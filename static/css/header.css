@@ -232,16 +232,21 @@
 .burger-menu__dropdown {
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 36px;
+  right: 28px;
   z-index: 1000;
   background: var(--color-gray-light);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
-  padding: var(--spacing-lg) var(--spacing-md);
+  padding: 10px;
   transform: translateY(100%);
-  transition: transform var(--transition-normal);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--transition-normal),
+              opacity var(--transition-normal),
+              visibility var(--transition-normal);
   max-height: 80vh;
   overflow-y: auto;
   
@@ -255,6 +260,9 @@
 }
 
 .burger-menu__dropdown[aria-hidden="false"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
   transform: translateY(0);
 }
 
