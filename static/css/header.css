@@ -1,0 +1,350 @@
+/* Header - Telegram-style капсульне меню знизу */
+.header {
+  /* position: sticky вже застосовується через клас .ios-safe-sticky */
+  bottom: 20px;
+  z-index: 1000;
+  padding: var(--spacing-sm) 0;
+  
+  /* Меню завжди внизу viewport на відстані 20px від нижнього краю */
+}
+
+/* Мобільний навігаційний контейнер з grid - ТІЛЬКИ ДЛЯ МОБІЛЬНИХ */
+.mobile-nav-container {
+  display: contents; /* На десктопі контейнер "прозорий" - header видимий */
+}
+
+/* ТІЛЬКИ мобільна версія - grid layout */
+@media (max-width: 767px) {
+  .mobile-nav-container {
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    
+    /* Sticky позиціонування */
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 10px;
+    bottom: max(10px, var(--safe-area-bottom, 10px));
+    z-index: 1001;
+    width: 100%;
+    
+    /* Padding з iOS safe area */
+    padding: 0 20px;
+    padding-left: max(20px, var(--safe-area-left, 20px));
+    padding-right: max(20px, var(--safe-area-right, 20px));
+  }
+}
+
+.header__nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.header__menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  list-style: none;
+  
+  /* Капсульна форма */
+  background: var(--color-gray-light);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-pill);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  
+  /* iOS safe area для всіх сторін */
+  padding-left: max(var(--spacing-sm), var(--safe-area-left));
+  padding-right: max(var(--spacing-sm), var(--safe-area-right));
+  padding-bottom: max(8px, var(--safe-area-bottom));
+}
+
+.header__link {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.header__link:hover,
+.header__link--active {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Десктоп версія */
+@media (min-width: 768px) {
+  .header {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+  
+  .header__nav {
+    max-width: 900px;
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+/* Мобільна версія */
+@media (max-width: 767px) {
+  .header {
+    bottom: 10px;
+  }
+  
+  .header__menu {
+    gap: 8px;
+    padding: 8px 16px;
+    overflow-x: auto;
+    justify-content: center;
+    
+    /* Приховати scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .header__menu::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .header__link {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+/* iOS Safari фікси */
+@supports (-webkit-touch-callout: none) {
+  .header {
+    /* Переконатися що backdrop-filter працює на iOS */
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+/* Приховування пунктів меню на мобільній версії */
+@media (max-width: 767px) {
+  .header__menu-item--mobile-hidden {
+    display: none;
+  }
+}
+
+/* Бургер-меню */
+.burger-menu {
+  z-index: 1001;
+  width: 53px;
+  height: 53px;
+  padding: 0;
+  border: none;
+  background: var(--color-gray-light);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  flex-shrink: 0; /* Не стискати в grid */
+}
+
+.burger-menu:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.burger-menu:hover .burger-menu__line {
+  background: var(--color-white);
+}
+
+.burger-menu__icon {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 22px;
+  height: 18px;
+  justify-content: space-between;
+  position: relative;
+}
+
+.burger-menu__line {
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+}
+
+.burger-menu[aria-expanded="true"] .burger-menu__icon {
+  gap: 0;
+}
+
+.burger-menu[aria-expanded="true"] .burger-menu__line:nth-child(1) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transform-origin: center;
+}
+
+.burger-menu[aria-expanded="true"] .burger-menu__line:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-menu[aria-expanded="true"] .burger-menu__line:nth-child(3) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  transform-origin: center;
+}
+
+/* Overlay для випадаючого меню */
+.burger-menu__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility var(--transition-normal);
+}
+
+.burger-menu__overlay[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Випадаюче меню */
+.burger-menu__dropdown {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--color-gray-light);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg) var(--spacing-md);
+  transform: translateY(100%);
+  transition: transform var(--transition-normal);
+  max-height: 80vh;
+  overflow-y: auto;
+  
+  /* Приховати scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.burger-menu__dropdown::-webkit-scrollbar {
+  display: none;
+}
+
+.burger-menu__dropdown[aria-hidden="false"] {
+  transform: translateY(0);
+}
+
+/* Мобільна версія - підняти dropdown вище хедера */
+@media (max-width: 767px) {
+  .burger-menu__dropdown {
+    bottom: 90px;
+  }
+}
+
+/* iOS Safari фікси для dropdown меню - виправляє проблеми з viewport */
+@supports (-webkit-touch-callout: none) {
+  .burger-menu__dropdown {
+    /* Використовуємо 100dvh (dynamic viewport height) для правильного обчислення на iOS */
+    max-height: 80dvh;
+    bottom: 0;
+    bottom: max(0px, env(safe-area-inset-bottom, 0px));
+  }
+  
+  /* Мобільна версія з урахуванням header та safe-area */
+  @media (max-width: 767px) {
+    .burger-menu__dropdown {
+      bottom: max(90px, calc(90px + env(safe-area-inset-bottom, 0px)));
+      max-height: calc(100dvh - 90px - env(safe-area-inset-bottom, 0px));
+    }
+  }
+}
+
+.burger-menu__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin: 0;
+  padding: 0;
+}
+
+.burger-menu__link {
+  display: block;
+  padding: var(--spacing-md);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.burger-menu__link:hover,
+.burger-menu__link:focus {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Мобільна версія - показувати бургер-меню та налаштувати розташування */
+@media (max-width: 767px) {
+  .burger-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Header в grid-контейнері - видалити позиціювання */
+  .header {
+    position: static;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    width: auto;
+    max-width: none;
+  }
+  
+  .header__nav {
+    padding: 0 var(--spacing-sm);
+    max-width: 100%;
+  }
+}
+
+/* Десктоп версія - приховати бургер-меню та контейнер */
+@media (min-width: 768px) {
+  .mobile-nav-container {
+    display: contents; /* Контейнер "прозорий" - header видимий */
+  }
+  
+  .burger-menu {
+    display: none;
+  }
+  
+  .burger-menu__dropdown {
+    display: none;
+  }
+}
