@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ seo.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="contacts">
+    <div class="container">
+        <h1>Контакти SPEAK UP</h1>
+        <div class="contacts-content">
+            <div class="contact-info">
+                <h2>Телефон</h2>
+                <p><a href="tel:+380931707867">+38 (093) 170-78-67</a></p>
+            </div>
+            <div class="contact-info">
+                <h2>Email</h2>
+                <p><a href="mailto:info@speak-up.com.ua">info@speak-up.com.ua</a></p>
+            </div>
+            <div class="contact-info">
+                <h2>Адреси наших шкіл</h2>
+                <ul>
+                    <li>Київ - 3 школи</li>
+                    <li>Харків</li>
+                    <li>Дніпро</li>
+                    <li>Одеса</li>
+                    <li>Львів</li>
+                    <li>Кривий Ріг</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+

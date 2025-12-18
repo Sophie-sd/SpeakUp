@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ seo.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="blog-detail">
+    <div class="container">
+        <h1>{{ blog_post.get_title|default:blog_post.get_title }}</h1>
+        <p class="meta">
+            Автор: {{ blog_post.author }}<br>
+            Дата: {{ blog_post.published_at|date:"d.m.Y" }}
+        </p>
+        {% if blog_post.featured_image %}
+        <img src="{{ blog_post.featured_image.url }}" alt="{{ blog_post.get_title }}" class="featured-image">
+        {% endif %}
+        <div class="content">
+            {{ blog_post.get_content|safe }}
+        </div>
+    </div>
+</article>
+{% endblock %}
+
+
+

@@ -1,0 +1,124 @@
+/* Advantages секція */
+.advantages {
+  padding: var(--spacing-xl) 0;
+  background: var(--color-bg);
+  transition: background-color var(--transition-normal);
+}
+
+.advantages__title {
+  font-size: var(--font-size-h2);
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Accordion */
+.accordion {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.accordion__item {
+  border-left: 3px solid var(--color-primary);
+  background: var(--color-gray-medium);
+  margin-bottom: var(--spacing-sm);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.accordion__item:last-child {
+  margin-bottom: 0;
+}
+
+.accordion__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.accordion__header:hover {
+  background: var(--color-gray-light);
+}
+
+.accordion__number {
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  color: var(--color-primary);
+  min-width: 40px;
+}
+
+.accordion__title {
+  flex: 1;
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+}
+
+.accordion__icon {
+  font-size: 24px;
+  font-weight: 300;
+  transition: transform var(--transition-fast);
+}
+
+/* Розкритий стан */
+.accordion__item--active .accordion__icon {
+  transform: rotate(45deg);
+}
+
+.accordion__item--active .accordion__header {
+  background: var(--color-gray-light);
+}
+
+.accordion__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-slow);
+}
+
+/* max-height встановлюється динамічно через JS */
+.accordion__item--active .accordion__content {
+  /* JS встановить правильний max-height через scrollHeight */
+}
+
+.accordion__content p {
+  padding: 0 var(--spacing-md) var(--spacing-md);
+  padding-left: calc(40px + var(--spacing-md) + var(--spacing-sm));
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all var(--transition-normal);
+}
+
+.accordion__item--active .accordion__content p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Мобільна версія */
+@media (max-width: 767px) {
+  .accordion__header {
+    padding: var(--spacing-sm);
+  }
+  
+  .accordion__number {
+    min-width: 30px;
+    font-size: 18px;
+  }
+  
+  .accordion__title {
+    font-size: 18px;
+  }
+  
+  .accordion__content p {
+    padding-left: var(--spacing-sm);
+  }
+}
+
+
+
+

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ seo.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="feedback">
+    <div class="container">
+        <h1>Відгуки наших студентів</h1>
+        <div class="feedback-content">
+            <p>Тут будуть відгуки учнів школи SPEAK UP про їх досвід навчання та результати.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+

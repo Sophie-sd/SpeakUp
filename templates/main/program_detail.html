@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ seo.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="program-detail">
+    <div class="container">
+        <h1>{{ program.get_title }}</h1>
+        {% if program.og_image %}
+        <img src="{{ program.og_image.url }}" alt="{{ program.get_title }}" class="featured-image">
+        {% endif %}
+        <div class="description">
+            <h2>Про програму</h2>
+            {{ program.get_description|safe }}
+        </div>
+        <div class="content">
+            {{ program.get_content_formatted|safe }}
+        </div>
+    </div>
+</article>
+{% endblock %}
+
+
+

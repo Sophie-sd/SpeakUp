@@ -1,0 +1,267 @@
+{% load static i18n seo_tags %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- iOS Safari оптимізації -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- CSRF Token для AJAX -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    
+    <!-- КРИТИЧНО: Google та Facebook Verification (на всіх сторінках) -->
+    <meta name="google-site-verification" content="{{ seo.verification.google_site_verification }}">
+    <meta name="facebook-domain-verification" content="{{ seo.verification.facebook_domain_verification }}">
+    
+    <!-- Title та Description -->
+    <title>{% block title %}{{ seo.title }}{% endblock %}</title>
+    <meta name="description" content="{{ seo.description }}">
+    {% if seo.meta_keywords %}<meta name="keywords" content="{{ seo.meta_keywords }}">{% endif %}
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ seo.canonical_url }}">
+    
+    <!-- Hreflang (багатомовність) -->
+    {% block hreflang %}
+    {% get_alternate_lang_url 'uk' as uk_url %}
+    {% get_alternate_lang_url 'ru' as ru_url %}
+    <link rel="alternate" hreflang="uk" href="https://speak-up.com.ua{{ uk_url }}">
+    <link rel="alternate" hreflang="ru" href="https://speak-up.com.ua{{ ru_url }}">
+    <link rel="alternate" hreflang="x-default" href="https://speak-up.com.ua{{ uk_url }}">
+    {% endblock %}
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="{{ seo.og_type|default:'website' }}">
+    <meta property="og:title" content="{{ seo.og_title|default:seo.title }}">
+    <meta property="og:description" content="{{ seo.og_description|default:seo.description }}">
+    <meta property="og:url" content="{{ seo.og_url }}">
+    <meta property="og:site_name" content="{{ seo.og_site_name }}">
+    {% if seo.og_image %}<meta property="og:image" content="{{ seo.og_image }}">{% endif %}
+    {% if seo.article_published_time %}<meta property="article:published_time" content="{{ seo.article_published_time }}">{% endif %}
+    {% if seo.article_modified_time %}<meta property="article:modified_time" content="{{ seo.article_modified_time }}">{% endif %}
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="{{ seo.twitter_card }}">
+    <meta name="twitter:title" content="{{ seo.twitter_title|default:seo.title }}">
+    <meta name="twitter:description" content="{{ seo.twitter_description|default:seo.description }}">
+    {% if seo.twitter_image %}<meta name="twitter:image" content="{{ seo.twitter_image }}">{% endif %}
+    
+    <!-- JSON-LD Structured Data -->
+    {% block structured_data %}
+    {% if structured_data %}
+    {% for data in structured_data %}
+    <script type="application/ld+json">
+    {{ data|safe }}
+    </script>
+    {% endfor %}
+    {% endif %}
+    {% endblock %}
+    
+    <!-- Theme initialization (синхронно, щоб уникнути блимання) -->
+    <script>
+      (function() {
+        try {
+          const autoMode = localStorage.getItem('speakup-theme-auto');
+          const isAuto = autoMode !== 'false'; // За замовчуванням автоматичний режим увімкнено
+          
+          let theme;
+          
+          if (isAuto) {
+            // Автоматичний режим: визначити тему на основі київського часу
+            try {
+              const formatter = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'Europe/Kyiv',
+                hour: '2-digit',
+                hour12: false
+              });
+              const now = new Date();
+              const kievTimeString = formatter.format(now);
+              const hours = parseInt(kievTimeString.split(':')[0], 10);
+              
+              // 07:00-18:00 → світла тема, 18:00-07:00 → темна тема
+              theme = (hours >= 7 && hours < 18) ? 'light' : 'dark';
+            } catch (e) {
+              // Якщо не вдалося отримати київський час, використати системну тему
+              theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+          } else {
+            // Ручний режим: використати збережену тему
+            const storedTheme = localStorage.getItem('speakup-theme');
+            if (storedTheme) {
+              theme = storedTheme;
+            } else {
+              // Якщо немає збереженої теми, використати тему за часом
+              try {
+                const formatter = new Intl.DateTimeFormat('en-US', {
+                  timeZone: 'Europe/Kyiv',
+                  hour: '2-digit',
+                  hour12: false
+                });
+                const now = new Date();
+                const kievTimeString = formatter.format(now);
+                const hours = parseInt(kievTimeString.split(':')[0], 10);
+                theme = (hours >= 7 && hours < 18) ? 'light' : 'dark';
+              } catch (e) {
+                theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+              }
+            }
+          }
+          
+          if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {
+          // Ігнорувати помилки localStorage
+        }
+      })();
+    </script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/utils/ios-safe.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Skip link для доступності -->
+    <a href="#main-content" class="skip-link">{% trans "Перейти до контенту" %}</a>
+    
+    <!-- Breadcrumbs з Microdata (ЗБЕРЕГТИ формат з існуючого) -->
+    {% block breadcrumbs %}
+    {% if breadcrumbs %}
+    <ul itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList" 
+        id="breadcrumbs" class="breadcrumbs">
+      {% for item in breadcrumbs %}
+      <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+        <a itemprop="item" href="{{ item.url }}" title="{{ item.name }}">
+          <span itemprop="name">{{ item.name }}</span>
+          <meta itemprop="position" content="{{ item.position }}">
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endblock %}
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="theme-toggle__button" aria-label="{% trans 'Перемкнути тему' %}" type="button">
+            <span class="theme-toggle__icon">
+                <svg class="theme-toggle__icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="theme-toggle__icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </span>
+        </button>
+    </div>
+    
+    {% block content %}{% endblock %}
+    
+    <!-- JS -->
+    <script type="module" src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+    
+    <!-- Theme initialization (синхронно, щоб уникнути блимання) -->
+    <script>
+      (function() {
+        try {
+          const autoMode = localStorage.getItem('speakup-theme-auto');
+          const isAuto = autoMode !== 'false'; // За замовчуванням автоматичний режим увімкнено
+          
+          let theme;
+          
+          if (isAuto) {
+            // Автоматичний режим: визначити тему на основі київського часу
+            try {
+              const formatter = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'Europe/Kyiv',
+                hour: '2-digit',
+                hour12: false
+              });
+              const now = new Date();
+              const kievTimeString = formatter.format(now);
+              const hours = parseInt(kievTimeString.split(':')[0], 10);
+              
+              // 07:00-18:00 → світла тема, 18:00-07:00 → темна тема
+              theme = (hours >= 7 && hours < 18) ? 'light' : 'dark';
+            } catch (e) {
+              // Якщо не вдалося отримати київський час, використати системну тему
+              theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            }
+          } else {
+            // Ручний режим: використати збережену тему
+            const storedTheme = localStorage.getItem('speakup-theme');
+            if (storedTheme) {
+              theme = storedTheme;
+            } else {
+              // Якщо немає збереженої теми, використати тему за часом
+              try {
+                const formatter = new Intl.DateTimeFormat('en-US', {
+                  timeZone: 'Europe/Kyiv',
+                  hour: '2-digit',
+                  hour12: false
+                });
+                const now = new Date();
+                const kievTimeString = formatter.format(now);
+                const hours = parseInt(kievTimeString.split(':')[0], 10);
+                theme = (hours >= 7 && hours < 18) ? 'light' : 'dark';
+              } catch (e) {
+                theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+              }
+            }
+          }
+          
+          if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {
+          // Ігнорувати помилки localStorage
+        }
+      })();
+    </script>
+</head>
+<body>
+    <!-- Skip link для доступності -->
+    <a href="#main-content" class="skip-link">Перейти до контенту</a>
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="theme-toggle__button" aria-label="Перемкнути тему" type="button">
+            <span class="theme-toggle__icon">
+                <svg class="theme-toggle__icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="theme-toggle__icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </span>
+        </button>
+    </div>
+</body>
+</html>
+
+
+

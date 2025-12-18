@@ -1,0 +1,46 @@
+/* Test CTA секція */
+.test-cta {
+  padding: var(--spacing-xl) 0;
+  background: var(--color-bg);
+  text-align: center;
+  transition: background-color var(--transition-normal);
+}
+
+.test-cta__content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.test-cta__text {
+  font-size: var(--font-size-h3);
+  line-height: 1.6;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Мобільна версія */
+@media (max-width: 767px) {
+  .test-cta {
+    padding: var(--spacing-lg) 0;
+  }
+  
+  .test-cta__content {
+    gap: var(--spacing-md);
+  }
+  
+  .test-cta__text {
+    font-size: var(--font-size-base);
+  }
+  
+  .test-cta__content .btn {
+    width: 100%;
+  }
+}
+
+
+
+

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ seo.title }}{% endblock %}
+
+{% block content %}
+<div class="job-page">
+    <div class="container">
+        <h1>Вакансії</h1>
+        <p class="intro">Приєднуйтесь до команди SPEAK UP!</p>
+        <p>На даний момент у нас немає відкритих вакансій, але ви завжди можете залишити своє резюме для розгляду.</p>
+        <p>Напишіть нам на email або телефоном:</p>
+        <p><strong>Телефон:</strong> +38 (093) 170-78-67</p>
+        <p><a href="{% url 'main:contacts' %}">Перейти на сторінку контактів</a></p>
+    </div>
+</div>
+{% endblock %}
+
+
+

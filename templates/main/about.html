@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ seo.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="about">
+    <div class="container">
+        <h1>Про школу SPEAK UP</h1>
+        <div class="about-content">
+            <p>Міжнародна школа Speak Up заснована в 2000 році в Польщі і є однією з найбільших мереж мовних шкіл. Наші школи є в 11 країнах на 4 континентах, загальна кількість студентів вже перевищує 500 тис. осіб.</p>
+            <p>В Україні працює 14 школ Speak Up. У нас постійно вчиться близько 10 тисяч студентів. Вже більше 18 років успішно навчаємо англійській мові!</p>
+            <h2>Наша методика</h2>
+            <p>Ми використовуємо унікальну методику Blended learning, яка поєднує найкращі підходи традиційного і дистанційного навчання.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+

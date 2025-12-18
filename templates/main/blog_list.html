@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ seo.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="blog">
+    <div class="container">
+        <h1>Блог SPEAK UP</h1>
+        <div class="blog-list">
+            {% for post in blog_posts %}
+            <article class="blog-card">
+                <h3><a href="{{ post.get_absolute_url }}">{{ post.get_title }}</a></h3>
+                <p class="meta">{{ post.published_at|date:"d.m.Y" }}</p>
+                <p>{{ post.meta_description_uk|truncatewords:30 }}</p>
+                <a href="{{ post.get_absolute_url }}" class="read-more">Читати далі</a>
+            </article>
+            {% empty %}
+            <p>Статей не знайдено.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+
