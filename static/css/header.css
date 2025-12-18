@@ -29,12 +29,12 @@
     bottom: max(10px, env(safe-area-inset-bottom, 10px));
     z-index: 1001;
     width: 100%;
-    max-width: 100vw;
+    /* Виправлення: видалено max-width щоб запобігти виїзду за екран */
     
     /* Padding з iOS safe area */
-    padding: 0 16px;
-    padding-left: max(16px, env(safe-area-inset-left, 16px));
-    padding-right: max(16px, env(safe-area-inset-right, 16px));
+    padding: 0 10px;
+    padding-left: max(10px, env(safe-area-inset-left, 10px));
+    padding-right: max(10px, env(safe-area-inset-right, 10px));
     
     /* iOS Safari fix: hardware acceleration */
     -webkit-transform: translateZ(0);
@@ -59,8 +59,7 @@
   
   /* Капсульна форма */
   background: var(--color-gray-light);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* Виправлення: видалено backdrop-filter щоб прибрати прозорість/тінь */
   border-radius: var(--radius-pill);
   padding: var(--spacing-xs) var(--spacing-sm);
   border: none;
@@ -133,15 +132,6 @@
   }
 }
 
-/* iOS Safari фікси */
-@supports (-webkit-touch-callout: none) {
-  .header {
-    /* Переконатися що backdrop-filter працює на iOS */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-}
-
 /* Приховування пунктів меню на мобільній версії */
 @media (max-width: 767px) {
   .header__menu-item--mobile-hidden {
@@ -159,8 +149,7 @@
   border: none;
   outline: none;
   background: var(--color-gray-light);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* Виправлення: видалено backdrop-filter щоб прибрати прозорість */
   border-radius: var(--radius-pill);
   cursor: pointer;
   display: none;
@@ -256,8 +245,7 @@
   right: 28px;
   z-index: 1000;
   background: var(--color-gray-light);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* Виправлення: видалено backdrop-filter */
   border-radius: var(--radius-lg);
   padding: 10px;
   transform: translateY(100%);
@@ -309,6 +297,7 @@
     bottom: max(0px, env(safe-area-inset-bottom, 0px));
     /* iOS Safari: hardware acceleration */
     -webkit-transform: translateZ(0);
+    transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
   }

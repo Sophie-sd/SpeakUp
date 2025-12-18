@@ -277,8 +277,12 @@ body {
     user-select: text;
   }
   
-  /* Hardware acceleration для анімацій */
-  * {
+  /* Hardware acceleration для анімацій - тільки для інтерактивних елементів */
+  button,
+  a,
+  .modal,
+  .burger-menu__dropdown,
+  .header__menu {
     -webkit-backface-visibility: hidden;
     -webkit-perspective: 1000;
   }
