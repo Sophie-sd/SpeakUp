@@ -10,6 +10,7 @@ urlpatterns = [
     path('feedback/', views.feedback_view, name='feedback'),
     path('contacts/', views.contacts_view, name='contacts'),
     path('job/', views.job_view, name='job'),
+    path('advertising/', views.advertising_view, name='advertising'),
     
     # Блог
     path('news/', views.blog_list_view, name='blog_list'),
@@ -23,6 +24,7 @@ urlpatterns = [
     path('api/test/submit/', views.test_submit_view, name='test_submit'),
     path('robots.txt', views.robots_txt_view, name='robots_txt'),
 ]
+
 
 
 

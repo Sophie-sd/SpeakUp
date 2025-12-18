@@ -26,3 +26,4 @@ services:
         value: "speakup.settings.production"
       - key: ALLOWED_HOSTS
         value: "speakup-web.onrender.com"
+

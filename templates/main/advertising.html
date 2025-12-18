@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}SpeakUp — Подвоюємо англійську за 1 грн{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/advertising.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script defer src="{% static 'js/advertising.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<main id="main-content" class="landing">
+    <div class="landing__background snow-bg">
+        <div class="garland" aria-hidden="true"></div>
+
+        <!-- Hero -->
+        <section class="landing-section landing-section--hero" aria-labelledby="landing-main-title">
+            <div class="landing-section__inner landing-grid">
+                <!-- Left column -->
+                <div class="landing-hero">
+                    <div class="landing-hero__badge">
+                        <span aria-hidden="true">🎄</span>
+                        <span>{% trans "Новорічна акція" %}</span>
+                    </div>
+
+                    <h1 id="landing-main-title" class="landing-hero__title">
+                        <span id="main-title-text">Подвоюємо вашу англійську за 1 грн</span>
+                        <span class="gift-icon" aria-hidden="true">🎁</span>
+                    </h1>
+
+                    <p id="subtitle" class="landing-hero__subtitle">
+                        Новорічна пропозиція SpeakUp: оплачуєте курс — отримуєте вдвічі більше навчання.
+                    </p>
+
+                    <!-- Offers -->
+                    <div class="landing-offers" aria-label="{% trans 'Варіанти пакетів' %}">
+                        <article class="offer-card" aria-label="{% trans 'Пакет 6 місяців за ціною 3' %}">
+                            <div class="offer-card__header">
+                                <div class="offer-card__label">{% trans "Пакет" %}</div>
+                            </div>
+                            <div class="offer-card__duration">
+                                <span class="offer-card__duration-old">3 міс</span>
+                                <span class="offer-card__duration-arrow" aria-hidden="true">→</span>
+                                <span class="offer-card__duration-new">6 міс</span>
+                            </div>
+                            <div class="offer-card__price">
+                                <span class="offer-card__price-main">349$</span>
+                                <span class="badge badge--promo">+ 1 грн</span>
+                            </div>
+                        </article>
+
+                        <article class="offer-card offer-card--featured" aria-label="{% trans 'Пакет 12 місяців за ціною 6' %}">
+                            <div class="offer-card__badge badge badge--gold">
+                                {% trans "Найвигідніше" %}
+                            </div>
+                            <div class="offer-card__header">
+                                <div class="offer-card__label">{% trans "Пакет" %}</div>
+                            </div>
+                            <div class="offer-card__duration">
+                                <span class="offer-card__duration-old">6 міс</span>
+                                <span class="offer-card__duration-arrow" aria-hidden="true">→</span>
+                                <span class="offer-card__duration-new">12 міс</span>
+                            </div>
+                            <div class="offer-card__price">
+                                <span class="offer-card__price-main">699$</span>
+                                <span class="badge badge--promo">+ 1 грн</span>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="landing-hero__notice">
+                        <span class="landing-hero__notice-icon" aria-hidden="true">⏰</span>
+                        <span>
+                            Акція діє обмежений час. Кількість місць за цією умовою — обмежена.
+                        </span>
+                    </div>
+
+                    <div class="landing-hero__cta landing-hero__cta--desktop">
+                        <button type="button" class="btn btn-primary" data-scroll-target="#form-section">
+                            Отримати подвоєння
+                        </button>
+                        <p class="landing-hero__cta-note">
+                            Передзвонимо за 5–15 хвилин у робочий час.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right column – form -->
+                <aside id="form-section" class="landing-form" aria-label="{% trans 'Форма бронювання акції' %}">
+                    <div id="form-container">
+                        <h2 class="landing-form__title">Забронюйте акцію</h2>
+                        <p class="landing-form__subtitle">
+                            Залиште контакт — ми зв'яжемось найближчим часом
+                        </p>
+
+                        <form id="lead-form" class="landing-form__body" novalidate>
+                            <div class="field">
+                                <label class="field__label" for="name-input">Ваше ім'я</label>
+                                <input
+                                    id="name-input"
+                                    name="name"
+                                    type="text"
+                                    class="field__input"
+                                    placeholder="Наприклад, Олена"
+                                    autocomplete="name"
+                                    required
+                                >
+                                <p id="name-error" class="field__error" aria-live="polite">
+                                    Будь ласка, введіть ваше ім'я
+                                </p>
+                            </div>
+
+                            <div class="field">
+                                <label class="field__label" for="phone-input">Номер телефону</label>
+                                <input
+                                    id="phone-input"
+                                    name="phone"
+                                    type="tel"
+                                    class="field__input"
+                                    placeholder="+380 XX XXX XX XX"
+                                    autocomplete="tel"
+                                    required
+                                >
+                                <p id="phone-error" class="field__error" aria-live="polite">
+                                    Будь ласка, введіть коректний номер телефону
+                                </p>
+                            </div>
+
+                            <div class="field field--checkbox">
+                                <input
+                                    id="consent"
+                                    name="consent"
+                                    type="checkbox"
+                                    class="field__checkbox-input"
+                                    required
+                                >
+                                <label for="consent" class="field__checkbox-label">
+                                    Погоджуюсь на
+                                    <a href="#privacy" class="field__link">обробку персональних даних</a>
+                                </label>
+                            </div>
+
+                            <button type="submit" id="form-button" class="btn btn-primary btn--full">
+                                Забронювати акцію
+                            </button>
+                        </form>
+                    </div>
+
+                    <div id="success-container" class="landing-form__success" aria-live="polite">
+                        <div class="landing-form__success-icon" aria-hidden="true">✓</div>
+                        <h2 class="landing-form__title">Заявку надіслано!</h2>
+                        <p class="landing-form__subtitle">
+                            Ми зв'яжемось з вами найближчим часом
+                        </p>
+                    </div>
+
+                    <div class="landing-trust">
+                        <div class="landing-trust__item">
+                            <div class="landing-trust__icon" aria-hidden="true">✓</div>
+                            <p class="landing-trust__text">Підбір рівня</p>
+                        </div>
+                        <div class="landing-trust__item">
+                            <div class="landing-trust__icon" aria-hidden="true">⏱</div>
+                            <p class="landing-trust__text">Зручний графік</p>
+                        </div>
+                        <div class="landing-trust__item">
+                            <div class="landing-trust__icon" aria-hidden="true">∞</div>
+                            <p class="landing-trust__text">Підтримка менеджера</p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section class="landing-section landing-section--light">
+            <div class="landing-section__inner">
+                <h2 class="landing-section__title">Як працює акція</h2>
+                <div class="steps">
+                    <article class="step-card">
+                        <div class="step-card__number">1</div>
+                        <h3 class="step-card__title">Залишаєте заявку</h3>
+                        <p class="step-card__text">
+                            Заповнюєте форму або натискаєте кнопку — це займе 30 секунд
+                        </p>
+                    </article>
+                    <article class="step-card">
+                        <div class="step-card__number">2</div>
+                        <h3 class="step-card__title">Менеджер підбирає пакет</h3>
+                        <p class="step-card__text">
+                            Визначаємо ваш рівень та зручний графік занять
+                        </p>
+                    </article>
+                    <article class="step-card">
+                        <div class="step-card__number">3</div>
+                        <h3 class="step-card__title">Фіксуємо акцію</h3>
+                        <p class="step-card__text">
+                            Резервуємо за вами умови та запускаємо навчання
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- What you get -->
+        <section class="landing-section landing-section--muted">
+            <div class="landing-section__inner">
+                <h2 class="landing-section__title">Що ви отримаєте</h2>
+                <div class="benefits">
+                    <article class="benefit">
+                        <div class="benefit__icon" aria-hidden="true">↗</div>
+                        <div class="benefit__body">
+                            <h3 class="benefit__title">Навчання під ваш рівень</h3>
+                            <p class="benefit__text">
+                                Від A1 до C1 — підберемо програму саме для вас
+                            </p>
+                        </div>
+                    </article>
+                    <article class="benefit">
+                        <div class="benefit__icon" aria-hidden="true">💬</div>
+                        <div class="benefit__body">
+                            <h3 class="benefit__title">Розмовна практика</h3>
+                            <p class="benefit__text">
+                                Живе спілкування з першого тижня навчання
+                            </p>
+                        </div>
+                    </article>
+                    <article class="benefit">
+                        <div class="benefit__icon" aria-hidden="true">✓</div>
+                        <div class="benefit__body">
+                            <h3 class="benefit__title">Домашні завдання + перевірка</h3>
+                            <p class="benefit__text">
+                                Закріплення матеріалу з фідбеком від викладача
+                            </p>
+                        </div>
+                    </article>
+                    <article class="benefit">
+                        <div class="benefit__icon" aria-hidden="true">📊</div>
+                        <div class="benefit__body">
+                            <h3 class="benefit__title">Прогрес-трекінг</h3>
+                            <p class="benefit__text">
+                                Контроль результату та регулярні звіти про прогрес
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="landing-section">
+            <div class="landing-section__inner">
+                <h2 class="landing-section__title">Часті питання</h2>
+                <div id="faq-container" class="faq">
+                    <article class="faq-item">
+                        <button class="faq-item__question" type="button">
+                            <span class="faq-item__question-text">Скільки діє акція?</span>
+                            <span class="faq-item__icon" aria-hidden="true">⌄</span>
+                        </button>
+                        <div class="faq-item__answer">
+                            Акція діє до кінця новорічних свят або до вичерпання місць. Кількість пакетів за цими умовами обмежена — рекомендуємо не зволікати.
+                        </div>
+                    </article>
+                    <article class="faq-item">
+                        <button class="faq-item__question" type="button">
+                            <span class="faq-item__question-text">Як зафіксувати ціну/умову?</span>
+                            <span class="faq-item__icon" aria-hidden="true">⌄</span>
+                        </button>
+                        <div class="faq-item__answer">
+                            Залиште заявку на сайті — менеджер зв'яжеться з вами та зарезервує місце. Ціна фіксується на момент підтвердження.
+                        </div>
+                    </article>
+                    <article class="faq-item">
+                        <button class="faq-item__question" type="button">
+                            <span class="faq-item__question-text">Чи можна почати пізніше?</span>
+                            <span class="faq-item__icon" aria-hidden="true">⌄</span>
+                        </button>
+                        <div class="faq-item__answer">
+                            Так, ви можете зафіксувати умови зараз, а почати навчання пізніше — погодимо зручну дату старту.
+                        </div>
+                    </article>
+                    <article class="faq-item">
+                        <button class="faq-item__question" type="button">
+                            <span class="faq-item__question-text">Як проходять заняття?</span>
+                            <span class="faq-item__icon" aria-hidden="true">⌄</span>
+                        </button>
+                        <div class="faq-item__answer">
+                            Заняття проходять онлайн індивідуально або в міні-групах. Тривалість — 50 хвилин. Графік підбираємо під ваш розклад.
+                        </div>
+                    </article>
+                    <article class="faq-item">
+                        <button class="faq-item__question" type="button">
+                            <span class="faq-item__question-text">Що означає "+ 1 грн"?</span>
+                            <span class="faq-item__icon" aria-hidden="true">⌄</span>
+                        </button>
+                        <div class="faq-item__answer">
+                            1 грн — це символічна доплата в межах умов акції. Ви оплачуєте базовий пакет і отримуєте подвоєний термін навчання за додаткову 1 гривню.
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="landing-section landing-section--gradient">
+            <div class="landing-section__inner landing-section__inner--center">
+                <h2 class="landing-section__title">Готові подвоїти свою англійську?</h2>
+                <p class="landing-section__subtitle">
+                    Залишайте заявку — зафіксуємо за вами новорічні умови
+                </p>
+                <button type="button" class="btn btn-primary" data-scroll-target="#form-section">
+                    Отримати подвоєння
+                </button>
+            </div>
+        </section>
+
+        <!-- Sticky CTA mobile -->
+        <div class="sticky-cta" id="sticky-cta">
+            <button type="button" class="btn btn-primary btn--full" data-scroll-target="#form-section">
+                Отримати подвоєння
+            </button>
+        </div>
+
+        <!-- Simple footer specific for landing -->
+        <footer class="landing-footer">
+            <div class="landing-footer__inner">
+                <div class="landing-footer__brand">
+                    <span class="landing-footer__logo">SpeakUp</span>
+                    <span class="landing-footer__text">Онлайн-школа англійської мови</span>
+                </div>
+                <div class="landing-footer__contacts">
+                    <span class="landing-footer__label">Контакти</span>
+                    <span class="landing-footer__text">+380 XX XXX XX XX</span>
+                    <span class="landing-footer__text">hello@speakup.com</span>
+                </div>
+                <div class="landing-footer__links">
+                    <span class="landing-footer__label">Документи</span>
+                    <a href="#privacy" class="landing-footer__link">Політика конфіденційності</a>
+                    <a href="#terms" class="landing-footer__link">Умови акції</a>
+                </div>
+            </div>
+            <div class="landing-footer__bottom">
+                <p class="landing-footer__bottom-text">© 2024 SpeakUp. Всі права захищені.</p>
+                <p class="landing-footer__bottom-text">*1 грн — символічна доплата в межах умов акції.</p>
+            </div>
+        </footer>
+    </div>
+</main>
+{% endblock %}
+

@@ -220,6 +220,22 @@ def job_view(request):
     return render(request, 'main/job.html', context)
 
 
+def advertising_view(request):
+    """Новорічний рекламний лендінг /advertising/"""
+    seo = get_seo_context(request, 'home')
+    breadcrumbs = get_breadcrumbs(request, items=[
+        ('Новорічна акція', request.path),
+    ])
+    structured_data = get_structured_data('home', breadcrumbs=breadcrumbs)
+
+    context = {
+        'seo': seo,
+        'breadcrumbs': breadcrumbs,
+        'structured_data': structured_data_to_json(structured_data),
+    }
+    return render(request, 'main/advertising.html', context)
+
+
 @require_http_methods(["POST"])
 def test_submit_view(request):
     """Обробка відправки тесту"""
@@ -289,6 +305,7 @@ def test_submit_view(request):
             'success': False,
             'message': "Помилка при обробці тесту. Спробуйте пізніше."
         }, status=500)
+
 
 
 
