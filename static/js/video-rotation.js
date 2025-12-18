@@ -24,14 +24,33 @@ export class VideoRotationManager {
       return videoDevice === this.device;
     });
     
-    if (this.videoElements.length < 2) {
-      console.warn('Video rotation requires at least 2 videos');
+    if (this.videoElements.length === 0) {
       return;
     }
     
     // Налаштування iOS оптимізацій
     if (this.isIOS) {
       this.applyIOSOptimizations();
+      
+      // На iOS уникаємо складної ротації: показуємо лише перше відео
+      const firstVideo = this.videoElements[0];
+      this.videoElements.forEach((video, index) => {
+        if (index === 0) {
+          video.classList.remove('video-hidden');
+          video.play().catch(() => {});
+        } else {
+          video.classList.add('video-hidden');
+          video.pause();
+        }
+      });
+      return;
+    }
+    
+    // Для інших платформ потрібні щонайменше 2 відео для ротації
+    if (this.videoElements.length < 2) {
+      this.videoElements[0].classList.remove('video-hidden');
+      this.videoElements[0].play().catch(() => {});
+      return;
     }
     
     // Налаштування мобільних оптимізацій
@@ -39,7 +58,7 @@ export class VideoRotationManager {
       this.applyMobileOptimizations();
     }
     
-    // Запуск ротації (для desktop та mobile)
+    // Запуск ротації (для desktop та Android мобільних)
     this.startRotation();
   }
   

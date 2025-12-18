@@ -1,11 +1,19 @@
 /* Hero секція */
 .hero {
   position: relative;
+  /* Базовий fallback для старих браузерів */
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+/* Сучасні браузери з підтримкою dynamic viewport */
+@supports (height: 100dvh) {
+  .hero {
+    min-height: 100dvh;
+  }
 }
 
 /* Відео контейнер (базові стилі в ios-safe.css) */
@@ -87,7 +95,14 @@
 /* Мобільна версія */
 @media (max-width: 767px) {
   .hero {
+    /* Fallback для мобільних браузерів */
     min-height: 100vh;
+  }
+  
+  @supports (height: 100dvh) {
+    .hero {
+      min-height: 100dvh;
+    }
   }
   
   /* Показати мобільні відео, приховати десктопні */
@@ -118,7 +133,21 @@
 /* iOS Safari фікси */
 @supports (-webkit-touch-callout: none) {
   .hero {
-    min-height: -webkit-fill-available;
+    /* На iOS орієнтуємось на dynamic viewport;
+       -webkit-fill-available як fallback для старіших версій */
+    min-height: 100vh;
+  }
+
+  @supports (height: 100dvh) {
+    .hero {
+      min-height: 100dvh;
+    }
+  }
+
+  @supports (height: -webkit-fill-available) {
+    .hero {
+      min-height: -webkit-fill-available;
+    }
   }
   
   .hero__video-container,

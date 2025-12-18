@@ -19,6 +19,7 @@
     display: grid !important;
     grid-template-columns: 1fr auto;
     align-items: center;
+    justify-content: space-between;
     gap: 8px;
     
     /* Sticky позиціонування */
@@ -59,6 +60,7 @@
   border: none;
   outline: none;
   box-shadow: none;
+  background-clip: padding-box;
   
   /* iOS safe area для всіх сторін */
   padding-left: max(var(--spacing-sm), var(--safe-area-left));
@@ -129,6 +131,7 @@
 @supports (-webkit-touch-callout: none) {
   .header {
     /* Переконатися що backdrop-filter працює на iOS */
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
 }
