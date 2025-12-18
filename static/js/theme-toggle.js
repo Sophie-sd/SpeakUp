@@ -42,8 +42,12 @@ export class ThemeToggle {
       }
     }
     
-    // Додати обробник події кліку
+    // Додати обробник події кліку + touch для iOS
     this.button.addEventListener('click', () => this.toggle());
+    this.button.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      this.toggle();
+    }, { passive: false });
   }
   
   /**
@@ -219,7 +223,3 @@ export class ThemeToggle {
     }
   }
 }
-
-
-
-
