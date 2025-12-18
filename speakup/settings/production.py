@@ -40,14 +40,8 @@ if DATABASE_URL:
         ssl_require=True,
     )
 
-# === Статика та медіа на диску Render ===
-RENDER_DISK_PATH = Path(config("RENDER_DISK_PATH", default="/data"))
-
-STATIC_ROOT = RENDER_DISK_PATH / "static"
-MEDIA_ROOT = RENDER_DISK_PATH / "media"
-
-# WhiteNoise для ефективної віддачі статики
+# WhiteNoise для ефективної віддачі статики (статичні файли збираються в STATIC_ROOT,
+# який уже налаштований у base.py; цього достатньо для free tier без диска)
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
-
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

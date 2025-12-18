@@ -13,10 +13,6 @@ services:
     region: frankfurt
     buildCommand: "./build.sh"
     startCommand: "gunicorn speakup.wsgi:application"
-    disk:
-      name: speakup-data
-      mountPath: /data
-      sizeGB: 1
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -28,7 +24,5 @@ services:
         value: "3.12"
       - key: DJANGO_SETTINGS_MODULE
         value: "speakup.settings.production"
-      - key: RENDER_DISK_PATH
-        value: "/data"
       - key: ALLOWED_HOSTS
         value: "your-service.onrender.com"
