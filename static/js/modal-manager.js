@@ -63,7 +63,15 @@ export class ModalManager {
     if (!this.modal) return;
     
     this.modal.setAttribute('aria-hidden', 'false');
+    
+    // iOS Safari fix: блокуємо скрол більш надійним способом
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = `-${window.scrollY}px`;
+    
+    // Зберігаємо поточну позицію скролу
+    this.scrollPosition = window.scrollY;
     
     // Фокус на першому полі
     const firstInput = this.form?.querySelector('input');
@@ -76,7 +84,17 @@ export class ModalManager {
     if (!this.modal) return;
     
     this.modal.setAttribute('aria-hidden', 'true');
+    
+    // iOS Safari fix: відновлюємо скрол
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.top = '';
+    
+    // Відновлюємо позицію скролу
+    if (typeof this.scrollPosition === 'number') {
+      window.scrollTo(0, this.scrollPosition);
+    }
     
     // Очистити форму
     if (this.form) {

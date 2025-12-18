@@ -35,6 +35,12 @@
     padding: 0 16px;
     padding-left: max(16px, env(safe-area-inset-left, 16px));
     padding-right: max(16px, env(safe-area-inset-right, 16px));
+    
+    /* iOS Safari fix: hardware acceleration */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 }
 
@@ -232,6 +238,9 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-normal), visibility var(--transition-normal);
+  /* iOS Safari fix: hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .burger-menu__overlay[aria-hidden="false"] {
@@ -264,6 +273,12 @@
   /* Приховати scrollbar */
   scrollbar-width: none;
   -ms-overflow-style: none;
+  
+  /* iOS Safari fix: hardware acceleration та smooth scroll */
+  -webkit-transform: translateY(100%) translateZ(0);
+  -webkit-overflow-scrolling: touch;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .burger-menu__dropdown::-webkit-scrollbar {
@@ -275,6 +290,7 @@
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
+  -webkit-transform: translateY(0) translateZ(0);
 }
 
 /* Мобільна версія - підняти dropdown вище хедера */
@@ -291,13 +307,28 @@
     max-height: 80dvh;
     bottom: 0;
     bottom: max(0px, env(safe-area-inset-bottom, 0px));
+    /* iOS Safari: hardware acceleration */
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   
   /* Мобільна версія з урахуванням header та safe-area */
   @media (max-width: 767px) {
     .burger-menu__dropdown {
       bottom: max(90px, calc(90px + env(safe-area-inset-bottom, 0px)));
-      max-height: calc(100dvh - 90px - env(safe-area-inset-bottom, 0px));
+      /* Фіксуємо для dynamic viewport на iOS */
+      max-height: calc(100dvh - 90px - env(safe-area-inset-bottom, 0px) - env(safe-area-inset-top, 0px));
+      /* Fallback для старих версій iOS */
+      max-height: calc(80vh - 90px);
+      /* iOS smooth scrolling */
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    @supports (height: 100dvh) {
+      .burger-menu__dropdown {
+        max-height: calc(100dvh - 90px - env(safe-area-inset-bottom, 0px) - env(safe-area-inset-top, 0px));
+      }
     }
   }
 }

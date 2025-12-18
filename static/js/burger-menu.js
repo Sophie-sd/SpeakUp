@@ -14,6 +14,7 @@ export class BurgerMenu {
     }
     
     this.isOpen = false;
+    this.scrollPosition = 0;
     this.init();
   }
   
@@ -75,8 +76,12 @@ export class BurgerMenu {
       this.overlay.setAttribute('aria-hidden', 'false');
     }
     
-    // Запобігти скролу body при відкритому меню
+    // iOS Safari fix: блокуємо скрол більш надійним способом
+    this.scrollPosition = window.scrollY;
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.top = `-${this.scrollPosition}px`;
   }
   
   close() {
@@ -87,7 +92,13 @@ export class BurgerMenu {
       this.overlay.setAttribute('aria-hidden', 'true');
     }
     
-    // Відновити скрол body
+    // iOS Safari fix: відновлюємо скрол
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.top = '';
+    
+    // Відновлюємо позицію скролу
+    window.scrollTo(0, this.scrollPosition);
   }
 }

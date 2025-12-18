@@ -7,6 +7,8 @@
   left: 0;
   width: 100%;
   height: 100%;
+  /* iOS Safari fix: використовуємо 100vh з fallback на dvh */
+  height: 100vh;
   z-index: 2000;
   display: flex;
   align-items: center;
@@ -14,6 +16,16 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-normal), visibility var(--transition-normal);
+  /* iOS Safari fix: додаємо hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* iOS Safari dynamic viewport height */
+@supports (height: 100dvh) {
+  .modal {
+    height: 100dvh;
+  }
 }
 
 .modal[aria-hidden="false"] {
@@ -138,6 +150,17 @@
     width: 95%;
     padding: var(--spacing-md);
     border-radius: 50%;
+    /* iOS Safari fix: обмежуємо max-height з врахуванням safe-area */
+    max-height: 85vh;
+    max-height: calc(85vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  }
+  
+  /* iOS Safari dynamic viewport */
+  @supports (height: 100dvh) {
+    .modal__container {
+      max-height: 85dvh;
+      max-height: calc(85dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+    }
   }
   
   .modal__actions {
@@ -156,8 +179,35 @@
 
 /* iOS Safari фікси */
 @supports (-webkit-touch-callout: none) {
+  .modal {
+    /* iOS Safari: hardware acceleration для плавного рендерингу */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
+  
   .modal__container {
     -webkit-backdrop-filter: blur(20px);
+    /* iOS Safari: додаємо hardware acceleration */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* iOS Safari: fix для overflow-y scroll */
+  @media (max-width: 767px) {
+    .modal__container {
+      /* Використовуємо -webkit-overflow-scrolling для smooth scroll */
+      -webkit-overflow-scrolling: touch;
+      /* Додатковий fallback для висоти */
+      max-height: 85vh;
+    }
+    
+    @supports (height: 100dvh) {
+      .modal__container {
+        max-height: calc(85dvh - env(safe-area-inset-bottom, 20px));
+      }
+    }
   }
 }
 
