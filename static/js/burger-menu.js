@@ -80,8 +80,12 @@ export class BurgerMenu {
     this.scrollPosition = window.scrollY;
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
+    // Виправлення: використовуємо 100vw замість 100% для уникнення конфліктів з grid
+    document.body.style.width = '100vw';
     document.body.style.top = `-${this.scrollPosition}px`;
+    // Додатково: переконатися що немає горизонтального скролу
+    document.body.style.left = '0';
+    document.body.style.right = '0';
   }
   
   close() {
@@ -97,6 +101,8 @@ export class BurgerMenu {
     document.body.style.position = '';
     document.body.style.width = '';
     document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
     
     // Відновлюємо позицію скролу
     window.scrollTo(0, this.scrollPosition);
