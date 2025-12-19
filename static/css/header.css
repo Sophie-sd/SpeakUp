@@ -283,6 +283,11 @@
   will-change: transform, opacity, visibility;
 }
 
+/* Світла тема - темніший фон для контрасту з білим текстом */
+[data-theme="light"] .burger-menu__dropdown {
+  background: rgba(0, 0, 0, 0.85); /* Темний фон для світлої теми */
+}
+
 .burger-menu__dropdown::-webkit-scrollbar {
   display: none;
 }
@@ -348,7 +353,7 @@
 .burger-menu__link {
   display: block;
   padding: var(--spacing-md);
-  color: var(--color-text);
+  color: var(--color-white); /* Завжди білий колір незалежно від теми */
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
