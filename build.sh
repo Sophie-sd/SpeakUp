@@ -8,3 +8,4 @@ pip install -r requirements.txt
 python manage.py migrate --noinput --settings=speakup.settings.production
 python manage.py collectstatic --noinput --settings=speakup.settings.production
 
+
