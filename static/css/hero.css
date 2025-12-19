@@ -7,6 +7,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  
+  /* Виправлення: НЕ додаємо padding-top тут - це буде в iOS-specific блоці */
 }
 
 /* Сучасні браузери з підтримкою dynamic viewport */
@@ -52,6 +54,8 @@
   z-index: 1;
   text-align: center;
   max-width: 800px;
+  
+  /* Виправлення: margin-top буде додано тільки в iOS-specific блоці для правильного відображення */
 }
 
 .hero__title {
@@ -117,6 +121,8 @@
   .hero__video-container,
   .hero__video {
     position: absolute; /* iOS fix */
+    /* Виправлення: відео має починатися з top: 0, щоб заповнювати весь екран */
+    top: 0;
   }
   
   .hero__actions {
@@ -136,6 +142,9 @@
     /* На iOS орієнтуємось на dynamic viewport;
        -webkit-fill-available як fallback для старіших версій */
     min-height: 100vh;
+    
+    /* iOS Safari: додати padding-top для safe area (статус-бар) - ТІЛЬКИ ОДИН РАЗ */
+    padding-top: env(safe-area-inset-top, 0px);
   }
 
   @supports (height: 100dvh) {
@@ -153,7 +162,15 @@
   .hero__video-container,
   .hero__video {
     position: absolute; /* замість fixed */
+    /* Виправлення: відео має починатися з top: 0, щоб заповнювати весь екран */
+    /* Safe area враховується через padding-top на .hero */
+    top: 0;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+  }
+  
+  /* iOS Safari: додатковий відступ для контенту hero, щоб він не заїжджав під статус-бар */
+  .hero__content {
+    margin-top: max(20px, env(safe-area-inset-top, 20px));
   }
 }

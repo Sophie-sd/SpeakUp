@@ -144,8 +144,15 @@ body {
   z-index: 1001;
   
   /* iOS safe area */
-  top: max(20px, var(--safe-area-top, 20px));
-  right: max(20px, var(--safe-area-right, 20px));
+  top: max(20px, env(safe-area-inset-top, 20px));
+  right: max(20px, env(safe-area-inset-right, 20px));
+  
+  /* iOS Safari fix: hardware acceleration для уникнення "стрибання" при скролі */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .theme-toggle__button {
@@ -257,6 +264,7 @@ body {
   /* Покращити smooth scrolling на iOS */
   body {
     -webkit-overflow-scrolling: touch;
+    /* Виправлення: НЕ додаємо padding-top на body - це зсуває весь контент */
   }
   
   /* Фіксувати проблему з активними елементами на iOS */
@@ -286,5 +294,8 @@ body {
     -webkit-backface-visibility: hidden;
     -webkit-perspective: 1000;
   }
+  
+  /* Виправлення: прибрано загальний margin-top для всіх посилань - це створювало проблеми */
+  /* Safe area буде застосовуватись тільки до конкретних елементів, які цього потребують */
 }
 

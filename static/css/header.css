@@ -227,9 +227,13 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-normal), visibility var(--transition-normal);
-  /* iOS Safari fix: hardware acceleration */
+  /* iOS Safari fix: hardware acceleration для уникнення "стрибання" */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+  will-change: opacity, visibility;
+  /* iOS Safari: фікс для правильного позиціонування при скролі */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .burger-menu__overlay[aria-hidden="false"] {
@@ -262,11 +266,13 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   
-  /* iOS Safari fix: hardware acceleration та smooth scroll */
+  /* iOS Safari fix: hardware acceleration та smooth scroll для уникнення "стрибання" */
   -webkit-transform: translateY(100%) translateZ(0);
+  transform: translateY(100%) translateZ(0);
   -webkit-overflow-scrolling: touch;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  will-change: transform, opacity, visibility;
 }
 
 .burger-menu__dropdown::-webkit-scrollbar {
