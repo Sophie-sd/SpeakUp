@@ -551,6 +551,15 @@
   flex-shrink: 0;
 }
 
+.step-card__content {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
 .step-card__title {
   font-size: 1.125rem;
   font-weight: 700;
@@ -851,6 +860,12 @@
     -webkit-box-flex: 0;
     -webkit-box-align: center;
     -webkit-box-pack: center;
+  }
+  
+  .step-card__content {
+    -webkit-box-flex: 1;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
   }
   
   .landing-trust__text {
