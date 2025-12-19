@@ -69,6 +69,12 @@ export class BurgerMenu {
   }
   
   open() {
+    // Зберігати позицію ПЕРЕД будь-якими змінами
+    this.scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Обчислити ширину scrollbar перед його зникненням
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    
     this.isOpen = true;
     this.burger.setAttribute('aria-expanded', 'true');
     this.menu.setAttribute('aria-hidden', 'false');
@@ -76,16 +82,20 @@ export class BurgerMenu {
       this.overlay.setAttribute('aria-hidden', 'false');
     }
     
-    // iOS Safari fix: блокуємо скрол більш надійним способом
-    this.scrollPosition = window.scrollY;
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    // Виправлення: використовуємо 100vw замість 100% для уникнення конфліктів з grid
-    document.body.style.width = '100vw';
-    document.body.style.top = `-${this.scrollPosition}px`;
-    // Додатково: переконатися що немає горизонтального скролу
-    document.body.style.left = '0';
-    document.body.style.right = '0';
+    // Використати requestAnimationFrame для плавного переходу
+    requestAnimationFrame(() => {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100vw';
+      document.body.style.top = `-${this.scrollPosition}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      
+      // Компенсувати зникнення scrollbar
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
+    });
   }
   
   close() {
@@ -96,15 +106,29 @@ export class BurgerMenu {
       this.overlay.setAttribute('aria-hidden', 'true');
     }
     
-    // iOS Safari fix: відновлюємо скрол
+    // Відновити стилі
+    const scrollbarWidth = document.body.style.paddingRight ? 
+      parseInt(document.body.style.paddingRight) : 0;
+    
     document.body.style.overflow = '';
     document.body.style.position = '';
     document.body.style.width = '';
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
+    document.body.style.paddingRight = '';
     
-    // Відновлюємо позицію скролу
-    window.scrollTo(0, this.scrollPosition);
+    // Використати requestAnimationFrame для плавного відновлення позиції
+    requestAnimationFrame(() => {
+      // Додаткова затримка для гарантії, що стилі застосовані
+      setTimeout(() => {
+        if (this.scrollPosition !== undefined && this.scrollPosition !== null) {
+          window.scrollTo({
+            top: this.scrollPosition,
+            behavior: 'auto' // Не використовуємо 'smooth' щоб уникнути конфліктів
+          });
+        }
+      }, 0);
+    });
   }
 }
