@@ -72,6 +72,11 @@ export class BurgerMenu {
     // Зберігати позицію ПЕРЕД будь-якими змінами
     this.scrollPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
     
+    // Зберегти в sessionStorage для надійності
+    if (this.scrollPosition > 0) {
+      sessionStorage.setItem('burgerMenuScrollPosition', this.scrollPosition.toString());
+    }
+    
     // Обчислити ширину scrollbar перед його зникненням
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     
@@ -82,19 +87,31 @@ export class BurgerMenu {
       this.overlay.setAttribute('aria-hidden', 'false');
     }
     
-    // Використати requestAnimationFrame для плавного переходу
+    // Використати подвійний requestAnimationFrame для iOS Safari
     requestAnimationFrame(() => {
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100vw';
-      document.body.style.top = `-${this.scrollPosition}px`;
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      
-      // Компенсувати зникнення scrollbar
-      if (scrollbarWidth > 0) {
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
-      }
+      requestAnimationFrame(() => {
+        // Вимкнути smooth scroll тимчасово на html
+        const html = document.documentElement;
+        const originalScrollBehavior = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100vw';
+        document.body.style.top = `-${this.scrollPosition}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        
+        // Компенсувати зникнення scrollbar
+        if (scrollbarWidth > 0) {
+          document.body.style.paddingRight = `${scrollbarWidth}px`;
+        }
+        
+        // Відновити smooth scroll через невелику затримку
+        setTimeout(() => {
+          html.style.scrollBehavior = originalScrollBehavior || '';
+        }, 50);
+      });
     });
   }
   
@@ -106,9 +123,26 @@ export class BurgerMenu {
       this.overlay.setAttribute('aria-hidden', 'true');
     }
     
+    // Відновити scrollPosition з sessionStorage якщо втрачено
+    if (!this.scrollPosition || this.scrollPosition === 0) {
+      const saved = sessionStorage.getItem('burgerMenuScrollPosition');
+      if (saved) {
+        this.scrollPosition = parseInt(saved, 10);
+      }
+    }
+    
     // Відновити стилі
     const scrollbarWidth = document.body.style.paddingRight ? 
       parseInt(document.body.style.paddingRight) : 0;
+    
+    // Вимкнути smooth scroll перед відновленням позиції
+    const html = document.documentElement;
+    const originalScrollBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    
+    // Вимкнути -webkit-overflow-scrolling тимчасово
+    const originalOverflowScrolling = document.body.style.webkitOverflowScrolling;
+    document.body.style.webkitOverflowScrolling = 'auto';
     
     document.body.style.overflow = '';
     document.body.style.position = '';
@@ -118,17 +152,43 @@ export class BurgerMenu {
     document.body.style.right = '';
     document.body.style.paddingRight = '';
     
-    // Використати requestAnimationFrame для плавного відновлення позиції
+    // Використати подвійний requestAnimationFrame для iOS Safari
     requestAnimationFrame(() => {
-      // Додаткова затримка для гарантії, що стилі застосовані
-      setTimeout(() => {
-        if (this.scrollPosition !== undefined && this.scrollPosition !== null) {
-          window.scrollTo({
-            top: this.scrollPosition,
-            behavior: 'auto' // Не використовуємо 'smooth' щоб уникнути конфліктів
-          });
-        }
-      }, 0);
+      requestAnimationFrame(() => {
+        // Додаткова затримка для гарантії, що стилі застосовані
+        setTimeout(() => {
+          if (this.scrollPosition !== undefined && this.scrollPosition !== null && this.scrollPosition >= 0) {
+            // Використати window.scrollTo з behavior: 'auto'
+            window.scrollTo({
+              top: this.scrollPosition,
+              behavior: 'auto'
+            });
+            
+            // Для iOS Safari - додаткова перевірка та повторний виклик
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isIOS) {
+              // Додаткова затримка для iOS
+              setTimeout(() => {
+                window.scrollTo({
+                  top: this.scrollPosition,
+                  behavior: 'auto'
+                });
+              }, 50);
+            }
+          }
+          
+          // Відновити -webkit-overflow-scrolling
+          document.body.style.webkitOverflowScrolling = originalOverflowScrolling || '';
+          
+          // Відновити smooth scroll після відновлення позиції
+          setTimeout(() => {
+            html.style.scrollBehavior = originalScrollBehavior || '';
+          }, 100);
+          
+          // Очистити sessionStorage
+          sessionStorage.removeItem('burgerMenuScrollPosition');
+        }, 20); // Збільшена затримка для iOS Safari
+      });
     });
   }
 }

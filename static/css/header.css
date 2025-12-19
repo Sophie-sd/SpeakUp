@@ -119,8 +119,11 @@
     gap: 8px;
     padding: 8px 16px;
     overflow-x: auto;
-    justify-content: center; /* Центрування кнопок в мобільній версії */
-    min-width: 0; /* Дозволяє стискатися в grid */
+    justify-content: center !important; /* !important для гарантії застосування */
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     
     /* Приховати scrollbar */
     scrollbar-width: none;
@@ -401,17 +404,8 @@
     overflow: hidden;
   }
   
-  /* Header menu в grid - має займати доступний простір */
-  .header__menu {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0; /* Дозволяє стискатися */
-    box-sizing: border-box;
-    justify-content: center; /* Центрування кнопок для узгодженості */
-    /* Переконатися що menu не виходить за межі */
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
+  /* Видалити дублюючий блок - все вже в попередньому медіа-запиті */
+  /* .header__menu стилі вже застосовані вище з !important */
 }
 
 /* Десктоп версія - приховати бургер-меню та контейнер */
