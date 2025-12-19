@@ -5,14 +5,10 @@
 import { VideoRotationManager } from './video-rotation.js';
 import { AccordionManager } from './accordion.js';
 import { TestManager } from './test-manager.js';
-import { ThemeToggle } from './theme-toggle.js';
 import { ModalManager } from './modal-manager.js';
 import { BurgerMenu } from './burger-menu.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Ініціалізація перемикача теми
-  new ThemeToggle();
-  
   // Ініціалізація відео ротації
   new VideoRotationManager();
   

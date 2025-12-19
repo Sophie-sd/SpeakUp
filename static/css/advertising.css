@@ -507,9 +507,13 @@
 }
 
 .landing-trust__text {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: #4b5563;
+  white-space: nowrap;
+  -webkit-hyphens: none;
+  hyphens: none;
+  word-break: keep-all;
 }
 
 .steps {
@@ -520,6 +524,13 @@
 
 .step-card {
   position: relative;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  gap: 16px;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
 }
 
 .step-card__number {
@@ -530,10 +541,14 @@
   color: #ffffff;
   font-size: 1.5rem;
   font-weight: 700;
+  display: -webkit-flex;
   display: flex;
+  -webkit-align-items: center;
   align-items: center;
+  -webkit-justify-content: center;
   justify-content: center;
-  margin-bottom: 12px;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .step-card__title {
@@ -720,6 +735,12 @@
   gap: 24px;
 }
 
+.landing-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .landing-footer__logo {
   font-size: 1.5rem;
   font-weight: 700;
@@ -728,6 +749,7 @@
 .landing-footer__text {
   font-size: 0.875rem;
   color: #9ca3af;
+  display: block;
 }
 
 .landing-footer__label {
@@ -814,6 +836,27 @@
 
   .landing-footer__inner {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* iOS Safari специфічні фікси для сумісності */
+@supports (-webkit-touch-callout: none) {
+  .step-card {
+    /* Забезпечує правильну роботу flexbox gap на iOS Safari */
+    -webkit-box-align: start;
+    -webkit-box-orient: horizontal;
+  }
+  
+  .step-card__number {
+    -webkit-box-flex: 0;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+  }
+  
+  .landing-trust__text {
+    /* Запобігає несподіваним переносам на iOS Safari */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 }
 
