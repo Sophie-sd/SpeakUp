@@ -16,6 +16,13 @@
   --landing-shadow-soft: 0 20px 60px rgba(15, 23, 42, 0.12);
 }
 
+/* Приховати breadcrumbs на сторінці акції */
+.landing #breadcrumbs,
+.landing .breadcrumbs {
+  display: none !important;
+  visibility: hidden !important;
+}
+
 .landing {
   color: var(--landing-text-main);
   background-color: var(--landing-surface);
@@ -207,6 +214,63 @@
   background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
 }
 
+/* Покращення оформлення карток акції */
+.offer-card--promo {
+  border-color: var(--landing-accent);
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.offer-card--promo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--landing-accent) 0%, var(--landing-accent-dark) 100%);
+}
+
+.offer-card--best {
+  border-width: 3px;
+  box-shadow: 0 8px 32px rgba(229, 57, 53, 0.2);
+}
+
+.offer-card__benefit {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.offer-card__benefit-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--landing-accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.offer-card__benefit-text::before {
+  content: '🎁';
+  font-size: 1rem;
+}
+
+/* Покращення hover ефектів */
+.offer-card--promo:hover,
+.offer-card--best:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(229, 57, 53, 0.25);
+}
+
+/* Покращення стрілки */
+.offer-card__duration-arrow {
+  font-size: 1.25rem;
+  color: var(--landing-accent);
+  font-weight: 800;
+}
+
 .offer-card__badge {
   position: absolute;
   top: -14px;
@@ -286,15 +350,6 @@
   font-size: 1.1rem;
 }
 
-.landing-hero__cta {
-  margin-top: 24px;
-}
-
-.landing-hero__cta-note {
-  margin-top: 8px;
-  font-size: 0.875rem;
-  color: var(--landing-text-muted);
-}
 
 .btn {
   display: inline-flex;
@@ -595,18 +650,83 @@
 
 .sticky-cta {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 10px 16px 14px;
-  background-color: var(--landing-surface);
-  box-shadow: 0 -14px 30px rgba(0, 0, 0, 0.16);
+  right: 20px;
+  bottom: 20px;
+  left: auto;
+  width: auto;
+  max-width: 280px;
+  padding: 0;
+  background-color: transparent;
+  box-shadow: none;
   display: none;
   z-index: 40;
+  /* iOS safe area */
+  right: max(20px, env(safe-area-inset-right, 20px));
+  bottom: max(20px, env(safe-area-inset-bottom, 20px));
+}
+
+.sticky-cta__button {
+  width: 100%;
+  min-width: 200px;
+  padding: 14px 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(229, 57, 53, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sticky-cta__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(229, 57, 53, 0.4);
+}
+
+.sticky-cta__button:active {
+  transform: translateY(0);
+}
+
+.sticky-cta__button-icon {
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.sticky-cta__button:hover .sticky-cta__button-icon {
+  transform: translateY(2px);
 }
 
 .sticky-cta--visible {
   display: block;
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Мобільна версія - трохи менша кнопка */
+@media (max-width: 768px) {
+  .sticky-cta {
+    right: 16px;
+    bottom: 16px;
+    max-width: 240px;
+  }
+  
+  .sticky-cta__button {
+    min-width: 180px;
+    padding: 12px 20px;
+    font-size: 0.938rem;
+  }
 }
 
 .landing-footer {
@@ -673,9 +793,6 @@
     margin: 0 auto;
   }
 
-  .landing-hero__cta--desktop {
-    display: none;
-  }
 }
 
 @media (max-width: 768px) {

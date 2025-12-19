@@ -14,6 +14,10 @@
 {% endblock %}
 
 {% block content %}
+{% block breadcrumbs %}
+{# Breadcrumbs приховані на сторінці акції #}
+{% endblock %}
+
 <main id="main-content" class="landing">
     <div class="landing__background snow-bg">
         <div class="garland" aria-hidden="true"></div>
@@ -34,14 +38,15 @@
                     </h1>
 
                     <p id="subtitle" class="landing-hero__subtitle">
-                        Новорічна пропозиція SpeakUp: оплачуєте курс — отримуєте вдвічі більше навчання.
+                        Новорічна пропозиція SpeakUp: купуєте курс — отримуєте вдвічі більше навчання.
                     </p>
 
                     <!-- Offers -->
                     <div class="landing-offers" aria-label="{% trans 'Варіанти пакетів' %}">
-                        <article class="offer-card" aria-label="{% trans 'Пакет 6 місяців за ціною 3' %}">
+                        <!-- 3 місяці → 6 місяців за 349$ + 1 грн -->
+                        <article class="offer-card offer-card--promo" aria-label="{% trans 'Пакет 6 місяців за ціною 3' %}">
                             <div class="offer-card__header">
-                                <div class="offer-card__label">{% trans "Пакет" %}</div>
+                                <div class="offer-card__label">{% trans "Акція" %}</div>
                             </div>
                             <div class="offer-card__duration">
                                 <span class="offer-card__duration-old">3 міс</span>
@@ -52,14 +57,18 @@
                                 <span class="offer-card__price-main">349$</span>
                                 <span class="badge badge--promo">+ 1 грн</span>
                             </div>
+                            <div class="offer-card__benefit">
+                                <span class="offer-card__benefit-text">Подвоєння терміну!</span>
+                            </div>
                         </article>
 
-                        <article class="offer-card offer-card--featured" aria-label="{% trans 'Пакет 12 місяців за ціною 6' %}">
+                        <!-- 6 місяців → 12 місяців за 699$ + 1 грн -->
+                        <article class="offer-card offer-card--featured offer-card--best" aria-label="{% trans 'Пакет 12 місяців за ціною 6' %}">
                             <div class="offer-card__badge badge badge--gold">
                                 {% trans "Найвигідніше" %}
                             </div>
                             <div class="offer-card__header">
-                                <div class="offer-card__label">{% trans "Пакет" %}</div>
+                                <div class="offer-card__label">{% trans "Акція" %}</div>
                             </div>
                             <div class="offer-card__duration">
                                 <span class="offer-card__duration-old">6 міс</span>
@@ -70,6 +79,9 @@
                                 <span class="offer-card__price-main">699$</span>
                                 <span class="badge badge--promo">+ 1 грн</span>
                             </div>
+                            <div class="offer-card__benefit">
+                                <span class="offer-card__benefit-text">Подвоєння терміну!</span>
+                            </div>
                         </article>
                     </div>
 
@@ -78,15 +90,6 @@
                         <span>
                             Акція діє обмежений час. Кількість місць за цією умовою — обмежена.
                         </span>
-                    </div>
-
-                    <div class="landing-hero__cta landing-hero__cta--desktop">
-                        <button type="button" class="btn btn-primary" data-scroll-target="#form-section">
-                            Отримати подвоєння
-                        </button>
-                        <p class="landing-hero__cta-note">
-                            Передзвонимо за 5–15 хвилин у робочий час.
-                        </p>
                     </div>
                 </div>
 
@@ -319,10 +322,11 @@
             </div>
         </section>
 
-        <!-- Sticky CTA mobile -->
+        <!-- Sticky CTA -->
         <div class="sticky-cta" id="sticky-cta">
-            <button type="button" class="btn btn-primary btn--full" data-scroll-target="#form-section">
-                Отримати подвоєння
+            <button type="button" class="btn btn-primary sticky-cta__button" data-scroll-target="#form-section">
+                <span class="sticky-cta__button-text">Отримати подвоєння</span>
+                <span class="sticky-cta__button-icon" aria-hidden="true">↓</span>
             </button>
         </div>
 
