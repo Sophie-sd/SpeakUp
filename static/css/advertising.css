@@ -218,23 +218,12 @@
 .offer-card--promo {
   border-color: var(--landing-accent);
   background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.offer-card--promo::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--landing-accent) 0%, var(--landing-accent-dark) 100%);
 }
 
 .offer-card--best {
   border-width: 3px;
-  box-shadow: 0 8px 32px rgba(229, 57, 53, 0.2);
+  border-color: var(--landing-gold-start);
+  box-shadow: 0 8px 32px rgba(214, 177, 94, 0.2);
 }
 
 .offer-card__benefit {
@@ -684,15 +673,6 @@
 
 .sticky-cta__button:active {
   transform: translateY(0);
-}
-
-.sticky-cta__button-icon {
-  font-size: 1.2rem;
-  transition: transform 0.2s ease;
-}
-
-.sticky-cta__button:hover .sticky-cta__button-icon {
-  transform: translateY(2px);
 }
 
 .sticky-cta--visible {
