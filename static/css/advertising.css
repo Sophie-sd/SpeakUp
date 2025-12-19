@@ -488,10 +488,14 @@
   margin-top: 20px;
   padding-top: 16px;
   border-top: 1px solid #e5e7eb;
+  overflow: hidden;
 }
 
 .landing-trust__item {
   text-align: center;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0 4px;
 }
 
 .landing-trust__icon {
@@ -514,6 +518,10 @@
   -webkit-hyphens: none;
   hyphens: none;
   word-break: keep-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
 }
 
 .steps {
@@ -630,11 +638,15 @@
   border: none;
   cursor: pointer;
   text-align: left;
+  color: var(--landing-text-main);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .faq-item__question-text {
   font-size: 1rem;
   font-weight: 600;
+  color: var(--landing-text-main);
+  -webkit-text-fill-color: var(--landing-text-main);
 }
 
 .faq-item__icon {
@@ -846,6 +858,20 @@
   .landing-footer__inner {
     grid-template-columns: minmax(0, 1fr);
   }
+  
+  .landing-trust {
+    gap: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  .landing-trust__item {
+    padding: 0 2px;
+  }
+  
+  .landing-trust__text {
+    font-size: 0.65rem;
+  }
 }
 
 /* iOS Safari специфічні фікси для сумісності */
@@ -868,10 +894,35 @@
     -webkit-box-direction: normal;
   }
   
+  .landing-trust {
+    /* iOS Safari фікс для grid gap */
+    -webkit-column-gap: 8px;
+    column-gap: 8px;
+  }
+  
+  .landing-trust__item {
+    /* Запобігає переповненню на iOS Safari */
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  
   .landing-trust__text {
     /* Запобігає несподіваним переносам на iOS Safari */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    -webkit-text-fill-color: #4b5563;
+  }
+  
+  .faq-item__question {
+    /* Запобігає синєму кольору на iOS Safari */
+    -webkit-text-fill-color: var(--landing-text-main);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .faq-item__question-text {
+    /* Запобігає синєму кольору на iOS Safari */
+    -webkit-text-fill-color: var(--landing-text-main);
+    color: var(--landing-text-main);
   }
 }
 
