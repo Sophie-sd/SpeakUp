@@ -694,7 +694,7 @@ html.landing-page body {
 }
 
 .sticky-cta {
-  position: fixed;
+  position: sticky; /* Замість fixed - згідно з правилами iOS */
   left: auto;
   width: auto;
   max-width: 280px;
@@ -856,7 +856,14 @@ html.landing-page body {
 @media (width <= 768px) {
   .landing__background {
     background-image: url('/static/images/advertising_back_mb.png');
-    background-attachment: fixed;
+    min-height: 100vh; /* базове значення */
+  }
+  
+  /* Підтримка 100dvh для мобільних */
+  @supports (height: 100dvh) {
+    .landing__background {
+      min-height: 100dvh;
+    }
   }
 
   .landing-section {
@@ -916,19 +923,37 @@ html.landing-page body {
 
 /* iOS Safari специфічні фікси для сумісності */
 @supports (-webkit-touch-callout: none) {
-  /* Фон для iOS Safari на мобільних пристроях */
+  /* iOS Safari на мобільних пристроях */
   @media (width <= 768px) {
+    /* Фон для iOS Safari */
     .landing__background {
+      background-image: none; /* Прибрати фон з основного елемента */
+      position: relative;
+    }
+    
+    .landing__background::before {
+      content: '';
+      position: fixed; /* Виняток для неінтерактивного фону */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh; /* базове значення */
       background-image: url('/static/images/advertising_back_mb.png');
-      background-attachment: scroll;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      z-index: -1;
+
+      /* Фіксований фон для iOS */
     }
-  }
-  
-  /* Адаптація заголовка з подарунком для iOS Safari на мобільних */
-  @media (width <= 768px) {
+    
+    @supports (height: 100dvh) {
+      .landing__background::before {
+        height: 100dvh;
+      }
+    }
+    
+    /* Адаптація заголовка з подарунком для iOS Safari */
     .landing-hero__title {
       display: flex;
       flex-wrap: wrap;
