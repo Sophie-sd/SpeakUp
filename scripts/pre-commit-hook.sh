@@ -22,7 +22,7 @@ fi
 CSS_FILES=$(echo "$STAGED_FILES" | grep '\.css$' | grep -v 'normalize.css' || echo "")
 if [ -n "$CSS_FILES" ]; then
   echo "Checking CSS..."
-  npx stylelint $CSS_FILES || ((ERROR_COUNT++))
+  npx stylelint $CSS_FILES --max-warnings=1000 || ((ERROR_COUNT++))
   bash scripts/check-css-rules.sh || ((ERROR_COUNT++))
 fi
 

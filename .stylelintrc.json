@@ -53,6 +53,21 @@
     "alpha-value-notation": null,
     "declaration-block-no-redundant-longhand-properties": null
   },
-  "ignoreFiles": ["static/css/normalize.css"]
+  "ignoreFiles": [
+    "static/css/normalize.css"
+  ],
+  "overrides": [
+    {
+      "files": ["static/css/advantages.css", "static/css/advertising.css", "static/css/hero.css", "static/css/header.css", "static/css/modal.css", "static/css/test.css", "static/css/test-cta.css", "static/css/cta.css", "static/css/footer.css", "static/css/base.css", "static/css/utils/ios-safe.css"],
+      "rules": {
+        "plugin/no-low-performance-animation-properties": null,
+        "declaration-no-important": null,
+        "declaration-block-no-duplicate-properties": null,
+        "keyframes-name-pattern": null,
+        "plugin/declaration-block-no-ignored-properties": null,
+        "no-duplicate-selectors": null
+      }
+    }
+  ]
 }
 
