@@ -859,9 +859,10 @@ html.landing-page body {
     background-attachment: fixed;
   }
   
-  /* Fallback для iOS Safari який не підтримує fixed */
+  /* iOS Safari специфічні налаштування */
   @supports (-webkit-touch-callout: none) {
     .landing__background {
+      background-image: url('/static/images/advertising_back_mb.png');
       background-attachment: scroll;
     }
   }
@@ -923,6 +924,22 @@ html.landing-page body {
 
 /* iOS Safari специфічні фікси для сумісності */
 @supports (-webkit-touch-callout: none) {
+  /* Адаптація заголовка з подарунком для iOS Safari на мобільних */
+  @media (width <= 768px) {
+    .landing-hero__title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .gift-icon {
+      display: block;
+      margin-top: 4px;
+      width: 100%;
+    }
+  }
+  
   .step-card {
     /* Забезпечує правильну роботу flexbox gap на iOS Safari */
     -webkit-box-align: start;
