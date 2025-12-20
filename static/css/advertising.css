@@ -194,7 +194,7 @@ html.landing-page body {
   padding: 20px;
   border-radius: 20px;
   border: 2px solid #e5e7eb;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -206,13 +206,13 @@ html.landing-page body {
 
 .offer-card--featured {
   border-color: var(--landing-accent);
-  background: rgba(255, 245, 245, 0.9);
+  background: rgba(255, 245, 245, 0.95);
 }
 
 /* Покращення оформлення карток акції */
 .offer-card--promo {
   border-color: var(--landing-accent);
-  background: rgba(255, 245, 245, 0.9);
+  background: rgba(255, 245, 245, 0.95);
 }
 
 .offer-card--best {
@@ -364,7 +364,7 @@ html.landing-page body {
   position: relative;
   padding: 24px 24px 28px;
   border-radius: var(--landing-radius-lg);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid #e5e7eb;
   box-shadow: var(--landing-shadow-soft);
 }
@@ -585,7 +585,7 @@ html.landing-page body {
   gap: 14px;
   padding: 18px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid #e5e7eb;
 }
 
@@ -614,7 +614,7 @@ html.landing-page body {
 
 .faq {
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid #e5e7eb;
 }
 
