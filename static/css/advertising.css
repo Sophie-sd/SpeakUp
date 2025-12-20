@@ -858,14 +858,6 @@ html.landing-page body {
     background-image: url('/static/images/advertising_back_mb.png');
     background-attachment: fixed;
   }
-  
-  /* iOS Safari специфічні налаштування */
-  @supports (-webkit-touch-callout: none) {
-    .landing__background {
-      background-image: url('/static/images/advertising_back_mb.png');
-      background-attachment: scroll;
-    }
-  }
 
   .landing-section {
     padding: 40px 16px;
@@ -924,6 +916,17 @@ html.landing-page body {
 
 /* iOS Safari специфічні фікси для сумісності */
 @supports (-webkit-touch-callout: none) {
+  /* Фон для iOS Safari на мобільних пристроях */
+  @media (width <= 768px) {
+    .landing__background {
+      background-image: url('/static/images/advertising_back_mb.png');
+      background-attachment: scroll;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+  
   /* Адаптація заголовка з подарунком для iOS Safari на мобільних */
   @media (width <= 768px) {
     .landing-hero__title {
