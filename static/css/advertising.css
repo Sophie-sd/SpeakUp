@@ -41,13 +41,25 @@ html.landing-page body {
 }
 
 .landing__background {
-  min-height: 100vh;
+  min-height: 100vh; /* fallback */
   position: relative;
   background-image: url('/static/images/advertising_back.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
+}
+
+@supports (height: 100svh) {
+  .landing__background {
+    min-height: 100svh;
+  }
+}
+
+@supports (height: -webkit-fill-available) {
+  .landing__background {
+    min-height: -webkit-fill-available;
+  }
 }
 
 /* iOS Safari - використовуємо scroll замість fixed для запобігання руху фону */
@@ -796,13 +808,19 @@ html.landing-page body {
 @media (width <= 768px) {
   .landing__background {
     background-image: url('/static/images/advertising_back_mb.png');
-    min-height: 100vh; /* базове значення */
+    min-height: 100vh; /* fallback */
   }
   
-  /* Підтримка 100dvh для мобільних */
-  @supports (height: 100dvh) {
+  /* Підтримка 100svh для мобільних (стабільна висота) */
+  @supports (height: 100svh) {
     .landing__background {
-      min-height: 100dvh;
+      min-height: 100svh;
+    }
+  }
+  
+  @supports (height: -webkit-fill-available) {
+    .landing__background {
+      min-height: -webkit-fill-available;
     }
   }
 
@@ -877,18 +895,24 @@ html.landing-page body {
       top: 0;
       left: 0;
       width: 100%;
-      height: 100vh; /* базове значення */
+      height: 100vh; /* fallback */
       background-image: url('/static/images/advertising_back_mb.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       z-index: -1;
-      transform: translateZ(0); /* Створює новий контекст накладання для стабільності */
+      backface-visibility: hidden; /* Запобігає візуальним артефактам */
     }
     
-    @supports (height: 100dvh) {
+    @supports (height: 100svh) {
       .landing__background::before {
-        height: 100dvh;
+        height: 100svh;
+      }
+    }
+    
+    @supports (height: -webkit-fill-available) {
+      .landing__background::before {
+        height: -webkit-fill-available;
       }
     }
     
