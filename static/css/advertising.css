@@ -11,6 +11,33 @@ html.landing-page body {
   color: #000000;
 }
 
+/* Fixed background layer - незалежний від висоти контенту */
+html.landing-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  height: 100svh; /* iOS-friendly */
+  z-index: -1;
+  pointer-events: none;
+  background-image: url('/static/images/advertising_back.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@supports (height: 100dvh) {
+  html.landing-page::before {
+    height: 100dvh; /* ще точніше під динамічні панелі */
+  }
+}
+
+/* Мобільна версія fixed-шару */
+@media (width <= 768px) {
+  html.landing-page::before {
+    background-image: url('/static/images/advertising_back_mb.png');
+  }
+}
+
 :root {
   --landing-bg: #fafbfc;
   --landing-surface: #ffffff;
@@ -41,13 +68,7 @@ html.landing-page body {
 }
 
 .landing__background {
-  min-height: 100vh;
   position: relative;
-  background-image: url('/static/images/advertising_back.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
 }
 
 
@@ -115,8 +136,8 @@ html.landing-page body {
 /* Стильні напівпрозорі картки для секцій (крім Hero) */
 .landing-section:not(.landing-section--hero) .landing-section__inner {
   background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-radius: 24px;
   padding: 48px 40px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -200,8 +221,8 @@ html.landing-page body {
   color: var(--landing-text-main);
   max-width: 480px;
   background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   padding: 12px 20px;
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -232,10 +253,12 @@ html.landing-page body {
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.offer-card:hover {
-  border-color: var(--landing-accent);
-  box-shadow: 0 16px 40px rgba(229, 57, 53, 0.15);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .offer-card:hover {
+    border-color: var(--landing-accent);
+    box-shadow: 0 16px 40px rgba(229, 57, 53, 0.15);
+    transform: translateY(-2px);
+  }
 }
 
 .offer-card--featured {
@@ -276,10 +299,12 @@ html.landing-page body {
 }
 
 /* Покращення hover ефектів */
-.offer-card--promo:hover,
-.offer-card--best:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 48px rgba(229, 57, 53, 0.25);
+@media (hover: hover) {
+  .offer-card--promo:hover,
+  .offer-card--best:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(229, 57, 53, 0.25);
+  }
 }
 
 
@@ -384,10 +409,12 @@ html.landing-page body {
   background: linear-gradient(135deg, var(--landing-accent) 0%, var(--landing-accent-dark) 100%);
 }
 
-.btn-primary:hover {
-  background: linear-gradient(135deg, var(--landing-accent-dark) 0%, var(--landing-accent-darker) 100%);
-  box-shadow: 0 16px 40px rgba(229, 57, 53, 0.35);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--landing-accent-dark) 0%, var(--landing-accent-darker) 100%);
+    box-shadow: 0 16px 40px rgba(229, 57, 53, 0.35);
+    transform: translateY(-1px);
+  }
 }
 
 .btn--full {
@@ -741,8 +768,10 @@ html.landing-page body {
   text-decoration: none;
 }
 
-.landing-footer__link:hover {
-  color: #ffffff;
+@media (hover: hover) {
+  .landing-footer__link:hover {
+    color: #ffffff;
+  }
 }
 
 .landing-footer__bottom {
@@ -786,18 +815,6 @@ html.landing-page body {
 }
 
 @media (width <= 768px) {
-  .landing__background {
-    background-image: url('/static/images/advertising_back_mb.png');
-    min-height: 100vh; /* базове значення */
-  }
-  
-  /* Підтримка 100dvh для мобільних */
-  @supports (height: 100dvh) {
-    .landing__background {
-      min-height: 100dvh;
-    }
-  }
-
   .landing-section {
     padding: 40px 16px;
   }
@@ -857,35 +874,6 @@ html.landing-page body {
 @supports (-webkit-touch-callout: none) {
   /* iOS Safari на мобільних пристроях */
   @media (width <= 768px) {
-    /* Фон для iOS Safari */
-    .landing__background {
-      background-image: none; /* Прибрати фон з основного елемента */
-      position: relative;
-    }
-    
-    .landing__background::before {
-      content: '';
-      position: fixed; /* Виняток для неінтерактивного фону */
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh; /* базове значення */
-      background-image: url('/static/images/advertising_back_mb.png');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      z-index: -1;
-
-      /* Фіксований фон для iOS */
-    }
-    
-    @supports (height: 100dvh) {
-      .landing__background::before {
-        height: 100dvh;
-      }
-    }
-    
-    
     /* Адаптація заголовка з подарунком для iOS Safari */
     .landing-hero__title {
       display: flex;
