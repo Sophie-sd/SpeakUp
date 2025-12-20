@@ -7,7 +7,7 @@ html.landing-page {
 }
 
 html.landing-page body {
-  background-color: #FFFFFF;
+  background-color: transparent;
   color: #000000;
 }
 
@@ -106,8 +106,6 @@ html.landing-page body {
 .landing-section--hero {
   padding-top: 96px;
 }
-
-
 
 .landing-section__inner {
   max-width: 1120px;
@@ -528,7 +526,6 @@ html.landing-page body {
 .step-card {
   position: relative;
   display: flex;
-  display: flex;
   -webkit-flex-direction: row;
   flex-direction: row;
   gap: 16px;
@@ -545,7 +542,6 @@ html.landing-page body {
   font-size: 1.5rem;
   font-weight: 700;
   display: flex;
-  display: flex;
   -webkit-align-items: center;
   align-items: center;
   -webkit-justify-content: center;
@@ -555,7 +551,6 @@ html.landing-page body {
 }
 
 .step-card__content {
-  display: flex;
   display: flex;
   -webkit-flex-direction: column;
   flex-direction: column;
@@ -828,7 +823,14 @@ html.landing-page body {
 @media (width <= 768px) {
   .landing__background {
     background-image: url('/static/images/advertising_back_mb.png');
-    background-attachment: scroll;
+    background-attachment: fixed;
+  }
+  
+  /* Fallback для iOS Safari який не підтримує fixed */
+  @supports (-webkit-touch-callout: none) {
+    .landing__background {
+      background-attachment: scroll;
+    }
   }
 
   .landing-section {
@@ -925,6 +927,4 @@ html.landing-page body {
     color: var(--landing-text-main);
   }
 }
-
-
 
