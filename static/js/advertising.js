@@ -167,28 +167,6 @@
     });
   }
 
-  function setupStickyCta() {
-    const stickyCta = document.getElementById('sticky-cta');
-    const formSection = document.getElementById('form-section');
-
-    if (!stickyCta || !formSection) return;
-
-    const toggleSticky = () => {
-      const rect = formSection.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-      if (rect.bottom < 0 || rect.top > viewportHeight) {
-        stickyCta.classList.add('sticky-cta--visible');
-      } else {
-        stickyCta.classList.remove('sticky-cta--visible');
-      }
-    };
-
-    toggleSticky();
-    window.addEventListener('scroll', toggleSticky, { passive: true });
-    window.addEventListener('resize', toggleSticky);
-  }
-
   function applyColors(config) {
     const root = document.documentElement;
     const background = config.background_color || defaultConfig.background_color;
@@ -321,7 +299,6 @@
     setupForm();
     setupScrollButtons();
     setupFaq();
-    setupStickyCta();
     setupElementSdk();
   }
 
