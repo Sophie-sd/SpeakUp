@@ -38,31 +38,18 @@ html.landing-page body {
 
 .landing {
   color: var(--landing-text-main);
-  background-color: var(--landing-surface);
 }
 
 .landing__background {
   min-height: 100vh;
   position: relative;
-  background: linear-gradient(180deg, var(--landing-bg) 0%, #ffffff 100%);
+  background-image: url('/static/images/advertising_back.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
-.snow-bg::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 260px;
-  background-image:
-    radial-gradient(circle at 20% 80px, rgba(255, 255, 255, 0.8) 2px, transparent 2px),
-    radial-gradient(circle at 80% 120px, rgba(200, 200, 200, 0.3) 1px, transparent 1px),
-    radial-gradient(circle at 40% 200px, rgba(200, 200, 200, 0.2) 1.5px, transparent 1.5px),
-    radial-gradient(circle at 60% 60px, rgba(200, 200, 200, 0.25) 1px, transparent 1px),
-    radial-gradient(circle at 90% 180px, rgba(255, 255, 255, 0.6) 2px, transparent 2px);
-  pointer-events: none;
-  z-index: 0;
-}
 
 .garland {
   position: absolute;
@@ -120,13 +107,7 @@ html.landing-page body {
   padding-top: 96px;
 }
 
-.landing-section--muted {
-  background-color: var(--landing-surface-muted);
-}
 
-.landing-section--gradient {
-  background: linear-gradient(180deg, #fee2e2 0%, #ffffff 100%);
-}
 
 .landing-section__inner {
   max-width: 1120px;
@@ -213,7 +194,7 @@ html.landing-page body {
   padding: 20px;
   border-radius: 20px;
   border: 2px solid #e5e7eb;
-  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  background: rgba(255, 255, 255, 0.85);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
@@ -225,13 +206,13 @@ html.landing-page body {
 
 .offer-card--featured {
   border-color: var(--landing-accent);
-  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  background: rgba(255, 245, 245, 0.9);
 }
 
 /* Покращення оформлення карток акції */
 .offer-card--promo {
   border-color: var(--landing-accent);
-  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  background: rgba(255, 245, 245, 0.9);
 }
 
 .offer-card--best {
@@ -383,7 +364,7 @@ html.landing-page body {
   position: relative;
   padding: 24px 24px 28px;
   border-radius: var(--landing-radius-lg);
-  background-color: var(--landing-surface);
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid #e5e7eb;
   box-shadow: var(--landing-shadow-soft);
 }
@@ -604,7 +585,7 @@ html.landing-page body {
   gap: 14px;
   padding: 18px;
   border-radius: 18px;
-  background-color: var(--landing-surface);
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid #e5e7eb;
 }
 
@@ -633,7 +614,7 @@ html.landing-page body {
 
 .faq {
   border-radius: 18px;
-  background-color: var(--landing-surface);
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid #e5e7eb;
 }
 
@@ -845,6 +826,11 @@ html.landing-page body {
 }
 
 @media (width <= 768px) {
+  .landing__background {
+    background-image: url('/static/images/advertising_back_mb.png');
+    background-attachment: scroll;
+  }
+
   .landing-section {
     padding: 40px 16px;
   }
