@@ -876,16 +876,20 @@ html.landing-page body {
       position: absolute; /* Замість fixed - згідно з правилами iOS Safari */
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
       width: 100%;
-      height: 100%;
+      height: 100vh; /* базове значення */
       background-image: url('/static/images/advertising_back_mb.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       z-index: -1;
       transform: translateZ(0); /* Створює новий контекст накладання для стабільності */
+    }
+    
+    @supports (height: 100dvh) {
+      .landing__background::before {
+        height: 100dvh;
+      }
     }
     
     
