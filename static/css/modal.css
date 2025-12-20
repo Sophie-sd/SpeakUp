@@ -7,6 +7,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+
   /* iOS Safari fix: використовуємо 100vh з fallback на dvh */
   height: 100vh;
   z-index: 2000;
@@ -16,6 +17,7 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-normal), visibility var(--transition-normal);
+
   /* iOS Safari fix: додаємо hardware acceleration */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
@@ -52,6 +54,7 @@
   max-height: 90vh;
   overflow-y: auto;
   background: var(--color-gray-light);
+
   /* Виправлення: видалено backdrop-filter для чіткішого тексту */
   border-radius: 50%;
   aspect-ratio: 1;
@@ -78,6 +81,7 @@
   justify-content: center;
   border: none;
   background: var(--color-gray-light);
+
   /* Виправлення: видалено backdrop-filter */
   color: var(--color-white);
   font-size: 24px;
@@ -135,7 +139,7 @@
 }
 
 /* Desktop версія */
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .modal__actions .btn {
     height: 48px;
     padding: 0 var(--spacing-md);
@@ -143,11 +147,12 @@
 }
 
 /* Мобільна версія */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .modal__container {
     width: 95%;
     padding: var(--spacing-md);
     border-radius: 50%;
+
     /* iOS Safari fix: обмежуємо max-height з врахуванням safe-area */
     max-height: 85vh;
     max-height: calc(85vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
@@ -203,16 +208,18 @@
   
   .modal__container {
     /* Виправлення: видалено backdrop-filter для iOS */
+
     /* iOS Safari: додаємо hardware acceleration */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
   }
   
   /* iOS Safari: fix для overflow-y scroll */
-  @media (max-width: 767px) {
+  @media (width <= 767px) {
     .modal__container {
       /* Використовуємо -webkit-overflow-scrolling для smooth scroll */
       -webkit-overflow-scrolling: touch;
+
       /* Додатковий fallback для висоти */
       max-height: 85vh;
     }

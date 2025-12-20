@@ -3,7 +3,7 @@
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
     
     <!-- iOS Safari оптимізації -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -61,69 +61,21 @@
     {% endif %}
     {% endblock %}
     
-    <!-- Theme initialization (синхронно, щоб уникнути блимання) -->
-    <script>
-      (function() {
-        try {
-          const autoMode = localStorage.getItem('speakup-theme-auto');
-          const isAuto = autoMode !== 'false'; // За замовчуванням автоматичний режим увімкнено
-          
-          let theme;
-          
-          if (isAuto) {
-            // Автоматичний режим: визначити тему на основі київського часу
-            try {
-              const formatter = new Intl.DateTimeFormat('en-US', {
-                timeZone: 'Europe/Kyiv',
-                hour: '2-digit',
-                hour12: false
-              });
-              const now = new Date();
-              const kievTimeString = formatter.format(now);
-              const hours = parseInt(kievTimeString.split(':')[0], 10);
-              
-              // 07:00-18:00 → світла тема, 18:00-07:00 → темна тема
-              theme = (hours >= 7 && hours < 18) ? 'light' : 'dark';
-            } catch (e) {
-              // Якщо не вдалося отримати київський час, використати системну тему
-              theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-            }
-          } else {
-            // Ручний режим: використати збережену тему
-            const storedTheme = localStorage.getItem('speakup-theme');
-            if (storedTheme) {
-              theme = storedTheme;
-            } else {
-              // Якщо немає збереженої теми, використати тему за часом
-              try {
-                const formatter = new Intl.DateTimeFormat('en-US', {
-                  timeZone: 'Europe/Kyiv',
-                  hour: '2-digit',
-                  hour12: false
-                });
-                const now = new Date();
-                const kievTimeString = formatter.format(now);
-                const hours = parseInt(kievTimeString.split(':')[0], 10);
-                theme = (hours >= 7 && hours < 18) ? 'light' : 'dark';
-              } catch (e) {
-                theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-              }
-            }
-          }
-          
-          if (theme === 'light') {
-            document.documentElement.setAttribute('data-theme', 'light');
-          }
-        } catch (e) {
-          // Ігнорувати помилки localStorage
-        }
-      })();
-    </script>
+    <!-- Theme initialization (inline для уникнення блимання при завантаженні) -->
+    <script>(function(){try{const a=localStorage.getItem('speakup-theme-auto');const isAuto=a!=='false';let t;if(isAuto){try{const f=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Kyiv',hour:'2-digit',hour12:false});const h=parseInt(f.format(new Date()).split(':')[0],10);t=(h>=7&&h<18)?'light':'dark';}catch(e){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}}else{const s=localStorage.getItem('speakup-theme');if(s){t=s;}else{try{const f=new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Kyiv',hour:'2-digit',hour12:false});const h=parseInt(f.format(new Date()).split(':')[0],10);t=(h>=7&&h<18)?'light':'dark';}catch(e){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}}}if(t==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();</script>
     
     <!-- CSS -->
+    <!-- Normalize CSS (не змінювати цей файл!) -->
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/utils/ios-safe.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block extra_css %}{% endblock %}
+    
+    <!-- Preconnect для HTMX CDN -->
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@2.0.8" defer></script>
 </head>
 <body>
     <!-- Skip link для доступності -->
@@ -153,6 +105,7 @@
     {% block extra_js %}{% endblock %}
 </body>
 </html>
+
 
 
 

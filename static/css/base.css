@@ -63,6 +63,7 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   transition: background-color var(--transition-normal), color var(--transition-normal);
+  overscroll-behavior: none; /* Запобігти bounce на iOS */
 }
 
 /* Container */
@@ -86,6 +87,7 @@ body {
   cursor: pointer;
   transition: all var(--transition-normal);
   text-decoration: none;
+
   /* iOS Safari fix: покращити tap response */
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
   -webkit-user-select: none;
@@ -98,21 +100,10 @@ body {
   color: var(--color-white);
 }
 
-.btn--primary:hover,
-.btn--primary:active {
-  background-color: var(--color-primary-dark);
-  transform: translateY(-2px);
-}
-
 .btn--secondary {
   background-color: transparent;
   color: var(--color-text);
   border: 2px solid var(--color-text);
-}
-
-.btn--secondary:hover {
-  background-color: var(--color-text);
-  color: var(--color-bg);
 }
 
 /* Utility classes */
@@ -139,8 +130,6 @@ body {
 /* Theme Toggle - у стилі Hedera меню */
 .theme-toggle {
   position: fixed;
-  top: 20px;
-  right: 20px;
   z-index: 1001;
   
   /* iOS safe area */
@@ -180,10 +169,6 @@ body {
   box-shadow: none;
 }
 
-.theme-toggle__button:hover {
-  background: rgba(255, 255, 255, 0.15);
-  transform: scale(1.05);
-}
 
 .theme-toggle__button:active {
   transform: scale(0.95);
@@ -230,12 +215,9 @@ body {
   opacity: 0;
 }
 
-.theme-toggle__button:hover .theme-toggle__icon {
-  transform: rotate(15deg);
-}
 
 /* Мобільна версія */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .theme-toggle {
     top: max(10px, var(--safe-area-top, 10px));
     right: max(10px, var(--safe-area-right, 10px));
@@ -264,6 +246,7 @@ body {
   /* Покращити smooth scrolling на iOS */
   body {
     -webkit-overflow-scrolling: touch;
+
     /* Виправлення: НЕ додаємо padding-top на body - це зсуває весь контент */
   }
   
@@ -296,6 +279,79 @@ body {
   }
   
   /* Виправлення: прибрано загальний margin-top для всіх посилань - це створювало проблеми */
+
   /* Safe area буде застосовуватись тільки до конкретних елементів, які цього потребують */
+}
+
+/* Hover states - тільки для пристроїв з hover */
+@media (hover: hover) {
+  .btn--primary:hover,
+  .btn--primary:active {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn--secondary:hover {
+    background-color: var(--color-text);
+    color: var(--color-bg);
+  }
+
+  .theme-toggle__button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+  }
+
+  .theme-toggle__button:hover .theme-toggle__icon {
+    transform: rotate(15deg);
+  }
+}
+
+/* Form components */
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group__label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.form-group__input,
+.form-group__select,
+.form-group__textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-gray-medium);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  min-height: 44px; /* Touch target */
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color var(--transition-fast), outline-color var(--transition-fast);
+}
+
+.form-group__input:focus,
+.form-group__select:focus,
+.form-group__textarea:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-color: var(--color-primary);
+}
+
+.form-group__input--error {
+  border-color: var(--color-error, #DC143C);
+}
+
+.form-group__error {
+  display: block;
+  margin-top: var(--spacing-xs);
+  color: var(--color-error, #DC143C);
+  font-size: 0.875rem;
+}
+
+.btn--full {
+  width: 100%;
 }
 

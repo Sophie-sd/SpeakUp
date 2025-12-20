@@ -1,0 +1,49 @@
+{% load i18n %}
+
+<form 
+  hx-post="{% url 'company_create' %}" 
+  hx-target="#company-list" 
+  hx-swap="afterbegin"
+  class="form"
+  novalidate
+>
+  {% csrf_token %}
+  
+  <div class="form-group">
+    <label for="id_name" class="form-group__label">{% trans "Назва компанії" %}</label>
+    <input 
+      type="text" 
+      id="id_name" 
+      name="name" 
+      class="form-group__input{% if form.name.errors %} form-group__input--error{% endif %}" 
+      value="{{ form.name.value|default:'' }}"
+      autocomplete="organization"
+      required
+    >
+    {% if form.name.errors %}
+      <span class="form-group__error" role="alert">{{ form.name.errors.0 }}</span>
+    {% endif %}
+  </div>
+  
+  <div class="form-group">
+    <label for="id_phone" class="form-group__label">{% trans "Телефон" %}</label>
+    <input 
+      type="tel" 
+      id="id_phone" 
+      name="phone" 
+      inputmode="tel"
+      class="form-group__input{% if form.phone.errors %} form-group__input--error{% endif %}"
+      value="{{ form.phone.value|default:'' }}"
+      autocomplete="tel"
+      placeholder="+380 XX XXX XX XX"
+    >
+    {% if form.phone.errors %}
+      <span class="form-group__error" role="alert">{{ form.phone.errors.0 }}</span>
+    {% endif %}
+  </div>
+  
+  <button type="submit" class="btn btn--primary btn--full">
+    {% trans "Створити" %}
+  </button>
+</form>
+

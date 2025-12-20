@@ -7,6 +7,7 @@ import { AccordionManager } from './accordion.js';
 import { TestManager } from './test-manager.js';
 import { ModalManager } from './modal-manager.js';
 import { BurgerMenu } from './burger-menu.js';
+import './htmx-integration.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Ініціалізація відео ротації

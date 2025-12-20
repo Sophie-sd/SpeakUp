@@ -55,7 +55,7 @@
 }
 
 .accordion__title {
-  flex: 1;
+  flex: 1 0 0;
   font-size: var(--font-size-h3);
   font-weight: 600;
 }
@@ -100,7 +100,7 @@
 }
 
 /* Мобільна версія */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .accordion__header {
     padding: var(--spacing-sm);
   }

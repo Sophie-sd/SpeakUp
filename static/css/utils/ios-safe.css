@@ -37,7 +37,7 @@
  */
 
 .ios-safe-sticky {
-  position: -webkit-sticky; /* Safari */
+  position: sticky; /* Safari */
   position: sticky;
   z-index: 100;
   
@@ -56,14 +56,14 @@
 /* Базові варіанти sticky позиціонування */
 
 .sticky-top {
-  position: -webkit-sticky;
+  position: sticky;
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 .sticky-top-safe {
-  position: -webkit-sticky;
+  position: sticky;
   position: sticky;
   top: var(--safe-area-top, 0);
   z-index: 100;
@@ -336,6 +336,7 @@ html {
   height: 100%;
   
   /* Виправлення: НЕ додаємо padding на html - це зсуває весь контент */
+
   /* Safe area буде враховуватись в конкретних компонентах (header, footer, тощо) */
 }
 

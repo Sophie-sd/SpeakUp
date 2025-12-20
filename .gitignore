@@ -5,3 +5,16 @@ db.sqlite3
 staticfiles/
 media/
 .DS_Store
+
+# Node.js (додано для системи контролю якості)
+node_modules/
+package-lock.json
+
+# IDE (додаткові)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS (додаткові)
+Thumbs.db

@@ -1,3 +1,16 @@
+/* Примусово встановити світлу тему для сторінки реклами */
+html.landing-page {
+  --color-bg: #FFFFFF;
+  --color-text: #000000;
+  --color-gray-light: rgba(0, 0, 0, 0.1);
+  --color-gray-medium: rgba(0, 0, 0, 0.35);
+}
+
+html.landing-page body {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
 :root {
   --landing-bg: #fafbfc;
   --landing-surface: #ffffff;
@@ -19,8 +32,8 @@
 /* Приховати breadcrumbs на сторінці акції */
 .landing #breadcrumbs,
 .landing .breadcrumbs {
-  display: none !important;
-  visibility: hidden !important;
+  display: none;
+  visibility: hidden;
 }
 
 .landing {
@@ -175,6 +188,7 @@
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-8px);
   }
@@ -532,7 +546,7 @@
 
 .step-card {
   position: relative;
-  display: -webkit-flex;
+  display: flex;
   display: flex;
   -webkit-flex-direction: row;
   flex-direction: row;
@@ -549,7 +563,7 @@
   color: #ffffff;
   font-size: 1.5rem;
   font-weight: 700;
-  display: -webkit-flex;
+  display: flex;
   display: flex;
   -webkit-align-items: center;
   align-items: center;
@@ -560,12 +574,12 @@
 }
 
 .step-card__content {
-  display: -webkit-flex;
+  display: flex;
   display: flex;
   -webkit-flex-direction: column;
   flex-direction: column;
-  -webkit-flex: 1;
-  flex: 1;
+  -webkit-flex: 1 0 0;
+  flex: 1 0 0;
 }
 
 .step-card__title {
@@ -588,7 +602,7 @@
 .benefit {
   display: flex;
   gap: 14px;
-  padding: 18px 18px;
+  padding: 18px;
   border-radius: 18px;
   background-color: var(--landing-surface);
   border: 1px solid #e5e7eb;
@@ -672,8 +686,6 @@
 
 .sticky-cta {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
   left: auto;
   width: auto;
   max-width: 280px;
@@ -682,6 +694,7 @@
   box-shadow: none;
   display: none;
   z-index: 40;
+
   /* iOS safe area */
   right: max(20px, env(safe-area-inset-right, 20px));
   bottom: max(20px, env(safe-area-inset-bottom, 20px));
@@ -721,6 +734,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -728,7 +742,7 @@
 }
 
 /* Мобільна версія - трохи менша кнопка */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .sticky-cta {
     right: 16px;
     bottom: 16px;
@@ -803,7 +817,7 @@
   color: #9ca3af;
 }
 
-@media (min-width: 769px) {
+@media (width >= 769px) {
   .offer-card__row {
     font-size: 1.125rem;
     gap: 6px;
@@ -818,7 +832,7 @@
   }
 }
 
-@media (max-width: 960px) {
+@media (width <= 960px) {
   .landing-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -830,7 +844,7 @@
 
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .landing-section {
     padding: 40px 16px;
   }
@@ -889,7 +903,7 @@
   }
   
   .step-card__content {
-    -webkit-box-flex: 1;
+    -webkit-box-flex: 1 0 0;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
   }
@@ -925,5 +939,6 @@
     color: var(--landing-text-main);
   }
 }
+
 
 

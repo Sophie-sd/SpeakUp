@@ -1,0 +1,11 @@
+# Development-only files (не потрібні на production)
+node_modules/
+package.json
+package-lock.json
+.husky/
+scripts/
+.stylelintrc.json
+.eslintrc.json
+.htmlhintrc
+*.sh
+

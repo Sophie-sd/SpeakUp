@@ -307,7 +307,28 @@ def test_submit_view(request):
         }, status=500)
 
 
-
+# Приклад HTMX view:
+# 
+# @require_http_methods(["POST"])
+# def company_create(request):
+#     form = CompanyForm(request.POST)
+#     if form.is_valid():
+#         company = form.save()
+#         
+#         # Для HTMX запитів повертаємо HTML фрагмент
+#         if request.headers.get('HX-Request'):
+#             html = render_to_string('companies/company_row.html', {'company': company})
+#             return HttpResponse(html)
+#         
+#         # Для звичайних запитів — редірект
+#         return redirect('company_list')
+#     
+#     # Якщо помилки
+#     if request.headers.get('HX-Request'):
+#         html = render_to_string('components/form.html', {'form': form})
+#         return HttpResponse(html, status=400)
+#     
+#     return render(request, 'companies/create.html', {'form': form})
 
 
 

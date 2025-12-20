@@ -1,3 +1,28 @@
+'use strict';
+
+// Примусово встановити світлу тему
+(function() {
+  document.documentElement.setAttribute('data-theme', 'light');
+  document.documentElement.classList.add('landing-page');
+  
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        if (currentTheme !== 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      }
+    });
+  });
+  
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+})();
+
+// Існуючий код advertising.js починається тут...
 (() => {
   const defaultConfig = {
     main_title: 'Подвоюємо вашу англійську за 1 грн',
@@ -306,5 +331,6 @@
     init();
   }
 })();
+
 
 

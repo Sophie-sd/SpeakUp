@@ -24,7 +24,7 @@
 }
 
 /* Мобільна версія */
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .btn--large {
     width: 100%;
     min-width: auto;
