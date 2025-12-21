@@ -25,12 +25,13 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: "speakup.settings.production"
       - key: ALLOWED_HOSTS
-        value: "speakup-web.onrender.com"
+        value: "speakup-web-b2tl.onrender.com,*.onrender.com"
       # Змінні для створення суперюзера (додати вручну в Dashboard Render)
       # DJANGO_SUPERUSER_USERNAME - логін суперюзера
       # DJANGO_SUPERUSER_EMAIL - email суперюзера
       # DJANGO_SUPERUSER_PASSWORD - пароль суперюзера
       # Див. SUPERUSER_CREDENTIALS.md для деталей
+
 
 
 

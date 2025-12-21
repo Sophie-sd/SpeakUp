@@ -5,11 +5,8 @@ import dj_database_url
 
 DEBUG = False
 
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="",
-    cast=lambda v: [s.strip() for s in v.split(",") if s.strip()],
-)
+_allowed_hosts = config("ALLOWED_HOSTS", default="")
+ALLOWED_HOSTS = [s.strip() for s in _allowed_hosts.split(",") if s.strip()] if _allowed_hosts else []
 
 # Security settings
 SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=True, cast=bool)
@@ -44,6 +41,8 @@ if DATABASE_URL:
 # який уже налаштований у base.py; цього достатньо для free tier без диска)
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
 
 
 
