@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TestSubmission, BlogPost, Program
+from .models import TestSubmission, BlogPost, Program, AdvertisingLead
 
 
 @admin.register(TestSubmission)
@@ -15,6 +15,27 @@ class TestSubmissionAdmin(admin.ModelAdmin):
         }),
         ('Відповіді', {
             'fields': ('question_1', 'question_2', 'question_3', 'question_4', 'question_5')
+        }),
+        ('Інтеграція з Bitrix', {
+            'fields': ('sent_to_bitrix', 'bitrix_response')
+        }),
+        ('Мета-дані', {
+            'fields': ('ip_address', 'user_agent', 'created_at', 'updated_at'),
+            'classes': ('collapse',)
+        })
+    )
+
+
+@admin.register(AdvertisingLead)
+class AdvertisingLeadAdmin(admin.ModelAdmin):
+    list_display = ['name', 'phone', 'created_at', 'sent_to_bitrix']
+    list_filter = ['sent_to_bitrix', 'created_at']
+    search_fields = ['name', 'phone']
+    readonly_fields = ['created_at', 'updated_at', 'ip_address', 'user_agent', 'bitrix_response']
+    
+    fieldsets = (
+        ('Контактні дані', {
+            'fields': ('name', 'phone')
         }),
         ('Інтеграція з Bitrix', {
             'fields': ('sent_to_bitrix', 'bitrix_response')
@@ -79,6 +100,7 @@ class ProgramAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         })
     )
+
 
 
 

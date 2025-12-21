@@ -41,6 +41,37 @@ class TestSubmission(models.Model):
         return f"{self.name} - {self.phone} ({self.created_at.strftime('%d.%m.%Y %H:%M')})"
 
 
+class AdvertisingLead(models.Model):
+    """Модель для збереження заявок з рекламного лендингу"""
+    name = models.CharField(
+        max_length=100,
+        validators=[MinLengthValidator(2)],
+        verbose_name="Ім'я"
+    )
+    phone = models.CharField(
+        max_length=20,
+        validators=[MinLengthValidator(10)],
+        verbose_name="Телефон"
+    )
+    
+    # Мета-дані
+    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP адреса")
+    user_agent = models.TextField(blank=True, verbose_name="User Agent")
+    sent_to_bitrix = models.BooleanField(default=False, verbose_name="Відправлено в Bitrix")
+    bitrix_response = models.JSONField(null=True, blank=True, verbose_name="Відповідь Bitrix")
+    
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Створено")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Оновлено")
+    
+    class Meta:
+        verbose_name = "Заявка з рекламного лендингу"
+        verbose_name_plural = "Заявки з рекламного лендингу"
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.name} - {self.phone} ({self.created_at.strftime('%d.%m.%Y %H:%M')})"
+
+
 class BlogPost(models.Model):
     """Стаття блогу з багатомовністю"""
     
@@ -208,6 +239,7 @@ class Program(models.Model):
     def get_meta_title(self, language='uk'):
         """Отримати meta title для конкретної мови (fallback до title)"""
         return self.get_title(language) + " | SPEAK UP"
+
 
 
 

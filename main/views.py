@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.translation import get_language
-from .models import TestSubmission, BlogPost, Program
+from .models import TestSubmission, BlogPost, Program, AdvertisingLead
 from .services import BitrixWebhookService
 from .seo import get_seo_context, get_breadcrumbs, get_structured_data, structured_data_to_json
 
@@ -237,6 +237,121 @@ def advertising_view(request):
 
 
 @require_http_methods(["POST"])
+def advertising_submit_view(request):
+    """Обробка відправки форми лендінгу акції"""
+    try:
+        name = request.POST.get('name', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        consent = request.POST.get('consent')
+        
+        if not name or len(name) < 2:
+            return JsonResponse({
+                'success': False,
+                'message': "Введіть коректне ім'я (мінімум 2 символи)"
+            }, status=400)
+        
+        if not phone or len(phone.replace(' ', '').replace('-', '').replace('+', '')) < 10:
+            return JsonResponse({
+                'success': False,
+                'message': "Введіть коректний номер телефону (мінімум 10 цифр)"
+            }, status=400)
+        
+        if not consent:
+            return JsonResponse({
+                'success': False,
+                'message': "Потрібна згода на обробку персональних даних"
+            }, status=400)
+        
+        # Збереження заявки в БД
+        lead = AdvertisingLead.objects.create(
+            name=name,
+            phone=phone,
+            ip_address=request.META.get('REMOTE_ADDR'),
+            user_agent=request.META.get('HTTP_USER_AGENT', '')
+        )
+        
+        # Відправка в Bitrix
+        bitrix_service = BitrixWebhookService()
+        bitrix_result = bitrix_service.send_lead(
+            name=name,
+            phone=phone,
+            form_type='advertising'
+        )
+        
+        # Оновлення статусу відправки в Bitrix
+        lead.sent_to_bitrix = bitrix_result.get('success', False)
+        lead.bitrix_response = bitrix_result
+        lead.save()
+        
+        if bitrix_result.get('success'):
+            return JsonResponse({
+                'success': True,
+                'message': "Дякуємо! Ми зв'яжемося з вами найближчим часом."
+            })
+        else:
+            return JsonResponse({
+                'success': False,
+                'message': "Помилка при відправці форми. Спробуйте пізніше."
+            }, status=500)
+        
+    except Exception as e:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.error(f"Advertising submission error: {e}")
+        return JsonResponse({
+            'success': False,
+            'message': "Помилка при обробці форми. Спробуйте пізніше."
+        }, status=500)
+
+
+@require_http_methods(["POST"])
+def order_call_submit_view(request):
+    """Обробка відправки модальної форми замовлення дзвінка"""
+    try:
+        name = request.POST.get('name', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        
+        if not name or len(name) < 2:
+            return JsonResponse({
+                'success': False,
+                'message': "Введіть коректне ім'я (мінімум 2 символи)"
+            }, status=400)
+        
+        if not phone or len(phone.replace(' ', '').replace('-', '').replace('+', '')) < 10:
+            return JsonResponse({
+                'success': False,
+                'message': "Введіть коректний номер телефону (мінімум 10 цифр)"
+            }, status=400)
+        
+        bitrix_service = BitrixWebhookService()
+        bitrix_result = bitrix_service.send_lead(
+            name=name,
+            phone=phone,
+            form_type='order_call'
+        )
+        
+        if bitrix_result.get('success'):
+            return JsonResponse({
+                'success': True,
+                'message': "Дякуємо! Ми зв'яжемося з вами найближчим часом."
+            })
+        else:
+            return JsonResponse({
+                'success': False,
+                'message': "Помилка при відправці форми. Спробуйте пізніше."
+            }, status=500)
+        
+    except Exception as e:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.error(f"Order call submission error: {e}")
+        return JsonResponse({
+            'success': False,
+            'message': "Помилка при обробці форми. Спробуйте пізніше."
+        }, status=500)
+
+
+@require_http_methods(["POST"])
 def test_submit_view(request):
     """Обробка відправки тесту"""
     try:
@@ -282,11 +397,21 @@ def test_submit_view(request):
         
         # Відправка в Bitrix
         bitrix_service = BitrixWebhookService()
-        bitrix_result = bitrix_service.send_test_submission({
-            'name': name,
-            'phone': phone,
-            **answers
-        })
+        # Форматування відповідей для коментаря
+        formatted_answers = []
+        for i in range(1, 6):
+            key = f'question_{i}'
+            if key in answers:
+                formatted_answers.append(f"Питання {i}: {answers[key]}")
+        comments = '\n'.join(formatted_answers)
+        
+        bitrix_result = bitrix_service.send_lead(
+            name=name,
+            phone=phone,
+            form_type='test',
+            comments=comments,
+            extra_data=answers
+        )
         
         submission.sent_to_bitrix = bitrix_result['success']
         submission.bitrix_response = bitrix_result

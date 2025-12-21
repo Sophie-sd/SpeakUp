@@ -5,6 +5,7 @@ db.sqlite3
 staticfiles/
 media/
 .DS_Store
+SUPERUSER_CREDENTIALS.md
 
 # Node.js (додано для системи контролю якості)
 node_modules/

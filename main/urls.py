@@ -22,8 +22,11 @@ urlpatterns = [
     
     # API та утиліти
     path('api/test/submit/', views.test_submit_view, name='test_submit'),
+    path('api/advertising/submit/', views.advertising_submit_view, name='advertising_submit'),
+    path('api/order-call/submit/', views.order_call_submit_view, name='order_call_submit'),
     path('robots.txt', views.robots_txt_view, name='robots_txt'),
 ]
+
 
 
 
