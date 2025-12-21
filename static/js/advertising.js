@@ -82,10 +82,7 @@
     // Обмежуємо до 10 цифр
     digits = digits.substring(0, 10);
     
-    // Якщо номер не починається з 0, додаємо 0
-    if (digits && !digits.startsWith('0')) {
-      digits = '0' + digits.substring(0, 9);
-    }
+    // НЕ додаємо автоматично 0 - користувач вводить його самостійно
     
     // Форматуємо: +38(0XX)XXX-XX-XX
     if (digits.length >= 3) {
@@ -114,11 +111,11 @@
   function setupPhoneMask(phoneField) {
     if (!phoneField) return;
     
-    // Додаємо префікс +38(0 якщо поле порожнє
+    // Додаємо префікс +38( якщо поле порожнє
     phoneField.addEventListener('focus', () => {
       if (!phoneField.value || phoneField.value.trim() === '') {
-        phoneField.value = '+38(0';
-        phoneField.setSelectionRange(5, 5);
+        phoneField.value = '+38(';
+        phoneField.setSelectionRange(4, 4);
       }
     });
     
@@ -134,10 +131,7 @@
       // Обмежуємо до 10 цифр
       digits = digits.substring(0, 10);
       
-      // Якщо номер не починається з 0, додаємо 0
-      if (digits && !digits.startsWith('0') && digits.length > 0) {
-        digits = '0' + digits.substring(0, 9);
-      }
+      // НЕ додаємо автоматично 0 - користувач вводить його самостійно
       
       // Форматуємо номер
       const formatted = formatPhone('+38' + digits);
@@ -148,7 +142,7 @@
       if (formatted.length > oldValue.length) {
         newCursorPosition = Math.min(cursorPosition + (formatted.length - oldValue.length), formatted.length);
       } else if (formatted.length < oldValue.length) {
-        newCursorPosition = Math.max(cursorPosition - (oldValue.length - formatted.length), 5);
+        newCursorPosition = Math.max(cursorPosition - (oldValue.length - formatted.length), 4);
       }
       e.target.setSelectionRange(newCursorPosition, newCursorPosition);
     });
@@ -157,12 +151,12 @@
     phoneField.addEventListener('keydown', (e) => {
       const selectionStart = phoneField.selectionStart;
       
-      // Якщо користувач намагається видалити +38(0, блокуємо
+      // Якщо користувач намагається видалити +38(, блокуємо
       if ((e.key === 'Backspace' || e.key === 'Delete') && 
-          selectionStart <= 5 && 
-          phoneField.value.startsWith('+38(0')) {
+          selectionStart <= 4 && 
+          phoneField.value.startsWith('+38(')) {
         e.preventDefault();
-        phoneField.setSelectionRange(5, 5);
+        phoneField.setSelectionRange(4, 4);
       }
       
       // Якщо користувач намагається вставити текст, перевіряємо формат
