@@ -355,6 +355,16 @@ html.landing-page::before {
   white-space: nowrap;
 }
 
+.offer-card__row-price--highlight {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--landing-accent);
+}
+
+.offer-card--best .offer-card__row-price--highlight {
+  color: var(--landing-gold-start);
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -785,6 +795,10 @@ html.landing-page::before {
 .landing-footer__bottom-text {
   font-size: 0.75rem;
   color: #9ca3af;
+}
+
+.landing .landing-footer {
+  display: none;
 }
 
 @media (width >= 769px) {

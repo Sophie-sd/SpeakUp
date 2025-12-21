@@ -13,6 +13,10 @@
     <!-- CSRF Token для AJAX -->
     <meta name="csrf-token" content="{{ csrf_token }}">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/logo.png' %}">
+    
     <!-- КРИТИЧНО: Google та Facebook Verification (на всіх сторінках) -->
     <meta name="google-site-verification" content="{{ seo.verification.google_site_verification }}">
     <meta name="facebook-domain-verification" content="{{ seo.verification.facebook_domain_verification }}">
