@@ -132,9 +132,6 @@ export class BurgerMenu {
     }
     
     // Відновити стилі
-    const scrollbarWidth = document.body.style.paddingRight ? 
-      parseInt(document.body.style.paddingRight) : 0;
-    
     // Вимкнути smooth scroll перед відновленням позиції
     const html = document.documentElement;
     const originalScrollBehavior = html.style.scrollBehavior;

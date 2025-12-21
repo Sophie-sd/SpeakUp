@@ -72,8 +72,6 @@ export function createStickyElement(tagName = 'div', options = {}) {
   
   // Додавання базових стилів для sticky позиціонування
   const baseStyles = {
-    position: '-webkit-sticky', // Safari
-    WebkitSticky: true,
     position: 'sticky',
     zIndex: `${zIndex}`,
   };
@@ -212,9 +210,6 @@ export function makeStickyHeaderFooter(options = {}) {
  */
 function applyStyles(element, styles) {
   Object.entries(styles).forEach(([key, value]) => {
-    // Конвертуємо camelCase на kebab-case для CSS властивостей
-    const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
-    
     // Видаляємо "webkit" префікс із ключів (обробляємо окремо)
     if (key === 'WebkitPosition') {
       element.style.webkitPosition = value;
@@ -363,6 +358,7 @@ export function applySafeAreaPadding(element, options = {}) {
   
   return element;
 }
+
 
 
 

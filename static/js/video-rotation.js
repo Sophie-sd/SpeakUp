@@ -33,7 +33,6 @@ export class VideoRotationManager {
       this.applyIOSOptimizations();
       
       // На iOS уникаємо складної ротації: показуємо лише перше відео
-      const firstVideo = this.videoElements[0];
       this.videoElements.forEach((video, index) => {
         if (index === 0) {
           video.classList.remove('video-hidden');
@@ -164,6 +163,7 @@ export class VideoRotationManager {
     });
   }
 }
+
 
 
 
