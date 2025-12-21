@@ -1,6 +1,40 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
+from django.core.exceptions import ValidationError
 from django.urls import reverse
+import re
+
+
+def validate_ukrainian_phone(value):
+    """
+    Валідатор для українського номера телефону.
+    Перевіряє формат +38(0XX)XXX-XX-XX або +380XXXXXXXXX.
+    Користувач має вводити лише 10 цифр після +38, починаючи з 0.
+    """
+    if not value:
+        raise ValidationError("Номер телефону обов'язковий")
+    
+    # Видаляємо всі символи крім цифр та +
+    digits_only = re.sub(r'[^\d+]', '', value)
+    
+    # Перевіряємо, що номер починається з +38
+    if not digits_only.startswith('+38'):
+        raise ValidationError("Номер телефону має починатися з +38")
+    
+    # Витягуємо цифри після +38
+    phone_digits = digits_only[3:]
+    
+    # Перевіряємо, що після +38 рівно 10 цифр
+    if len(phone_digits) != 10:
+        raise ValidationError("Після +38 має бути рівно 10 цифр")
+    
+    # Перевіряємо, що перша цифра після +38 це 0
+    if not phone_digits.startswith('0'):
+        raise ValidationError("Після +38 номер має починатися з 0")
+    
+    # Перевіряємо, що всі символи після +38 це цифри
+    if not phone_digits.isdigit():
+        raise ValidationError("Після +38 мають бути лише цифри")
 
 
 class TestSubmission(models.Model):
@@ -50,7 +84,7 @@ class AdvertisingLead(models.Model):
     )
     phone = models.CharField(
         max_length=20,
-        validators=[MinLengthValidator(10)],
+        validators=[validate_ukrainian_phone],
         verbose_name="Телефон"
     )
     

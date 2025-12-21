@@ -3,9 +3,14 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.translation import get_language
+from django.core.exceptions import ValidationError
+import logging
+import re
 from .models import TestSubmission, BlogPost, Program, AdvertisingLead
 from .services import BitrixWebhookService
 from .seo import get_seo_context, get_breadcrumbs, get_structured_data, structured_data_to_json
+
+logger = logging.getLogger(__name__)
 
 
 def get_blog_list_url(language):
@@ -16,6 +21,48 @@ def get_blog_list_url(language):
 def get_programs_list_url(language):
     """Отримати URL списку програм для конкретної мови"""
     return '/programs/' if language == 'uk' else '/ru/programs/'
+
+
+def normalize_phone(phone):
+    """
+    Нормалізує номер телефону до формату +380XXXXXXXXX.
+    Видаляє всі символи крім цифр та +, перевіряє формат +38(0XX)XXX-XX-XX.
+    """
+    if not phone:
+        return None
+    
+    # Видаляємо всі символи крім цифр та +
+    digits_only = re.sub(r'[^\d+]', '', phone)
+    
+    # Перевіряємо, що номер починається з +38
+    if not digits_only.startswith('+38'):
+        return None
+    
+    # Витягуємо цифри після +38
+    phone_digits = digits_only[3:]
+    
+    # Перевіряємо, що після +38 рівно 10 цифр і починається з 0
+    if len(phone_digits) != 10 or not phone_digits.startswith('0'):
+        return None
+    
+    # Повертаємо нормалізований номер
+    return f'+38{phone_digits}'
+
+
+def validate_phone_format(phone):
+    """
+    Валідує формат телефону +38(0XX)XXX-XX-XX.
+    Повертає (is_valid, error_message, normalized_phone).
+    normalized_phone буде None якщо валідація не пройдена.
+    """
+    if not phone:
+        return False, "Введіть номер телефону", None
+    
+    normalized = normalize_phone(phone)
+    if not normalized:
+        return False, "Номер телефону має починатися з +38(0XX)XXX-XX-XX. Введіть 10 цифр після +38, починаючи з 0", None
+    
+    return True, None, normalized
 
 
 @ensure_csrf_cookie
@@ -244,18 +291,22 @@ def advertising_submit_view(request):
         phone = request.POST.get('phone', '').strip()
         consent = request.POST.get('consent')
         
+        # Валідація імені
         if not name or len(name) < 2:
             return JsonResponse({
                 'success': False,
                 'message': "Введіть коректне ім'я (мінімум 2 символи)"
             }, status=400)
         
-        if not phone or len(phone.replace(' ', '').replace('-', '').replace('+', '')) < 10:
+        # Валідація та нормалізація телефону
+        is_valid_phone, phone_error, normalized_phone = validate_phone_format(phone)
+        if not is_valid_phone:
             return JsonResponse({
                 'success': False,
-                'message': "Введіть коректний номер телефону (мінімум 10 цифр)"
+                'message': phone_error
             }, status=400)
         
+        # Валідація згоди
         if not consent:
             return JsonResponse({
                 'success': False,
@@ -263,41 +314,53 @@ def advertising_submit_view(request):
             }, status=400)
         
         # Збереження заявки в БД
-        lead = AdvertisingLead.objects.create(
-            name=name,
-            phone=phone,
-            ip_address=request.META.get('REMOTE_ADDR'),
-            user_agent=request.META.get('HTTP_USER_AGENT', '')
-        )
-        
-        # Відправка в Bitrix
-        bitrix_service = BitrixWebhookService()
-        bitrix_result = bitrix_service.send_lead(
-            name=name,
-            phone=phone,
-            form_type='advertising'
-        )
-        
-        # Оновлення статусу відправки в Bitrix
-        lead.sent_to_bitrix = bitrix_result.get('success', False)
-        lead.bitrix_response = bitrix_result
-        lead.save()
-        
-        if bitrix_result.get('success'):
-            return JsonResponse({
-                'success': True,
-                'message': "Дякуємо! Ми зв'яжемося з вами найближчим часом."
-            })
-        else:
+        try:
+            lead = AdvertisingLead.objects.create(
+                name=name,
+                phone=normalized_phone,
+                ip_address=request.META.get('REMOTE_ADDR'),
+                user_agent=request.META.get('HTTP_USER_AGENT', '')
+            )
+            logger.info(f"Advertising lead created: {lead.id} - {lead.name} - {lead.phone}")
+        except ValidationError as e:
+            logger.error(f"Validation error creating advertising lead: {e}")
             return JsonResponse({
                 'success': False,
-                'message': "Помилка при відправці форми. Спробуйте пізніше."
+                'message': f"Помилка валідації: {', '.join(e.messages)}"
+            }, status=400)
+        except Exception as e:
+            logger.error(f"Error creating advertising lead: {e}", exc_info=True)
+            return JsonResponse({
+                'success': False,
+                'message': "Помилка при збереженні заявки. Спробуйте пізніше."
             }, status=500)
         
+        # Відправка в Bitrix
+        try:
+            bitrix_service = BitrixWebhookService()
+            bitrix_result = bitrix_service.send_lead(
+                name=name,
+                phone=normalized_phone,
+                form_type='advertising'
+            )
+            
+            # Оновлення статусу відправки в Bitrix
+            lead.sent_to_bitrix = bitrix_result.get('success', False)
+            lead.bitrix_response = bitrix_result
+            lead.save()
+            
+            logger.info(f"Bitrix result for lead {lead.id}: {bitrix_result.get('success', False)}")
+        except Exception as e:
+            logger.error(f"Error sending to Bitrix for lead {lead.id}: {e}", exc_info=True)
+            # Не повертаємо помилку, бо заявка вже збережена в БД
+        
+        return JsonResponse({
+            'success': True,
+            'message': "Дякуємо! Ми зв'яжемося з вами найближчим часом."
+        })
+        
     except Exception as e:
-        import logging
-        logger = logging.getLogger(__name__)
-        logger.error(f"Advertising submission error: {e}")
+        logger.error(f"Advertising submission error: {e}", exc_info=True)
         return JsonResponse({
             'success': False,
             'message': "Помилка при обробці форми. Спробуйте пізніше."
@@ -342,9 +405,7 @@ def order_call_submit_view(request):
             }, status=500)
         
     except Exception as e:
-        import logging
-        logger = logging.getLogger(__name__)
-        logger.error(f"Order call submission error: {e}")
+        logger.error(f"Order call submission error: {e}", exc_info=True)
         return JsonResponse({
             'success': False,
             'message': "Помилка при обробці форми. Спробуйте пізніше."
@@ -423,9 +484,7 @@ def test_submit_view(request):
         })
         
     except Exception as e:
-        import logging
-        logger = logging.getLogger(__name__)
-        logger.error(f"Test submission error: {e}")
+        logger.error(f"Test submission error: {e}", exc_info=True)
         return JsonResponse({
             'success': False,
             'message': "Помилка при обробці тесту. Спробуйте пізніше."

@@ -107,7 +107,7 @@ export class ModalManager {
     return this.modal?.getAttribute('aria-hidden') === 'false';
   }
   
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
     
     if (!this.form) return;
@@ -117,24 +117,54 @@ export class ModalManager {
       return;
     }
     
+    // Отримання CSRF токена
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    if (!csrfToken) {
+      alert('Помилка безпеки: CSRF токен не знайдено');
+      return;
+    }
+    
     // Отримати дані форми
     const formData = new FormData(this.form);
-    const data = {
-      name: formData.get('name'),
-      phone: formData.get('phone')
-    };
+    const submitButton = this.form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton?.textContent;
     
-    // Тимчасово: вивести дані в консоль
-    console.log('Order call data:', data);
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Відправка...';
+    }
     
-    // Тут буде відправка на сервер
-    // TODO: Додати AJAX запит на сервер
-    
-    // Показати повідомлення про успіх
-    alert('Дякуємо! Ми зв\'яжемося з вами найближчим часом.');
-    
-    // Закрити модальне вікно
-    this.close();
+    try {
+      const response = await fetch('/api/order-call/submit/', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        // Показати повідомлення про успіх
+        alert(data.message || 'Дякуємо! Ми зв\'яжемося з вами найближчим часом.');
+        
+        // Закрити модальне вікно
+        this.close();
+      } else {
+        alert(data.message || 'Помилка при відправці форми. Спробуйте пізніше.');
+      }
+    } catch (error) {
+      console.error('Submit error:', error);
+      alert('Помилка при відправці форми. Спробуйте пізніше.');
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        if (originalButtonText) {
+          submitButton.textContent = originalButtonText;
+        }
+      }
+    }
   }
   
   validateForm() {

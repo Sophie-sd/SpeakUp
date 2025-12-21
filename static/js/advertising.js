@@ -38,8 +38,146 @@
     font_size: 16,
   };
 
-  const phonePattern =
-    /^[+]?[(]?[0-9]{2,4}[)]?[-\s.]?[0-9]{2,4}[-\s.]?[0-9]{2,4}[-\s.]?[0-9]{0,4}$/;
+  /**
+   * Нормалізує номер телефону, видаляючи всі символи крім цифр та +
+   */
+  function normalizePhone(phone) {
+    if (!phone) return '';
+    return phone.replace(/[^\d+]/g, '');
+  }
+
+  /**
+   * Валідує формат телефону +38(0XX)XXX-XX-XX
+   * Перевіряє, що номер починається з +38, далі йде 0, і всього 10 цифр після +38
+   */
+  function validatePhone(phone) {
+    if (!phone) return false;
+    
+    const normalized = normalizePhone(phone);
+    
+    // Перевіряємо, що номер починається з +38
+    if (!normalized.startsWith('+38')) return false;
+    
+    // Витягуємо цифри після +38
+    const phoneDigits = normalized.substring(3);
+    
+    // Перевіряємо, що після +38 рівно 10 цифр і починається з 0
+    if (phoneDigits.length !== 10 || !phoneDigits.startsWith('0')) return false;
+    
+    // Перевіряємо, що всі символи після +38 це цифри
+    return /^\d+$/.test(phoneDigits);
+  }
+
+  /**
+   * Форматує номер телефону до формату +38(0XX)XXX-XX-XX
+   */
+  function formatPhone(phone) {
+    if (!phone) return '';
+    
+    const normalized = normalizePhone(phone);
+    
+    // Якщо номер не починається з +38, додаємо префікс
+    let digits = normalized.startsWith('+38') ? normalized.substring(3) : normalized;
+    
+    // Обмежуємо до 10 цифр
+    digits = digits.substring(0, 10);
+    
+    // Якщо номер не починається з 0, додаємо 0
+    if (digits && !digits.startsWith('0')) {
+      digits = '0' + digits.substring(0, 9);
+    }
+    
+    // Форматуємо: +38(0XX)XXX-XX-XX
+    if (digits.length >= 3) {
+      const part1 = digits.substring(0, 3); // 0XX
+      const part2 = digits.substring(3, 6); // XXX
+      const part3 = digits.substring(6, 8); // XX
+      const part4 = digits.substring(8, 10); // XX
+      
+      if (digits.length <= 3) {
+        return `+38(${part1}`;
+      } else if (digits.length <= 6) {
+        return `+38(${part1})${part2}`;
+      } else if (digits.length <= 8) {
+        return `+38(${part1})${part2}-${part3}`;
+      } else {
+        return `+38(${part1})${part2}-${part3}-${part4}`;
+      }
+    }
+    
+    return digits ? `+38(${digits}` : '+38(';
+  }
+
+  /**
+   * Обробляє введення в поле телефону, автоматично форматує номер
+   */
+  function setupPhoneMask(phoneField) {
+    if (!phoneField) return;
+    
+    // Додаємо префікс +38(0 якщо поле порожнє
+    phoneField.addEventListener('focus', () => {
+      if (!phoneField.value || phoneField.value.trim() === '') {
+        phoneField.value = '+38(0';
+        phoneField.setSelectionRange(5, 5);
+      }
+    });
+    
+    // Обробляємо введення
+    phoneField.addEventListener('input', (e) => {
+      const cursorPosition = e.target.selectionStart;
+      const oldValue = e.target.value;
+      const normalized = normalizePhone(oldValue);
+      
+      // Якщо номер не починається з +38, додаємо префікс
+      let digits = normalized.startsWith('+38') ? normalized.substring(3) : normalized;
+      
+      // Обмежуємо до 10 цифр
+      digits = digits.substring(0, 10);
+      
+      // Якщо номер не починається з 0, додаємо 0
+      if (digits && !digits.startsWith('0') && digits.length > 0) {
+        digits = '0' + digits.substring(0, 9);
+      }
+      
+      // Форматуємо номер
+      const formatted = formatPhone('+38' + digits);
+      e.target.value = formatted;
+      
+      // Відновлюємо позицію курсора
+      let newCursorPosition = cursorPosition;
+      if (formatted.length > oldValue.length) {
+        newCursorPosition = Math.min(cursorPosition + (formatted.length - oldValue.length), formatted.length);
+      } else if (formatted.length < oldValue.length) {
+        newCursorPosition = Math.max(cursorPosition - (oldValue.length - formatted.length), 5);
+      }
+      e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+    });
+    
+    // Обробляємо видалення
+    phoneField.addEventListener('keydown', (e) => {
+      const selectionStart = phoneField.selectionStart;
+      
+      // Якщо користувач намагається видалити +38(0, блокуємо
+      if ((e.key === 'Backspace' || e.key === 'Delete') && 
+          selectionStart <= 5 && 
+          phoneField.value.startsWith('+38(0')) {
+        e.preventDefault();
+        phoneField.setSelectionRange(5, 5);
+      }
+      
+      // Якщо користувач намагається вставити текст, перевіряємо формат
+      if (e.key === 'v' && (e.ctrlKey || e.metaKey)) {
+        setTimeout(() => {
+          const normalized = normalizePhone(phoneField.value);
+          if (!normalized.startsWith('+38')) {
+            phoneField.value = formatPhone('+38' + normalized);
+          } else {
+            phoneField.value = formatPhone(normalized);
+          }
+        }, 0);
+      }
+    });
+  }
 
   function setFieldError(fieldWrapper, hasError) {
     if (!fieldWrapper) return;
@@ -65,15 +203,15 @@
     }
 
     const trimmedName = nameField.value.trim();
-    if (!trimmedName) {
+    if (!trimmedName || trimmedName.length < 2) {
       setFieldError(nameWrapper, true);
       isValid = false;
     } else {
       setFieldError(nameWrapper, false);
     }
 
-    const normalizedPhone = phoneField.value.replace(/\s/g, '');
-    if (!normalizedPhone || !phonePattern.test(normalizedPhone)) {
+    const phoneValue = phoneField.value.trim();
+    if (!validatePhone(phoneValue)) {
       setFieldError(phoneWrapper, true);
       isValid = false;
     } else {
@@ -94,18 +232,66 @@
     const form = document.getElementById('lead-form');
     const formContainer = document.getElementById('form-container');
     const successContainer = document.getElementById('success-container');
+    const phoneField = document.getElementById('phone-input');
 
     if (!form || !formContainer || !successContainer) return;
 
-    form.addEventListener('submit', (event) => {
+    // Налаштовуємо маску для поля телефону
+    if (phoneField) {
+      setupPhoneMask(phoneField);
+    }
+
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
       if (!validateForm()) {
         return;
       }
 
-      formContainer.classList.add('landing-form__container-hidden');
-      successContainer.classList.add('landing-form__success--visible');
+      const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+      if (!csrfToken) {
+        alert('Помилка безпеки: CSRF токен не знайдено');
+        return;
+      }
+
+      const formData = new FormData(form);
+      const submitButton = document.getElementById('form-button');
+      const originalButtonText = submitButton?.textContent;
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Відправка...';
+      }
+
+      try {
+        const response = await fetch('/api/advertising/submit/', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-CSRFToken': csrfToken
+          }
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          formContainer.classList.add('landing-form__container-hidden');
+          successContainer.classList.add('landing-form__success--visible');
+          form.reset();
+        } else {
+          alert(data.message || 'Помилка при відправці форми. Спробуйте пізніше.');
+        }
+      } catch (error) {
+        console.error('Submit error:', error);
+        alert('Помилка при відправці форми. Спробуйте пізніше.');
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          if (originalButtonText) {
+            submitButton.textContent = originalButtonText;
+          }
+        }
+      }
     });
   }
 
