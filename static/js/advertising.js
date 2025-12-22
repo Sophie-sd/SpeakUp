@@ -269,9 +269,7 @@
         const data = await response.json();
 
         if (response.ok && data.success) {
-          formContainer.classList.add('landing-form__container-hidden');
-          successContainer.classList.add('landing-form__success--visible');
-          form.reset();
+          window.location.href = '/thank-you/';
         } else {
           alert(data.message || 'Помилка при відправці форми. Спробуйте пізніше.');
         }

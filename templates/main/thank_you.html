@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{{ seo.title }}{% endblock %}
+
+{% block extra_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+<style>
+.thank-you {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.thank-you__container {
+  max-width: 600px;
+  text-align: center;
+}
+
+.thank-you__icon {
+  font-size: clamp(48px, 8vw, 80px);
+  margin-bottom: var(--spacing-md);
+  line-height: 1;
+}
+
+.thank-you__title {
+  font-size: var(--font-size-h1);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+.thank-you__text {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.thank-you__button {
+  margin-top: var(--spacing-md);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main id="main-content">
+  <section class="thank-you">
+    <div class="container">
+      <div class="thank-you__container">
+        <div class="thank-you__icon" aria-hidden="true">🎉</div>
+        <h1 class="thank-you__title">Дякуємо!</h1>
+        <p class="thank-you__text">
+          Ваша заявка успішно відправлена. Ми зв'яжемося з вами найближчим часом.
+        </p>
+        <a href="/" class="btn btn--primary thank-you__button">
+          Повернутись на головну
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
+

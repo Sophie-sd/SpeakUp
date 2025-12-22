@@ -283,6 +283,22 @@ def advertising_view(request):
     return render(request, 'main/advertising.html', context)
 
 
+def thank_you_view(request):
+    """Сторінка підтвердження після відправки форми"""
+    seo = get_seo_context(request, 'thank_you')
+    breadcrumbs = get_breadcrumbs(request, items=[
+        ('Дякуємо', request.path),
+    ])
+    structured_data = get_structured_data('thank_you', breadcrumbs=breadcrumbs)
+
+    context = {
+        'seo': seo,
+        'breadcrumbs': breadcrumbs,
+        'structured_data': structured_data_to_json(structured_data),
+    }
+    return render(request, 'main/thank_you.html', context)
+
+
 @require_http_methods(["POST"])
 def advertising_submit_view(request):
     """Обробка відправки форми лендінгу акції"""

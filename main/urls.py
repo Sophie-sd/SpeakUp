@@ -11,6 +11,7 @@ urlpatterns = [
     path('contacts/', views.contacts_view, name='contacts'),
     path('job/', views.job_view, name='job'),
     path('advertising/', views.advertising_view, name='advertising'),
+    path('thank-you/', views.thank_you_view, name='thank_you'),
     
     # Блог
     path('news/', views.blog_list_view, name='blog_list'),

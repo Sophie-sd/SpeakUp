@@ -105,6 +105,18 @@ SEO_DATA = {
             'description': 'Присоединяйтесь к команде SPEAK UP! Открытые вакансии преподавателей и сотрудников',
             'og_type': 'website',
         }
+    },
+    'thank_you': {
+        'uk': {
+            'title': 'Дякуємо! | SPEAK UP',
+            'description': 'Ваша заявка успішно відправлена. Ми зв\'яжемося з вами найближчим часом.',
+            'og_type': 'website',
+        },
+        'ru': {
+            'title': 'Спасибо! | SPEAK UP',
+            'description': 'Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.',
+            'og_type': 'website',
+        }
     }
 }
 
@@ -314,6 +326,7 @@ def structured_data_to_json(structured_data_list):
     Конвертує список структурованих даних в JSON для шаблону
     """
     return [json.dumps(data, ensure_ascii=False) for data in structured_data_list]
+
 
 
 
