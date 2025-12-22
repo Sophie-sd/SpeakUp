@@ -3,6 +3,10 @@
 
 {% block title %}{{ seo.title }}{% endblock %}
 
+{% block breadcrumbs %}
+{# Breadcrumbs приховані на сторінці підтвердження #}
+{% endblock %}
+
 {% block extra_css %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
@@ -16,9 +20,19 @@
   padding: var(--spacing-xl) var(--spacing-md);
 }
 
+.thank-you .container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .thank-you__container {
   max-width: 600px;
+  width: 100%;
   text-align: center;
+  margin: 0 auto;
 }
 
 .thank-you__icon {
@@ -56,8 +70,8 @@
         <p class="thank-you__text">
           Ваша заявка успішно відправлена. Ми зв'яжемося з вами найближчим часом.
         </p>
-        <a href="/" class="btn btn--primary thank-you__button">
-          Повернутись на головну
+        <a href="/advertising/" class="btn btn--primary thank-you__button">
+          Повернутись до акції
         </a>
       </div>
     </div>
