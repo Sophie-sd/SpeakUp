@@ -269,6 +269,13 @@
         const data = await response.json();
 
         if (response.ok && data.success) {
+          // Відстеження події generate_lead для Google Analytics
+          if (typeof gtag === 'function') {
+            gtag('event', 'generate_lead', {
+              event_category: 'lead',
+              event_label: 'advertising_form'
+            });
+          }
           window.location.href = '/thank-you/';
         } else {
           alert(data.message || 'Помилка при відправці форми. Спробуйте пізніше.');
