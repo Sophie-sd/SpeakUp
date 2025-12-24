@@ -5,22 +5,20 @@
 
 {% block head_extra %}
 {{ block.super }}
-<!-- Google tag (gtag.js) для сторінки advertising -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17783090781"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'AW-17783090781');
-</script>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) для GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXG3WSLNYZ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-SXG3WSLNYZ');
+  
+  // Увімкнути debug_mode якщо є параметр ?debug=1 в URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const debugMode = urlParams.get('debug') === '1';
+  
+  gtag('config', 'G-SXG3WSLNYZ', {
+    debug_mode: debugMode
+  });
 </script>
 {% endblock %}
 

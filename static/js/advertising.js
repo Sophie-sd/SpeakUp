@@ -270,13 +270,37 @@
 
         if (response.ok && data.success) {
           // Відстеження події generate_lead для Google Analytics
-          if (typeof gtag === 'function') {
-            gtag('event', 'generate_lead', {
-              event_category: 'lead',
-              event_label: 'advertising_form'
-            });
-          }
-          window.location.href = '/thank-you/';
+          const sendEventAndRedirect = () => {
+            if (typeof window.gtag === 'function') {
+              const urlParams = new URLSearchParams(window.location.search);
+              const debugMode = urlParams.get('debug') === '1';
+              
+              gtag('event', 'generate_lead', {
+                event_category: 'lead',
+                event_label: 'advertising_form',
+                debug_mode: debugMode,
+                event_callback: () => {
+                  // Редирект після успішної відправки події
+                  window.location.href = '/thank-you/';
+                },
+                event_timeout: 1500
+              });
+              
+              // Fallback: якщо callback не спрацював через 1.5 секунди, робимо редирект
+              setTimeout(() => {
+                if (window.location.pathname === '/advertising/') {
+                  window.location.href = '/thank-you/';
+                }
+              }, 1500);
+            } else {
+              // Якщо gtag не завантажився, робимо редирект з невеликою затримкою
+              setTimeout(() => {
+                window.location.href = '/thank-you/';
+              }, 500);
+            }
+          };
+          
+          sendEventAndRedirect();
         } else {
           alert(data.message || 'Помилка при відправці форми. Спробуйте пізніше.');
         }
