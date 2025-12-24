@@ -3,6 +3,18 @@
 
 {% block title %}SpeakUp — Подвоюємо англійську за 1 грн{% endblock %}
 
+{% block head_extra %}
+{{ block.super }}
+<!-- Google tag (gtag.js) для сторінки advertising -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17783090781"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-17783090781');
+</script>
+{% endblock %}
+
 {% block extra_css %}
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'css/advertising.css' %}">
