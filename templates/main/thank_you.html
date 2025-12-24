@@ -7,6 +7,30 @@
 {# Breadcrumbs приховані на сторінці підтвердження #}
 {% endblock %}
 
+{% block head_extra %}
+{{ block.super }}
+<!-- Google tag (gtag.js) для GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SXG3WSLNYZ"></script>
+<script>
+  // dataLayer та gtag вже ініціалізовані в base.html для Google Ads
+  // Перевіряємо, чи вони існують, якщо ні - ініціалізуємо
+  window.dataLayer = window.dataLayer || [];
+  if (typeof window.gtag !== 'function') {
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+  }
+  gtag('js', new Date());
+  
+  // Увімкнути debug_mode якщо є параметр ?debug=1 в URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const debugMode = urlParams.get('debug') === '1';
+  
+  gtag('config', 'G-SXG3WSLNYZ', {
+    debug_mode: debugMode
+  });
+</script>
+{% endblock %}
+
 {% block extra_css %}
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
@@ -58,6 +82,30 @@
   margin-top: var(--spacing-md);
 }
 </style>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+  // Відстеження перегляду сторінки підтвердження
+  (function() {
+    if (typeof window.gtag === 'function') {
+      // Відправка page_view для GA4 (автоматично відправляється через gtag('config'), але явно для впевненості)
+      gtag('event', 'page_view', {
+        page_title: 'Thank You',
+        page_location: window.location.href,
+        page_path: window.location.pathname
+      });
+      
+      // Додаткова подія для підтвердження конверсії
+      gtag('event', 'thank_you_view', {
+        event_category: 'conversion',
+        event_label: 'advertising_form_success',
+        value: 1.0
+      });
+    }
+  })();
+</script>
 {% endblock %}
 
 {% block content %}

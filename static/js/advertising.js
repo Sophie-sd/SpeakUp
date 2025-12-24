@@ -316,27 +316,41 @@
         }
 
         if (response.ok && data.success) {
-          // Відстеження події generate_lead для Google Analytics
+          // Відстеження подій для Google Analytics та Google Ads
           const sendEventAndRedirect = () => {
             if (typeof window.gtag === 'function') {
-              const urlParams = new URLSearchParams(window.location.search);
-              const debugMode = urlParams.get('debug') === '1';
+              let redirectExecuted = false;
               
+              const performRedirect = () => {
+                if (!redirectExecuted) {
+                  redirectExecuted = true;
+                  window.location.href = '/thank-you/';
+                }
+              };
+              
+              // GA4 подія generate_lead
               gtag('event', 'generate_lead', {
                 event_category: 'lead',
                 event_label: 'advertising_form',
-                debug_mode: debugMode,
-                event_callback: () => {
-                  // Редирект після успішної відправки події
-                  window.location.href = '/thank-you/';
-                },
+                event_callback: performRedirect,
                 event_timeout: 1500
+              });
+              
+              // Google Ads conversion event
+              // Примітка: замініть 'XXXXX' на реальний ID конверсії з Google Ads (формат: AW-17783090781/XXXXX)
+              // ID конверсії можна знайти в Google Ads → Tools → Conversions
+              gtag('event', 'conversion', {
+                'send_to': 'AW-17783090781/XXXXX', // TODO: замінити на реальний ID конверсії
+                'value': 1.0,
+                'currency': 'UAH',
+                'event_callback': performRedirect,
+                'event_timeout': 1500
               });
               
               // Fallback: якщо callback не спрацював через 1.5 секунди, робимо редирект
               setTimeout(() => {
                 if (window.location.pathname === '/advertising/') {
-                  window.location.href = '/thank-you/';
+                  performRedirect();
                 }
               }, 1500);
             } else {

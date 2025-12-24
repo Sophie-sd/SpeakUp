@@ -8,8 +8,13 @@
 <!-- Google tag (gtag.js) для GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SXG3WSLNYZ"></script>
 <script>
+  // dataLayer та gtag вже ініціалізовані в base.html для Google Ads
+  // Перевіряємо, чи вони існують, якщо ні - ініціалізуємо
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  if (typeof window.gtag !== 'function') {
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+  }
   gtag('js', new Date());
   
   // Увімкнути debug_mode якщо є параметр ?debug=1 в URL
