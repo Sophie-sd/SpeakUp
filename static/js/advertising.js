@@ -115,7 +115,9 @@
     phoneField.addEventListener('focus', () => {
       if (!phoneField.value || phoneField.value.trim() === '') {
         phoneField.value = '+38(';
-        phoneField.setSelectionRange(4, 4);
+        if (phoneField.setSelectionRange) {
+          phoneField.setSelectionRange(4, 4);
+        }
       }
     });
     
@@ -144,7 +146,9 @@
       } else if (formatted.length < oldValue.length) {
         newCursorPosition = Math.max(cursorPosition - (oldValue.length - formatted.length), 4);
       }
-      e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+      if (e.target.setSelectionRange) {
+        e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+      }
     });
     
     // Обробляємо видалення
@@ -156,7 +160,9 @@
           selectionStart <= 4 && 
           phoneField.value.startsWith('+38(')) {
         e.preventDefault();
-        phoneField.setSelectionRange(4, 4);
+        if (phoneField.setSelectionRange) {
+          phoneField.setSelectionRange(4, 4);
+        }
       }
       
       // Якщо користувач намагається вставити текст, перевіряємо формат
@@ -170,6 +176,24 @@
           }
         }, 0);
       }
+    });
+    
+    // Обробка вставки на мобільних пристроях
+    phoneField.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+      const normalized = normalizePhone(pastedText);
+      let digits = normalized.startsWith('+38') ? normalized.substring(3) : normalized;
+      digits = digits.substring(0, 10);
+      const formatted = formatPhone('+38' + digits);
+      phoneField.value = formatted;
+      
+      // Встановлюємо курсор в кінець
+      setTimeout(() => {
+        if (phoneField.setSelectionRange) {
+          phoneField.setSelectionRange(formatted.length, formatted.length);
+        }
+      }, 0);
     });
   }
 
@@ -266,7 +290,30 @@
           }
         });
 
-        const data = await response.json();
+        // Обробка відповіді з захистом від помилок парсингу
+        let data;
+        try {
+          data = await response.json();
+        } catch (parseError) {
+          console.error('Failed to parse JSON response:', parseError);
+          
+          // Відстеження помилки парсингу в Google Analytics
+          if (typeof window.gtag === 'function') {
+            gtag('event', 'exception', {
+              description: 'form_submission_parse_error',
+              fatal: false
+            });
+          }
+          
+          alert('Помилка при відправці форми. Спробуйте пізніше.');
+          if (submitButton) {
+            submitButton.disabled = false;
+            if (originalButtonText) {
+              submitButton.textContent = originalButtonText;
+            }
+          }
+          return;
+        }
 
         if (response.ok && data.success) {
           // Відстеження події generate_lead для Google Analytics
@@ -302,12 +349,35 @@
           
           sendEventAndRedirect();
         } else {
-          alert(data.message || 'Помилка при відправці форми. Спробуйте пізніше.');
+          // Відстеження помилки валідації в Google Analytics
+          if (typeof window.gtag === 'function') {
+            gtag('event', 'form_error', {
+              event_category: 'form',
+              event_label: 'advertising_form_validation_error',
+              error_message: data?.message || 'Unknown validation error'
+            });
+          }
+          
+          alert(data?.message || 'Помилка при відправці форми. Спробуйте пізніше.');
+          if (submitButton) {
+            submitButton.disabled = false;
+            if (originalButtonText) {
+              submitButton.textContent = originalButtonText;
+            }
+          }
         }
       } catch (error) {
         console.error('Submit error:', error);
+        
+        // Відстеження мережевої помилки в Google Analytics
+        if (typeof window.gtag === 'function') {
+          gtag('event', 'exception', {
+            description: 'form_submission_network_error',
+            fatal: false
+          });
+        }
+        
         alert('Помилка при відправці форми. Спробуйте пізніше.');
-      } finally {
         if (submitButton) {
           submitButton.disabled = false;
           if (originalButtonText) {
