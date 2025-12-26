@@ -288,12 +288,21 @@ body {
   .btn--primary:hover,
   .btn--primary:active {
     background-color: var(--color-primary-dark);
+    color: var(--color-white);
     transform: translateY(-2px);
   }
 
   .btn--secondary:hover {
     background-color: var(--color-text);
     color: var(--color-bg);
+  }
+
+  /* Кнопка портфоліо - при hover змінюється тільки фон, текст залишається видимим */
+  .btn--portfolio:hover,
+  .portfolio-btn:hover,
+  [data-portfolio]:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
   }
 
   .theme-toggle__button:hover {

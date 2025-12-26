@@ -54,6 +54,10 @@
   max-height: 90vh;
   overflow-y: auto;
   background: var(--color-gray-light);
+  background-image: url('../images/mobile_menu.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   /* Виправлення: видалено backdrop-filter для чіткішого тексту */
   border-radius: 50%;
@@ -113,7 +117,7 @@
 .modal__subtitle {
   font-size: var(--font-size-base);
   margin-bottom: var(--spacing-md);
-  opacity: 0.8;
+  opacity: 0.9;
   color: var(--color-white);
 }
 
@@ -136,6 +140,34 @@
 /* Приховання labels в модальному вікні */
 .modal .field__label {
   display: none;
+}
+
+/* Світлий текст для полів форми в модальному вікні */
+.modal .field__input {
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal .field__input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.modal .field__input:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--color-white);
+}
+
+.modal .field__error {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Hover стан кнопки в модальному вікні - темний колір */
+.modal .btn--primary:hover,
+.modal .btn--primary:active {
+  background-color: var(--color-black);
+  color: var(--color-white);
 }
 
 /* Desktop версія */
