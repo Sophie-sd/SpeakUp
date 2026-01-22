@@ -19,6 +19,7 @@
   function initCampLanding() {
     const ctaButton = document.getElementById('cta-button');
     const ctaButton2 = document.getElementById('cta-button-2');
+    const ctaButtonFixed = document.getElementById('cta-button-fixed');
     const modalTrigger = document.getElementById('modal-trigger');
     const campModal = document.getElementById('camp-modal');
     const campModalClose = document.getElementById('camp-modal-close');
@@ -31,6 +32,10 @@
 
     if (ctaButton2) {
       ctaButton2.addEventListener('click', handleCtaClick);
+    }
+
+    if (ctaButtonFixed) {
+      ctaButtonFixed.addEventListener('click', handleCtaClick);
     }
 
     // Modal close button
@@ -59,12 +64,11 @@
       }
     });
 
-    // Initialize scroll handler for CTA button visibility on desktop
-    if (window.innerWidth >= 768) {
-      window.addEventListener('scroll', handleScrollVisibility);
-      // Initial check
-      handleScrollVisibility();
-    }
+    // Initialize scroll handler for fixed CTA button visibility
+    window.addEventListener('scroll', handleScrollVisibility);
+    window.addEventListener('resize', handleScrollVisibility);
+    // Initial check
+    handleScrollVisibility();
   }
 
   /**
@@ -217,22 +221,22 @@
   }
 
   /**
-   * Handle scroll visibility for CTA button
+   * Handle scroll visibility for fixed CTA button
    * Show button in bottom-left corner after scrolling past hero section
    */
   function handleScrollVisibility() {
     const heroSection = document.querySelector('.hero-section');
-    const ctaButton = document.getElementById('cta-button');
+    const ctaButtonFixed = document.getElementById('cta-button-fixed');
 
-    if (!heroSection || !ctaButton) return;
+    if (!heroSection || !ctaButtonFixed) return;
 
     const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
     const scrollY = window.scrollY || window.pageYOffset;
 
     if (scrollY > heroBottom) {
-      ctaButton.classList.add('visible');
+      ctaButtonFixed.classList.add('visible');
     } else {
-      ctaButton.classList.remove('visible');
+      ctaButtonFixed.classList.remove('visible');
     }
   }
 

@@ -529,18 +529,62 @@ header {
     width: auto;
     font-size: 1.25rem;
     padding: 24px 48px;
-    position: fixed;
-    left: 24px;
-    bottom: 24px;
-    z-index: 50;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
   }
+}
 
-  .cta-button.visible {
-    opacity: 1;
-    visibility: visible;
+/* Fixed CTA button for scroll (appears after scrolling past hero) */
+.cta-button-fixed {
+  display: none;
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 50;
+  width: auto;
+  padding: 20px 40px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  font-family: 'Fredoka', sans-serif;
+  background: linear-gradient(to right, var(--pink-500), var(--purple-600));
+  color: var(--white);
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cta-button-fixed.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cta-button-fixed:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, var(--pink-600), var(--purple-700));
+}
+
+.cta-button-fixed:active {
+  transform: scale(0.98);
+}
+
+@media (min-width: 768px) {
+  .cta-button-fixed {
+    display: flex;
+    font-size: 1.25rem;
+    padding: 24px 48px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cta-button-fixed {
+    display: flex;
+    font-size: 1rem;
+    padding: 16px 32px;
   }
 }
 
