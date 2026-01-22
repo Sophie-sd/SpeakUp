@@ -860,18 +860,18 @@ def document_view(request, filename):
     """View для обслуговування документів з папки DogovoraURL."""
     # Мапінг імен файлів (без розширення) на реальні імена файлів
     documents_map = {
-        'dogovir-dostup-do-kabinetu-spik-ap': 'Dogovir_dostup_do_kabinetu_Спік_Ап.pdf',
-        'dogovir-dostup-do-kabinetu-stadi-sistems-grup': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Груп.pdf',
-        'dogovir-dostup-do-kabinetu-stadi-sistems-kiiv': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Київ.pdf',
-        'dogovir-dostup-do-kabinetu-stadi-sistems-odesa': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Одеса.pdf',
-        'dogovir-dostup-do-kabinetu-stadi-sistems-ukraina': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Україна.pdf',
-        'dogovir-dostup-do-kabinetu-stadi-sistems-tsentr': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Центр.pdf',
-        'dogovir-poslugy-spik-ap': 'Dogovir_poslugy_Спік_Ап.pdf',
-        'dogovir-poslugy-stadi-sistems-grup': 'Dogovir_poslugy_Стаді_Сістемс_Груп.pdf',
-        'dogovir-poslugy-stadi-sistems-kiiv': 'Dogovir_poslugy_Стаді_Сістемс_Київ.docx.pdf',
-        'dogovir-poslugy-stadi-sistems-odesa': 'Dogovir_poslugy_Стаді_Сістемс_Одеса.pdf',
-        'dogovir-poslugy-stadi-sistems-ukraina': 'Dogovir_poslugy_Стаді_Сістемс_Україна.pdf',
-        'dogovir-poslugy-stadi-sistems-tsentr': 'Dogovir_poslugy_Стаді_Сістемс_Центр.pdf',
+        'dogovir-dostup-do-kabinetu-speak-up': 'Dogovir_dostup_do_kabinetu_Спік_Ап.pdf',
+        'dogovir-dostup-do-kabinetu-study-systems-grup': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Груп.pdf',
+        'dogovir-dostup-do-kabinetu-study-systems-kyiv': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Київ.pdf',
+        'dogovir-dostup-do-kabinetu-study-systems-odesa': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Одеса.pdf',
+        'dogovir-dostup-do-kabinetu-study-systems-ukraina': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Україна.pdf',
+        'dogovir-dostup-do-kabinetu-study-systems-tsentr': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Центр.pdf',
+        'dogovir-poslugy-speak-up': 'Dogovir_poslugy_Спік_Ап.pdf',
+        'dogovir-poslugy-study-systems-grup': 'Dogovir_poslugy_Стаді_Сістемс_Груп.pdf',
+        'dogovir-poslugy-study-systems-kyiv': 'Dogovir_poslugy_Стаді_Сістемс_Київ.docx.pdf',
+        'dogovir-poslugy-study-systems-odesa': 'Dogovir_poslugy_Стаді_Сістемс_Одеса.pdf',
+        'dogovir-poslugy-study-systems-ukraina': 'Dogovir_poslugy_Стаді_Сістемс_Україна.pdf',
+        'dogovir-poslugy-study-systems-tsentr': 'Dogovir_poslugy_Стаді_Сістемс_Центр.pdf',
     }
     
     if filename not in documents_map:

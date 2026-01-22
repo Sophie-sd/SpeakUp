@@ -14,22 +14,22 @@ django.setup()
 from django.urls import reverse
 
 # Базовий URL для production
-base_url = 'https://speakup.com.ua'
+base_url = 'https://speak-up.com.ua'
 
 # Список документів з іменами URL-ів
 documents = [
-    ('document_dostup_spik_ap', 'Договір доступу до кабінету - Спік Ап'),
-    ('document_dostup_stadi_grup', 'Договір доступу до кабінету - Стаді Сістемс Груп'),
-    ('document_dostup_stadi_kiiv', 'Договір доступу до кабінету - Стаді Сістемс Київ'),
-    ('document_dostup_stadi_odesa', 'Договір доступу до кабінету - Стаді Сістемс Одеса'),
-    ('document_dostup_stadi_ukraina', 'Договір доступу до кабінету - Стаді Сістемс Україна'),
-    ('document_dostup_stadi_tsentr', 'Договір доступу до кабінету - Стаді Сістемс Центр'),
-    ('document_poslugy_spik_ap', 'Договір послуг - Спік Ап'),
-    ('document_poslugy_stadi_grup', 'Договір послуг - Стаді Сістемс Груп'),
-    ('document_poslugy_stadi_kiiv', 'Договір послуг - Стаді Сістемс Київ'),
-    ('document_poslugy_stadi_odesa', 'Договір послуг - Стаді Сістемс Одеса'),
-    ('document_poslugy_stadi_ukraina', 'Договір послуг - Стаді Сістемс Україна'),
-    ('document_poslugy_stadi_tsentr', 'Договір послуг - Стаді Сістемс Центр'),
+    ('document_dostup_speak_up', 'Договір доступу до кабінету - Speak Up'),
+    ('document_dostup_study_systems_grup', 'Договір доступу до кабінету - Study Systems Груп'),
+    ('document_dostup_study_systems_kyiv', 'Договір доступу до кабінету - Study Systems Київ'),
+    ('document_dostup_study_systems_odesa', 'Договір доступу до кабінету - Study Systems Одеса'),
+    ('document_dostup_study_systems_ukraina', 'Договір доступу до кабінету - Study Systems Україна'),
+    ('document_dostup_study_systems_tsentr', 'Договір доступу до кабінету - Study Systems Центр'),
+    ('document_poslugy_speak_up', 'Договір послуг - Speak Up'),
+    ('document_poslugy_study_systems_grup', 'Договір послуг - Study Systems Груп'),
+    ('document_poslugy_study_systems_kyiv', 'Договір послуг - Study Systems Київ'),
+    ('document_poslugy_study_systems_odesa', 'Договір послуг - Study Systems Одеса'),
+    ('document_poslugy_study_systems_ukraina', 'Договір послуг - Study Systems Україна'),
+    ('document_poslugy_study_systems_tsentr', 'Договір послуг - Study Systems Центр'),
 ]
 
 print('\n' + '='*80)

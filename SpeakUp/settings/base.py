@@ -133,7 +133,7 @@ DEFAULT_OG_IMAGE = os.getenv('DEFAULT_OG_IMAGE', '/static/img/logoBase.png')
 
 # Email (для dev - console):
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'noreply@speakup.com.ua')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'noreply@speak-up.com.ua')
 
 # Реклама (з .env):
 FACEBOOK_PIXEL_ID = os.getenv('FACEBOOK_PIXEL_ID', '')
