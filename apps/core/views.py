@@ -830,11 +830,11 @@ def camp_landing_page(request):
     # SEO metadata for the landing page
     if lang == 'ru':
         title = "Speak Up Kids - Грант на обучение английскому"
-        meta_description = "Специальное предложение: грант на обучение английскому языку для вашего ребенка. Программа Kids Standard для детей 6-10 лет."
+        meta_description = "Специальное предложение: грант на обучение английскому языку для вашего ребенка. Программа Kids Standard для детей 6-15 лет."
         og_title = "Speak Up Kids - Грант на обучение английскому"
     else:
         title = "Speak Up Kids - Грант на навчання англійської"
-        meta_description = "Спеціальна пропозиція: грант 5000 грн на навчання англійської мови для вашої дитини. Програма Kids Standard для дітей 6-10 років."
+        meta_description = "Спеціальна пропозиція: грант 5000 грн на навчання англійської мови для вашої дитини. Програма Kids Standard для дітей 6-15 років."
         og_title = "Speak Up Kids - Грант на навчання англійської"
 
     context = {

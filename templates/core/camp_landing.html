@@ -70,24 +70,21 @@
   <div class="page-container">
     <div class="content-wrapper">
       <!-- Header -->
-      <header>
-        <div class="header-container">
-          <div class="logo-box">
-            <div class="logo-badge">
-              <img src="{% static 'img/logoBase.png' %}" alt="SPEAK UP Logo" class="logo-badge__image">
-            </div>
-            <div class="logo-text">
-              <h2>SPEAK UP</h2>
-              <p>🇪🇺 EUROPEAN PARTNERS</p>
-            </div>
-          </div>
-        </div>
-      </header>
+      <header></header>
 
       <!-- Hero Section -->
       <section class="hero-section">
         <div class="hero-container">
           <div class="card-white">
+            <!-- SPEAK UP Badge -->
+            <div class="card-white-badge">
+              <div class="badge-logo">
+                <img src="{% static 'img/logoBase.png' %}" alt="SPEAK UP Logo">
+              </div>
+              <div class="badge-text">
+                <p>SPEAK UP with<br>🇪🇺 EUROPEAN PARTNERS</p>
+              </div>
+            </div>
             <div class="card-content">
               <!-- Badge -->
               <div class="badge">
@@ -101,6 +98,11 @@
                 <span class="highlight">ГРАНТ</span>
                 <span> на навчання<br>англійської для вашої дитини!</span>
               </h1>
+
+              <!-- Age info -->
+              <p class="hero-subtitle hero-age-info">
+                для дітей від 6 до 15 років
+              </p>
 
               <!-- Subtitle -->
               <p class="hero-subtitle">
@@ -151,7 +153,7 @@
         <div class="section-container">
           <div class="section-header">
             <h2 class="section-title display-font">Програма навчання Kids Standard 📚</h2>
-            <p class="section-subtitle">Для дітей від 6 до 10 років</p>
+            <p class="section-subtitle">Для дітей від 6 до 15 років</p>
           </div>
 
           <!-- Features Grid -->
