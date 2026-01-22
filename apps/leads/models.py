@@ -75,6 +75,17 @@ class ConsultationRequest(CoreConsultationRequest):
         default_permissions = ('add', 'change', 'delete', 'view')
 
 
+class ChildrenLearningRequest(CoreConsultationRequest):
+    """Proxy модель для заявок з дитячої навчання"""
+
+    class Meta:
+        proxy = True
+        verbose_name = "Заявка дитяча навчання"
+        verbose_name_plural = "Заявки дитяча навчання"
+        app_label = 'leads'
+        default_permissions = ('add', 'change', 'delete', 'view')
+
+
 
 
 

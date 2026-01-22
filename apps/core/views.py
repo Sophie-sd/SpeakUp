@@ -630,9 +630,19 @@ def get_testimonial_form(request):
     })
 
 
-@require_http_methods(["POST"])
+@require_http_methods(["GET", "POST"])
 def submit_consultation(request):
-    """Обробка форми консультації з HTMX."""
+    """Обробка форми консультації з HTMX та сторінка консультацій."""
+    
+    # GET запит - показати сторінку з формою
+    if request.method == 'GET':
+        form = ConsultationForm()
+        return render(request, 'core/submit_consultation.html', {
+            'form': form,
+            'form_location': 'submit-consultation-page'
+        })
+    
+    # POST запит - обробити форму
     # Визначити тип форми на основі data-form-location
     form_location = request.POST.get('form_location', request.POST.get('data-form-location', ''))
 
@@ -666,8 +676,11 @@ def submit_consultation(request):
             from apps.leads.utils import get_client_ip
             consultation.ip_address = get_client_ip(request)
 
+            # Встановити статус "дитяча навчання" якщо форма зі сторінки submit-consultation
+            if 'submit-consultation-page' in str(form_location):
+                consultation.status = 'children_learning'
             # Встановити статус "грант діти" якщо форма з лендингу табору
-            if 'camp-landing' in str(form_location):
+            elif 'camp-landing' in str(form_location):
                 consultation.status = 'grant_diti'
 
             # КРИТИЧНО: Обробка ValidationError при збереженні
@@ -682,10 +695,17 @@ def submit_consultation(request):
                     form.add_error(None, e)
 
                 return render(request, 'core/components/consultation_form.html', {
-                    'form': form
+                    'form': form,
+                    'form_location': form_location
                 }, status=400)
 
-            # Повертаємо success message з HTMX redirect
+            # Для submit-consultation-page - повертаємо success message
+            if 'submit-consultation-page' in str(form_location):
+                return render(request, 'core/components/consultation_success.html', {
+                    'message': 'Дякуємо! Ми зв\'яжемось з вами найближчим часом.'
+                }, status=200)
+            
+            # Для інших форм - редирект на thank you
             response = HttpResponse(status=200)
             response['HX-Redirect'] = reverse('core:thank_you')
             return response
@@ -695,12 +715,14 @@ def submit_consultation(request):
             logger.error('[ConsultationForm] Unexpected error: %s', e, exc_info=True)
             form.add_error(None, 'Помилка сервера. Спробуйте ще раз.')
             return render(request, 'core/components/consultation_form.html', {
-                'form': form
+                'form': form,
+                'form_location': form_location
             }, status=500)
 
     # Якщо форма невалідна, повертаємо помилки
     return render(request, 'core/components/consultation_form.html', {
-        'form': form
+        'form': form,
+        'form_location': form_location
     }, status=400)
 
 

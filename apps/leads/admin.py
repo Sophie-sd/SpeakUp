@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-from .models import TrialLesson, ConsultationRequest
+from .models import TrialLesson, ConsultationRequest, ChildrenLearningRequest
 
 
 # Українізація Admin Site
@@ -139,3 +139,40 @@ class ConsultationRequestAdmin(admin.ModelAdmin, UnifiedLeadAdminMixin):
             'classes': ('collapse',)
         }),
     )
+
+
+@admin.register(ChildrenLearningRequest)
+class ChildrenLearningRequestAdmin(admin.ModelAdmin, UnifiedLeadAdminMixin):
+    """Admin для заявок на дитячу навчання"""
+    list_display = ['get_lead_type_display', 'get_contact_info', 'get_source_display', 'get_channel_display', 'prefers_messenger', 'created_at']
+    list_filter = ['prefers_messenger', 'messenger_choice', 'created_at', 'utm_source', 'utm_medium']
+    search_fields = ['phone', 'utm_campaign', 'utm_source']
+    readonly_fields = ['created_at', 'updated_at', 'ip_address', 'fbclid', 'gclid', 'referrer', 'status']
+    date_hierarchy = 'created_at'
+
+    fieldsets = (
+        ('Основна інформація', {
+            'fields': ('phone', 'name', 'email', 'prefers_messenger', 'messenger_choice', 'status', 'created_at')
+        }),
+        ('Джерело ліду', {
+            'fields': ('utm_source', 'utm_medium', 'utm_campaign'),
+            'description': 'Основна інформація про джерело заявки'
+        }),
+        ('Деталі кампанії', {
+            'fields': ('utm_content', 'utm_term'),
+            'classes': ('collapse',)
+        }),
+        ('Рекламні ID', {
+            'fields': ('fbclid', 'gclid', 'referrer'),
+            'classes': ('collapse',)
+        }),
+        ('Технічна інформація', {
+            'fields': ('ip_address', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def get_queryset(self, request):
+        """Фільтрувати лише заявки з status='children_learning'"""
+        qs = super().get_queryset(request)
+        return qs.filter(status='children_learning')

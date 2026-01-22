@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Дитяча навчання - Англійська для дітей - SPEAK UP{% endblock %}
+{% block og_title %}Дитяча навчання - Англійська для дітей - SPEAK UP{% endblock %}
+{% block meta_description %}Замовте консультацію щодо дитячої навчання англійської мови у школі SPEAK UP. Знайдіть найкращу програму для вашої дитини.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/consultation.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+  <!-- Hero-блок консультації -->
+  <section class="consultation-page glass-section" id="consultation-page">
+    <div class="consultation-page__container">
+      <div class="consultation-page__header">
+        <h1 class="section-title section-title--hero">Замовити консультацію</h1>
+        <p class="section-subtitle section-subtitle--hero">Дитяче навчання</p>
+        <p class="consultation-page__description">
+          Залиште свої контакти, і наш менеджер зв'яжеться з вами найближчим часом для детальної консультації щодо програм дитячого навчання англійської мови.
+        </p>
+      </div>
+
+      <!-- Форма консультації -->
+      <div class="consultation-page__form-wrapper glass-card">
+        {% include 'core/components/consultation_form.html' with form=form form_location='submit-consultation-page' %}
+      </div>
+
+      <!-- Інформація про переваги -->
+      <div class="consultation-page__info">
+        <h2>Чому вибрати SPEAK UP для дитячого навчання?</h2>
+        <ul class="consultation-page__benefits">
+          <li>
+            <strong>Дитячий підхід:</strong> Методика розроблена спеціально для дітей 6-10 років з урахуванням їх особливостей
+          </li>
+          <li>
+            <strong>Малі групи:</strong> Навчання в групах від 3 до 8 осіб для індивідуальної уваги
+          </li>
+          <li>
+            <strong>Цікаві заняття:</strong> Ігрова форма навчання робить дітям цікаво розуміти та говорити англійською
+          </li>
+          <li>
+            <strong>Носії мови:</strong> Розмовні заняття з носіями мови навіть на базових рівнях
+          </li>
+          <li>
+            <strong>Гарантія результату:</strong> Ми гарантуємо комфортний прогрес вашої дитини
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module" src="{% static 'js/modules/consultation-form-handler.js' %}" defer></script>
+{% endblock %}

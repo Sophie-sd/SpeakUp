@@ -242,6 +242,7 @@ class ConsultationRequest(BaseModel):
     STATUS_CHOICES = [
         ('standard', 'Стандартна заявка'),
         ('grant_diti', 'Грант діти'),
+        ('children_learning', 'Дитяча навчання'),
     ]
 
     name = models.CharField(
