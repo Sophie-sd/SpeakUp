@@ -529,6 +529,11 @@ header {
     width: auto;
     font-size: 1.25rem;
     padding: 24px 48px;
+    position: fixed;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
   }
 }
 
@@ -1075,7 +1080,7 @@ footer {
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .hero-title {
-    font-size: 1.875rem;
+    font-size: 1.7rem;
   }
 
   .cta-button {

@@ -68,7 +68,6 @@
     event.preventDefault();
     const button = event.currentTarget;
     openModal();
-    showButtonSuccess(button);
   }
 
   /**
