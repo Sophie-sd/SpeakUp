@@ -58,6 +58,13 @@
         closeModal();
       }
     });
+
+    // Initialize scroll handler for CTA button visibility on desktop
+    if (window.innerWidth >= 768) {
+      window.addEventListener('scroll', handleScrollVisibility);
+      // Initial check
+      handleScrollVisibility();
+    }
   }
 
   /**
@@ -207,6 +214,26 @@
     setTimeout(function() {
       // Keep success state visible
     }, 3000);
+  }
+
+  /**
+   * Handle scroll visibility for CTA button
+   * Show button in bottom-left corner after scrolling past hero section
+   */
+  function handleScrollVisibility() {
+    const heroSection = document.querySelector('.hero-section');
+    const ctaButton = document.getElementById('cta-button');
+
+    if (!heroSection || !ctaButton) return;
+
+    const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    if (scrollY > heroBottom) {
+      ctaButton.classList.add('visible');
+    } else {
+      ctaButton.classList.remove('visible');
+    }
   }
 
   /**

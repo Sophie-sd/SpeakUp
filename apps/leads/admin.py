@@ -112,15 +112,15 @@ class TrialLessonAdmin(admin.ModelAdmin, UnifiedLeadAdminMixin):
 @admin.register(ConsultationRequest)
 class ConsultationRequestAdmin(admin.ModelAdmin, UnifiedLeadAdminMixin):
     """Admin для заявок на консультацію"""
-    list_display = ['get_lead_type_display', 'get_contact_info', 'get_source_display', 'get_channel_display', 'prefers_messenger', 'created_at']
-    list_filter = ['prefers_messenger', 'messenger_choice', 'created_at', 'utm_source', 'utm_medium']
+    list_display = ['get_lead_type_display', 'get_contact_info', 'get_source_display', 'get_channel_display', 'status', 'prefers_messenger', 'created_at']
+    list_filter = ['status', 'prefers_messenger', 'messenger_choice', 'created_at', 'utm_source', 'utm_medium']
     search_fields = ['phone', 'utm_campaign', 'utm_source']
     readonly_fields = ['created_at', 'updated_at', 'ip_address', 'fbclid', 'gclid', 'referrer']
     date_hierarchy = 'created_at'
 
     fieldsets = (
         ('Основна інформація', {
-            'fields': ('phone', 'prefers_messenger', 'messenger_choice', 'created_at')
+            'fields': ('phone', 'prefers_messenger', 'messenger_choice', 'status', 'created_at')
         }),
         ('Джерело ліду', {
             'fields': ('utm_source', 'utm_medium', 'utm_campaign'),

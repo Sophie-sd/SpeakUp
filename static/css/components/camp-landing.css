@@ -531,9 +531,16 @@ header {
     padding: 24px 48px;
     position: fixed;
     left: 24px;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 24px;
     z-index: 50;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .cta-button.visible {
+    opacity: 1;
+    visibility: visible;
   }
 }
 
@@ -1198,7 +1205,7 @@ footer {
 }
 
 .camp-modal__header {
-  padding: 32px;
+  padding: 5px 32px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   display: flex;
   justify-content: space-between;
@@ -1246,14 +1253,14 @@ footer {
   padding: 32px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 12px;
 }
 
 /* Sections */
 .camp-modal__section {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .camp-modal__section-title {

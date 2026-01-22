@@ -666,6 +666,10 @@ def submit_consultation(request):
             from apps.leads.utils import get_client_ip
             consultation.ip_address = get_client_ip(request)
 
+            # Встановити статус "грант діти" якщо форма з лендингу табору
+            if 'camp-landing' in str(form_location):
+                consultation.status = 'grant_diti'
+
             # КРИТИЧНО: Обробка ValidationError при збереженні
             try:
                 consultation.save()

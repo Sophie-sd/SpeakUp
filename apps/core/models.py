@@ -239,6 +239,11 @@ class FAQ(BaseModel):
 
 class ConsultationRequest(BaseModel):
     """Заявка на консультацію"""
+    STATUS_CHOICES = [
+        ('standard', 'Стандартна заявка'),
+        ('grant_diti', 'Грант діти'),
+    ]
+
     name = models.CharField(
         max_length=100,
         blank=True,
@@ -280,6 +285,12 @@ class ConsultationRequest(BaseModel):
     gclid = models.CharField(max_length=200, blank=True, verbose_name="Google Click ID")
     referrer = models.URLField(max_length=500, blank=True, verbose_name="Referrer", help_text="Сторінка, з якої прийшов користувач")
     ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP адреса")
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='standard',
+        verbose_name="Статус"
+    )
 
     class Meta:
         ordering = ['-created_at']
