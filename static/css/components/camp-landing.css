@@ -1566,12 +1566,28 @@ footer {
     font-size: 1rem;
   }
 
+  .camp-modal__phone-section {
+    padding: 12px;
+  }
+
   .camp-modal__phone-block {
-    flex-wrap: wrap;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .camp-modal__phone-text {
+    font-size: 0.95rem;
+    white-space: nowrap;
+    min-width: 0;
   }
 
   .camp-modal__copy-btn {
-    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+
+  .camp-modal__copy-text {
+    display: none;
   }
 
   .camp-modal__social-buttons {
