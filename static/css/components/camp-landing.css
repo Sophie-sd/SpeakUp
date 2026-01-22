@@ -594,6 +594,7 @@ header {
 
 .button-text {
   display: inline;
+  white-space: nowrap;
 }
 
 .button-arrow {
@@ -611,6 +612,13 @@ header {
 @media (min-width: 768px) {
   .trust-line {
     text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .trust-line {
+    font-size: 0.75rem;
+    line-height: 1.4;
   }
 }
 
@@ -800,7 +808,8 @@ header {
   content: '⭐ ПОПУЛЯРНИЙ';
   position: absolute;
   top: -16px;
-  left: 32px;
+  right: 32px;
+  left: auto;
   background: var(--cyan-400);
   color: var(--white);
   padding: 8px 24px;
@@ -819,7 +828,8 @@ header {
   content: '🌟 НАЙВИГІДНІШИЙ';
   position: absolute;
   top: -16px;
-  left: 32px;
+  right: 32px;
+  left: auto;
   background: linear-gradient(to right, var(--purple-500), var(--pink-500));
   color: var(--white);
   padding: 8px 24px;
@@ -959,6 +969,13 @@ header {
   font-family: 'Fredoka', sans-serif;
 }
 
+@media (max-width: 640px) {
+  .payment-info p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}
+
 /* Final CTA section */
 .final-cta-section {
   padding: 48px 16px;
@@ -994,6 +1011,13 @@ header {
 @media (min-width: 768px) {
   .final-cta-card h2 {
     font-size: 1.875rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .final-cta-card h2 {
+    white-space: nowrap;
+    font-size: 1.25rem;
   }
 }
 
@@ -1571,23 +1595,40 @@ footer {
   }
 
   .camp-modal__phone-block {
-    padding: 8px 12px;
-    gap: 8px;
+    padding: 8px 8px;
+    gap: 4px;
+    flex-wrap: nowrap;
   }
 
   .camp-modal__phone-text {
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     white-space: nowrap;
     min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    color: var(--pink-600) !important;
+    text-decoration: none !important;
   }
 
   .camp-modal__copy-btn {
-    padding: 8px 12px;
-    font-size: 0.75rem;
+    padding: 6px 10px;
+    font-size: 0.65rem;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .camp-modal__copy-btn svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
   }
 
   .camp-modal__copy-text {
-    display: none;
+    display: inline;
+    font-weight: 600;
+    white-space: nowrap;
   }
 
   .camp-modal__social-buttons {
