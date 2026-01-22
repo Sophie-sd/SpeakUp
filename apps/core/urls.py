@@ -54,6 +54,20 @@ urlpatterns = [
     path('anglijska-dlya-ditej-kids-30', views.kids_learning_page, name='kids_learning_page'),
     path('product/misyacz-bezlimitu/', views.premium_learning_page, name='premium_learning_page'),
 
+    # Документи з папки DogovoraURL
+    path('documents/dogovir-dostup-do-kabinetu-spik-ap/', views.document_view, kwargs={'filename': 'dogovir-dostup-do-kabinetu-spik-ap'}, name='document_dostup_spik_ap'),
+    path('documents/dogovir-dostup-do-kabinetu-stadi-sistems-grup/', views.document_view, kwargs={'filename': 'dogovir-dostup-do-kabinetu-stadi-sistems-grup'}, name='document_dostup_stadi_grup'),
+    path('documents/dogovir-dostup-do-kabinetu-stadi-sistems-kiiv/', views.document_view, kwargs={'filename': 'dogovir-dostup-do-kabinetu-stadi-sistems-kiiv'}, name='document_dostup_stadi_kiiv'),
+    path('documents/dogovir-dostup-do-kabinetu-stadi-sistems-odesa/', views.document_view, kwargs={'filename': 'dogovir-dostup-do-kabinetu-stadi-sistems-odesa'}, name='document_dostup_stadi_odesa'),
+    path('documents/dogovir-dostup-do-kabinetu-stadi-sistems-ukraina/', views.document_view, kwargs={'filename': 'dogovir-dostup-do-kabinetu-stadi-sistems-ukraina'}, name='document_dostup_stadi_ukraina'),
+    path('documents/dogovir-dostup-do-kabinetu-stadi-sistems-tsentr/', views.document_view, kwargs={'filename': 'dogovir-dostup-do-kabinetu-stadi-sistems-tsentr'}, name='document_dostup_stadi_tsentr'),
+    path('documents/dogovir-poslugy-spik-ap/', views.document_view, kwargs={'filename': 'dogovir-poslugy-spik-ap'}, name='document_poslugy_spik_ap'),
+    path('documents/dogovir-poslugy-stadi-sistems-grup/', views.document_view, kwargs={'filename': 'dogovir-poslugy-stadi-sistems-grup'}, name='document_poslugy_stadi_grup'),
+    path('documents/dogovir-poslugy-stadi-sistems-kiiv/', views.document_view, kwargs={'filename': 'dogovir-poslugy-stadi-sistems-kiiv'}, name='document_poslugy_stadi_kiiv'),
+    path('documents/dogovir-poslugy-stadi-sistems-odesa/', views.document_view, kwargs={'filename': 'dogovir-poslugy-stadi-sistems-odesa'}, name='document_poslugy_stadi_odesa'),
+    path('documents/dogovir-poslugy-stadi-sistems-ukraina/', views.document_view, kwargs={'filename': 'dogovir-poslugy-stadi-sistems-ukraina'}, name='document_poslugy_stadi_ukraina'),
+    path('documents/dogovir-poslugy-stadi-sistems-tsentr/', views.document_view, kwargs={'filename': 'dogovir-poslugy-stadi-sistems-tsentr'}, name='document_poslugy_stadi_tsentr'),
+
     # Orphan: Міста (динамічний slug) - В КІНЦІ як catch-all
     path('<slug:city>', views.city_page, name='city_page'),
 ]

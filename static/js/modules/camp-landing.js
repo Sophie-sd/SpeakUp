@@ -20,6 +20,10 @@
     const ctaButton = document.getElementById('cta-button');
     const ctaButton2 = document.getElementById('cta-button-2');
     const modalTrigger = document.getElementById('modal-trigger');
+    const campModal = document.getElementById('camp-modal');
+    const campModalClose = document.getElementById('camp-modal-close');
+    const campCopyBtn = document.getElementById('camp-copy-phone');
+    const campPhoneText = document.getElementById('camp-phone-text');
 
     if (ctaButton) {
       ctaButton.addEventListener('click', handleCtaClick);
@@ -28,6 +32,32 @@
     if (ctaButton2) {
       ctaButton2.addEventListener('click', handleCtaClick);
     }
+
+    // Modal close button
+    if (campModalClose) {
+      campModalClose.addEventListener('click', closeModal);
+    }
+
+    // Close modal on backdrop click
+    if (campModal) {
+      campModal.addEventListener('click', function(event) {
+        if (event.target === this) {
+          closeModal();
+        }
+      });
+    }
+
+    // Copy phone button
+    if (campCopyBtn) {
+      campCopyBtn.addEventListener('click', handleCopyPhone);
+    }
+
+    // Keyboard: close modal on Escape
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    });
   }
 
   /**
@@ -36,44 +66,106 @@
    */
   function handleCtaClick(event) {
     event.preventDefault();
-
     const button = event.currentTarget;
-    const action = button.getAttribute('data-action');
+    openModal();
+    showButtonSuccess(button);
+  }
 
-    // Check if modal already exists in DOM
-    const modal = document.querySelector('[role="dialog"]') || 
-                  document.getElementById('consultation-modal') ||
-                  document.querySelector('.modal');
-
-    if (action === 'open-modal' && modal) {
-      // Modal exists - open it
-      if (modal.classList) {
-        modal.classList.add('active', 'is-open');
-      }
-      // Also trigger via click if it has a trigger mechanism
-      const trigger = modal.querySelector('[data-modal-trigger]');
-      if (trigger) {
-        trigger.click();
-      }
-    } else if (action === 'open-modal') {
-      // Modal doesn't exist - try HTMX approach
-      const htmxForm = document.querySelector('[hx-get*="consultation"]');
-      if (htmxForm && window.htmx) {
-        window.htmx.ajax('GET', htmxForm.getAttribute('hx-get'), {
-          target: '#modal-trigger',
-          swap: 'innerHTML'
-        });
-      } else {
-        // Fallback: trigger button if it exists
-        const modalButton = document.querySelector('[data-modal-open]');
-        if (modalButton) {
-          modalButton.click();
-        }
+  /**
+   * Open camp modal
+   */
+  function openModal() {
+    const campModal = document.getElementById('camp-modal');
+    if (campModal) {
+      campModal.classList.add('camp-modal--active');
+      document.body.style.overflow = 'hidden';
+      
+      // Set focus to first form input for accessibility
+      const firstInput = campModal.querySelector('input[type="text"], input[type="tel"]');
+      if (firstInput) {
+        setTimeout(() => firstInput.focus(), 100);
       }
     }
+  }
 
-    // Show success state (optional)
-    showButtonSuccess(button);
+  /**
+   * Close camp modal
+   */
+  function closeModal() {
+    const campModal = document.getElementById('camp-modal');
+    if (campModal) {
+      campModal.classList.remove('camp-modal--active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  /**
+   * Handle copy phone to clipboard
+   * @param {Event} event - Click event
+   */
+  function handleCopyPhone(event) {
+    event.preventDefault();
+    const campCopyBtn = event.currentTarget;
+    const campPhoneText = document.getElementById('camp-phone-text');
+
+    if (!campPhoneText) return;
+
+    const phoneNumber = campPhoneText.textContent.trim();
+
+    // Use Clipboard API if available
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(phoneNumber).then(() => {
+        showCopySuccess(campCopyBtn);
+      }).catch(() => {
+        fallbackCopy(phoneNumber, campCopyBtn);
+      });
+    } else {
+      // Fallback for older browsers
+      fallbackCopy(phoneNumber, campCopyBtn);
+    }
+  }
+
+  /**
+   * Fallback copy method for older browsers
+   * @param {string} text - Text to copy
+   * @param {HTMLElement} button - Button element
+   */
+  function fallbackCopy(text, button) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    
+    try {
+      textArea.select();
+      document.execCommand('copy');
+      showCopySuccess(button);
+    } catch (err) {
+      console.error('Fallback copy failed:', err);
+    } finally {
+      document.body.removeChild(textArea);
+    }
+  }
+
+  /**
+   * Show copy success state
+   * @param {HTMLElement} button - Button element
+   */
+  function showCopySuccess(button) {
+    const originalHTML = button.innerHTML;
+    const originalClass = button.className;
+
+    // Change to success state
+    button.classList.add('copied');
+    button.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg><span class="camp-modal__copy-text">Скопійовано!</span>';
+
+    // Restore after 2 seconds
+    setTimeout(() => {
+      button.classList.remove('copied');
+      button.innerHTML = originalHTML;
+      button.className = originalClass;
+    }, 2000);
   }
 
   /**
@@ -157,7 +249,9 @@
           arrow.style.display = '';
         }
       });
-    }
+    },
+    openModal: openModal,
+    closeModal: closeModal,
   };
 
 })();

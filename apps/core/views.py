@@ -8,7 +8,10 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.db import models
+from django.conf import settings
+from django.views.static import serve
 import logging
+import os
 from .seo_config import PROGRAMS, LOCATIONS, CITIES, LEVEL_PACKAGES, LEVEL_CONTENT, LEVEL_INFO
 
 logger = logging.getLogger(__name__)
@@ -844,6 +847,7 @@ def camp_landing_page(request):
         'grant_amount': '5000 грн',
         'spots_left': '23',
         'consultation_form': ConsultationForm(),
+        'contact_info': ContactInfo.objects.filter(is_active=True).first(),
     }
 
     return render(request, 'core/camp_landing.html', context)
@@ -852,3 +856,30 @@ def dogovir_stub(request):
     """SEO stub for /ru/dogovir-pro-nadannya-poslug-dostupu-do-elektronnogo-kabinetu-speak-up-2/."""
     return render(request, 'core/stubs/dogovir_stub.html')
 
+def document_view(request, filename):
+    """View для обслуговування документів з папки DogovoraURL."""
+    # Мапінг імен файлів (без розширення) на реальні імена файлів
+    documents_map = {
+        'dogovir-dostup-do-kabinetu-spik-ap': 'Dogovir_dostup_do_kabinetu_Спік_Ап.pdf',
+        'dogovir-dostup-do-kabinetu-stadi-sistems-grup': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Груп.pdf',
+        'dogovir-dostup-do-kabinetu-stadi-sistems-kiiv': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Київ.pdf',
+        'dogovir-dostup-do-kabinetu-stadi-sistems-odesa': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Одеса.pdf',
+        'dogovir-dostup-do-kabinetu-stadi-sistems-ukraina': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Україна.pdf',
+        'dogovir-dostup-do-kabinetu-stadi-sistems-tsentr': 'Dogovir_dostup_do_kabinetu_Стаді_Сістемс_Центр.pdf',
+        'dogovir-poslugy-spik-ap': 'Dogovir_poslugy_Спік_Ап.pdf',
+        'dogovir-poslugy-stadi-sistems-grup': 'Dogovir_poslugy_Стаді_Сістемс_Груп.pdf',
+        'dogovir-poslugy-stadi-sistems-kiiv': 'Dogovir_poslugy_Стаді_Сістемс_Київ.docx.pdf',
+        'dogovir-poslugy-stadi-sistems-odesa': 'Dogovir_poslugy_Стаді_Сістемс_Одеса.pdf',
+        'dogovir-poslugy-stadi-sistems-ukraina': 'Dogovir_poslugy_Стаді_Сістемс_Україна.pdf',
+        'dogovir-poslugy-stadi-sistems-tsentr': 'Dogovir_poslugy_Стаді_Сістемс_Центр.pdf',
+    }
+    
+    if filename not in documents_map:
+        raise Http404("Документ не знайдено")
+    
+    file_path = os.path.join(settings.BASE_DIR, 'static', 'documents', 'DogovoraURL', documents_map[filename])
+    
+    if not os.path.exists(file_path):
+        raise Http404("Файл не знайдено")
+    
+    return serve(request, os.path.basename(file_path), os.path.dirname(file_path))
