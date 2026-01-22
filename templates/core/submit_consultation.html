@@ -6,7 +6,7 @@
 {% block meta_description %}Замовте консультацію щодо дитячої навчання англійської мови у школі SPEAK UP. Знайдіть найкращу програму для вашої дитини.{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/components/consultation.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/consultation-form.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -23,7 +23,7 @@
       </div>
 
       <!-- Форма консультації -->
-      <div class="consultation-page__form-wrapper glass-card">
+      <div class="consultation-form glass-card">
         {% include 'core/components/consultation_form.html' with form=form form_location='submit-consultation-page' %}
       </div>
 

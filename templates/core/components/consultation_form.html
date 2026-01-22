@@ -1,9 +1,10 @@
 {% load static %}
-<div class="consultation-form__form">
+<div class="consultation-form__wrapper" id="consultation-form-wrapper">
   <form method="post"
         action="{% url 'core:submit_consultation' %}"
         hx-post="{% url 'core:submit_consultation' %}"
-        hx-swap="outerHTML"
+        hx-swap="innerHTML"
+        hx-target="#consultation-form-wrapper"
         data-form-type="consultation"
         data-form-location="{% if form_location %}{{ form_location }}{% else %}page{% endif %}">
     {% csrf_token %}
