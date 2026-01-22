@@ -285,7 +285,7 @@ header {
   align-items: center;
   gap: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  max-width: 260px;
+  max-width: 300px;
   z-index: 10;
 }
 
@@ -322,7 +322,7 @@ header {
 @media (min-width: 768px) {
   .card-white-badge {
     padding: 20px 24px;
-    max-width: 280px;
+    max-width: 300px;
     gap: 14px;
   }
 
@@ -352,6 +352,15 @@ header {
 
 .badge span:first-child {
   font-size: 24px;
+}
+
+/* Hide badge on mobile but keep space */
+@media (max-width: 767px) {
+  .badge {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 /* Hero title */
@@ -1406,6 +1415,11 @@ footer {
 
 .camp-modal__form-wrapper .consultation-form__form {
   width: 100%;
+}
+
+/* Hide duplicate social media section in modal */
+.camp-modal__form-wrapper .consultation-form__messenger-buttons {
+  display: none;
 }
 
 .camp-modal__form-wrapper .consultation-form__phone-section {
