@@ -211,17 +211,11 @@ header {
 .hero-section {
   position: relative;
   padding: 32px 16px;
-  background-image: url('/static/img/kids_land_mb.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
 }
 
 @media (min-width: 768px) {
   .hero-section {
     padding: 48px 16px;
-    background-image: url('/static/img/kids_land_desc.png');
   }
 }
 
@@ -231,47 +225,48 @@ header {
 }
 
 .card-white {
-  background: var(--white);
   border-radius: 48px;
   padding: 32px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   position: relative;
   overflow: hidden;
+  background-image: url('../../img/kids_land_mb.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 @media (min-width: 768px) {
   .card-white {
     padding: 48px;
+    background-image: url('../../img/kids_land_desc.png');
   }
 }
 
-/* Decorative circles inside card */
+/* Light overlay for background image readability */
 .card-white::before {
   content: '';
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
-  width: 160px;
-  height: 160px;
-  background: #fef08a;
-  border-radius: 50%;
-  opacity: 0.4;
-  margin-right: -80px;
-  margin-top: -80px;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.78);
+  z-index: 1;
+  border-radius: 48px;
 }
 
+/* Decorative accent circle - kept for visual enhancement */
 .card-white::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 128px;
-  height: 128px;
-  background: #fca5a5;
+  bottom: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  background: rgba(250, 204, 21, 0.15);
   border-radius: 50%;
-  opacity: 0.4;
-  margin-left: -64px;
-  margin-bottom: -64px;
+  z-index: 1;
 }
 
 .card-content {
