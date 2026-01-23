@@ -81,7 +81,8 @@ class ConsultationForm(forms.ModelForm):
 
     def clean_name(self):
         """Валідація імені: якщо введено, то мінімум 2 символи"""
-        name = self.cleaned_data.get('name', '').strip()
+        name = self.cleaned_data.get('name') or ''
+        name = name.strip()
         if name and len(name) < 2:
             raise forms.ValidationError("Ім'я має містити мінімум 2 символи")
         return name if name else None
@@ -142,7 +143,8 @@ class CorporateConsultationForm(forms.ModelForm):
 
     def clean_name(self):
         """Валідація імені: якщо введено, то мінімум 2 символи"""
-        name = self.cleaned_data.get('name', '').strip()
+        name = self.cleaned_data.get('name') or ''
+        name = name.strip()
         if name and len(name) < 2:
             raise forms.ValidationError("Ім'я має містити мінімум 2 символи")
         return name if name else None
