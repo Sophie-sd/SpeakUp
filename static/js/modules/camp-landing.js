@@ -70,163 +70,30 @@
     // Initial check
     handleScrollVisibility();
 
-    // Initialize HTMX event handlers for form submission
-    initializeFormHandlers();
+    // Disable form submission for camp modal
+    disableFormSubmission();
   }
 
   /**
-   * Initialize HTMX form handlers
+   * Disable form submission for camp modal
    */
-  function initializeFormHandlers() {
-    // Remove error class when user starts typing
-    document.addEventListener('htmx:oobBeforeSwap', (e) => {
-      const target = e.detail.target;
-      if (target && target.id === 'consultation-form-wrapper') {
-        // Remove all error classes when form is about to be re-rendered
-        const formInputs = target.querySelectorAll('input.field-error');
-        formInputs.forEach(input => {
-          input.classList.remove('field-error');
+  function disableFormSubmission() {
+    const campModal = document.getElementById('camp-modal');
+    if (campModal) {
+      const form = campModal.querySelector('form');
+      if (form) {
+        // Remove HTMX attributes
+        form.removeAttribute('hx-post');
+        form.removeAttribute('hx-swap');
+        form.removeAttribute('hx-target');
+        
+        // Prevent form submission
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
         });
       }
-    });
-
-    // Handle successful form submission
-    document.addEventListener('htmx:afterSwap', (e) => {
-      const target = e.detail.target;
-      
-      // Check if this is the consultation form wrapper
-      if (target && target.id === 'consultation-form-wrapper') {
-        const successElement = target.querySelector('[data-success="consultation"]');
-        
-        if (successElement) {
-          // Extract the success message
-          const message = successElement.querySelector('.message__text')?.textContent || 
-                         'Дякуємо! Ми зв\'яжемось з вами найближчим часом.';
-          
-          // Show toast notification
-          showToast(message, 'success');
-          
-          // Clear form inputs
-          setTimeout(() => {
-            const form = document.querySelector('#consultation-form-wrapper form');
-            if (form) {
-              form.reset();
-            }
-          }, 500);
-          
-          // Remove the success message element (it's not needed anymore)
-          setTimeout(() => {
-            successElement.remove();
-            // Reload the form
-            reloadConsultationForm();
-          }, 3000);
-        }
-      }
-    });
-
-    // Handle form validation errors
-    document.addEventListener('htmx:afterSwap', (e) => {
-      const target = e.detail.target;
-      
-      if (target && target.id === 'consultation-form-wrapper') {
-        const form = target.querySelector('form');
-        
-        // Check if form has validation errors
-        const errorElements = target.querySelectorAll('.form-error');
-        if (errorElements.length > 0 && e.detail.xhr.status === 400) {
-          // Add error class to inputs with errors
-          errorElements.forEach((errorEl) => {
-            const inputGroup = errorEl.closest('.form-group');
-            if (inputGroup) {
-              const input = inputGroup.querySelector('input');
-              if (input) {
-                input.classList.add('field-error');
-              }
-            }
-          });
-          
-          // Focus on first input with error
-          const firstErrorInput = target.querySelector('input.field-error');
-          if (firstErrorInput) {
-            setTimeout(() => firstErrorInput.focus(), 100);
-          }
-        }
-      }
-    });
-
-    // Handle network/server errors
-    document.addEventListener('htmx:responseError', (e) => {
-      console.error('Form submission error:', e);
-      showToast('Помилка при відправці. Спробуйте ще раз.', 'error');
-    });
-  }
-
-  /**
-   * Reload the consultation form
-   */
-  function reloadConsultationForm() {
-    if (typeof htmx !== 'undefined') {
-      const formWrapper = document.getElementById('consultation-form-wrapper');
-      if (formWrapper) {
-        const formLocation = 'camp-landing';
-        htmx.ajax('GET', `/submit-consultation/?form_location=${encodeURIComponent(formLocation)}`, {
-          target: '#consultation-form-wrapper',
-          swap: 'innerHTML'
-        });
-      }
-    }
-  }
-
-  /**
-   * Show toast notification
-   * @param {string} message - Message to display
-   * @param {string} type - 'success' or 'error'
-   */
-  function showToast(message, type = 'success') {
-    const toast = document.getElementById('camp-toast');
-    if (!toast) return;
-
-    const messageEl = toast.querySelector('.camp-toast__message');
-    const iconEl = toast.querySelector('.camp-toast__icon');
-
-    if (messageEl) {
-      messageEl.textContent = message;
-    }
-
-    // Set icon and type
-    if (type === 'error') {
-      toast.classList.add('camp-toast--error');
-      if (iconEl) iconEl.textContent = '⚠';
-    } else {
-      toast.classList.remove('camp-toast--error');
-      if (iconEl) iconEl.textContent = '✓';
-    }
-
-    // Show toast
-    toast.classList.add('camp-toast--visible');
-
-    // Auto-hide after 5 seconds
-    const hideTimer = setTimeout(() => {
-      hideToast();
-    }, 5000);
-
-    // Add close button handler
-    const closeBtn = toast.querySelector('[data-close-toast]');
-    if (closeBtn) {
-      closeBtn.onclick = () => {
-        clearTimeout(hideTimer);
-        hideToast();
-      };
-    }
-  }
-
-  /**
-   * Hide toast notification
-   */
-  function hideToast() {
-    const toast = document.getElementById('camp-toast');
-    if (toast) {
-      toast.classList.remove('camp-toast--visible');
     }
   }
 
@@ -338,48 +205,6 @@
   }
 
   /**
-   * Show success state on button after click
-   * @param {HTMLElement} button - Button element
-   */
-  function showButtonSuccess(button) {
-    const originalText = button.textContent;
-    const originalHTML = button.innerHTML;
-
-    // Store original state
-    button.dataset.originalHtml = originalHTML;
-
-    // Update button UI to show success
-    button.classList.add('success');
-
-    // Change text
-    const textSpan = button.querySelector('.button-text');
-    if (textSpan) {
-      textSpan.textContent = 'Дякуємо! Ми зв\'яжемося з вами';
-    }
-
-    // Remove arrow
-    const arrow = button.querySelector('.button-arrow');
-    if (arrow) {
-      arrow.style.display = 'none';
-    }
-
-    // Change emoji
-    const emoji = button.querySelector('.button-emoji');
-    if (emoji) {
-      emoji.textContent = '✅';
-    }
-
-    // Disable button
-    button.disabled = true;
-    button.style.pointerEvents = 'none';
-
-    // Optional: Restore after delay
-    setTimeout(function() {
-      // Keep success state visible
-    }, 3000);
-  }
-
-  /**
    * Handle scroll visibility for fixed CTA button
    * Show button in bottom-left corner after scrolling past hero section
    */
@@ -441,8 +266,6 @@
     },
     openModal: openModal,
     closeModal: closeModal,
-    showToast: showToast,
-    hideToast: hideToast,
   };
 
 })();

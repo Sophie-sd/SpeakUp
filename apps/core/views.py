@@ -710,14 +710,6 @@ def submit_consultation(request):
                     'form_location': form_location
                 }, status=400)
 
-            # Для camp-landing - повертаємо toast notification
-            if 'camp-landing' in str(form_location):
-                # Поверти success message як простий HTML для toast
-                success_html = '''<div data-success="consultation">
-                    <span class="message__text">Дякуємо! Ми зв'яжемось з вами найближчим часом.</span>
-                </div>'''
-                return HttpResponse(success_html, status=200)
-            
             # Для submit-consultation-page - повертаємо success message
             elif 'submit-consultation-page' in str(form_location):
                 return render(request, 'core/components/consultation_success.html', {

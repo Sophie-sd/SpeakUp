@@ -35,9 +35,6 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="{% static 'css/components/camp-landing.css' %}">
 
-  <!-- HTMX для форми консультації -->
-  <script src="{% static 'js/htmx.min.js' %}" defer></script>
-
   <!-- Structured Data (Schema.org) -->
   <script type="application/ld+json">
   {
@@ -340,13 +337,6 @@
   <!-- Hidden modal trigger for form integration -->
   <div id="modal-trigger" class="modal-trigger"></div>
 
-  <!-- Toast notification container -->
-  <div id="camp-toast" class="camp-toast" role="alert" aria-live="polite">
-    <span class="camp-toast__icon">✓</span>
-    <p class="camp-toast__message"></p>
-    <button type="button" class="camp-toast__close" aria-label="Закрити" data-close-toast>×</button>
-  </div>
-
   <!-- Camp Landing Modal -->
   <div class="camp-modal" id="camp-modal" role="dialog" aria-modal="true" aria-labelledby="camp-modal-title">
     <div class="camp-modal__backdrop"></div>
@@ -422,8 +412,5 @@
 
   <!-- Script -->
   <script src="{% static 'js/modules/camp-landing.js' %}" defer></script>
-  
-  <!-- Consultation form handler -->
-  <script src="{% static 'js/modules/consultation-form-handler.js' %}" type="module" defer></script>
 </body>
 </html>
