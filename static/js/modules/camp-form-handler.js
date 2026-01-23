@@ -53,11 +53,8 @@ export class CampFormHandler {
       const data = await response.json();
 
       if (data.success) {
-        this.showSuccess();
-        // Редирект через 2 секунди
-        setTimeout(() => {
-          window.location.href = data.redirect_url;
-        }, 2000);
+        // Миттєвий редирект без спливаючих повідомлень
+        window.location.href = data.redirect_url;
       } else {
         this.showErrors(data.errors || {});
       }
@@ -69,23 +66,6 @@ export class CampFormHandler {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
     }
-  }
-
-  showSuccess() {
-    // Спливаюче повідомлення
-    const message = document.createElement('div');
-    message.className = 'message message--success';
-    message.setAttribute('role', 'alert');
-    message.innerHTML = `
-      <div class="message__text">Дякуємо! Ми зв'яжемось з вами найближчим часом. Перенаправляємо...</div>
-      <button type="button" class="message__close" aria-label="Закрити">×</button>
-    `;
-
-    this.form.parentNode.insertBefore(message, this.form);
-
-    message.querySelector('.message__close')?.addEventListener('click', () => {
-      message.remove();
-    });
   }
 
   showErrors(errors) {

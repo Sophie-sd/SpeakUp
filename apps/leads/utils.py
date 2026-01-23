@@ -34,7 +34,7 @@ def normalize_phone_number(phone):
 
     # Якщо немає цифр - помилка
     if not digits:
-        raise forms.ValidationError("Введіть коректний український номер телефону")
+        raise forms.ValidationError("Введіть коректний номер телефону")
 
     # Нормалізація до формату +380XXXXXXXXX (13 символів: +380 + 9 цифр)
     if has_plus and phone_clean.startswith('+380'):
@@ -45,9 +45,9 @@ def normalize_phone_number(phone):
             if len(phone_digits) == 9:
                 phone = '+380' + phone_digits
             else:
-                raise forms.ValidationError("Введіть коректний український номер телефону (9 цифр після +380)")
+                raise forms.ValidationError("Введіть коректний номер телефону (9 цифр після +380)")
         else:
-            raise forms.ValidationError("Введіть коректний український номер телефону")
+            raise forms.ValidationError("Введіть коректний номер телефону")
     elif len(digits) == 12 and digits.startswith('380'):
         # 380XXXXXXXXX -> +380XXXXXXXXX (видаляємо 380, додаємо +380)
         phone = '+380' + digits[3:]
@@ -61,7 +61,7 @@ def normalize_phone_number(phone):
         # XXXXXXXXX (9 цифр без префіксу) -> +380XXXXXXXXX
         phone = '+380' + digits
     else:
-        raise forms.ValidationError("Введіть коректний український номер телефону")
+        raise forms.ValidationError("Введіть коректний номер телефону")
 
     # Фінальна перевірка формату (модель очікує ^\+380\d{9}$)
     if not phone.startswith('+380') or len(phone) != 13:
