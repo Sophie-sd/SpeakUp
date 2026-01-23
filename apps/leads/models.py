@@ -80,8 +80,8 @@ class ChildrenLearningRequest(CoreConsultationRequest):
 
     class Meta:
         proxy = True
-        verbose_name = "Заявка дитяча навчання"
-        verbose_name_plural = "Заявки дитяча навчання"
+        verbose_name = "Заявка дитяче навчання"
+        verbose_name_plural = "Заявки дитяче навчання"
         app_label = 'leads'
         default_permissions = ('add', 'change', 'delete', 'view')
 

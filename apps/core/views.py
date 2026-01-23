@@ -690,9 +690,9 @@ def submit_consultation(request):
             # Встановити статус "дитяча навчання" якщо форма зі сторінки submit-consultation
             if 'submit-consultation-page' in str(form_location):
                 consultation.status = 'children_learning'
-            # Встановити статус "грант діти" якщо форма з лендингу табору
+            # Встановити статус "дитяча навчання" якщо форма з лендингу табору
             elif 'camp-landing' in str(form_location):
-                consultation.status = 'grant_diti'
+                consultation.status = 'children_learning'
 
             # КРИТИЧНО: Обробка ValidationError при збереженні
             try:

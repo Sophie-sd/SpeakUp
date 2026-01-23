@@ -69,32 +69,6 @@
     window.addEventListener('resize', handleScrollVisibility);
     // Initial check
     handleScrollVisibility();
-
-    // Disable form submission for camp modal
-    disableFormSubmission();
-  }
-
-  /**
-   * Disable form submission for camp modal
-   */
-  function disableFormSubmission() {
-    const campModal = document.getElementById('camp-modal');
-    if (campModal) {
-      const form = campModal.querySelector('form');
-      if (form) {
-        // Remove HTMX attributes
-        form.removeAttribute('hx-post');
-        form.removeAttribute('hx-swap');
-        form.removeAttribute('hx-target');
-        
-        // Prevent form submission
-        form.addEventListener('submit', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        });
-      }
-    }
   }
 
   /**
