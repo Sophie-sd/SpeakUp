@@ -51,9 +51,20 @@ class UnifiedLeadAdminMixin:
     def get_contact_info(self, obj):
         """Відображення контактної інформації"""
         if isinstance(obj, TrialLesson):
-            return format_html('<strong>{}</strong><br>{}', obj.name, obj.phone)
+            name = obj.name or '-'
+            phone = obj.phone or 'Не вказано'
+            return format_html('<strong>{}</strong><br>{}', name, phone)
         elif isinstance(obj, ConsultationRequest):
-            return format_html('<strong>{}</strong>', obj.phone)
+            # Збираємо частини для відображення
+            parts = []
+            if obj.name and obj.name.strip():
+                parts.append(f'<strong>{obj.name}</strong>')
+            if obj.phone and obj.phone.strip():
+                parts.append(obj.phone)
+            
+            if parts:
+                return format_html('<br>'.join(parts))
+            return '-'
         return '-'
     get_contact_info.short_description = 'Контакт'
 
