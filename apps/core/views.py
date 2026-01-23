@@ -711,7 +711,7 @@ def submit_consultation(request):
                 }, status=400)
 
             # Для submit-consultation-page - повертаємо success message
-            elif 'submit-consultation-page' in str(form_location):
+            if 'submit-consultation-page' in str(form_location):
                 return render(request, 'core/components/consultation_success.html', {
                     'message': 'Дякуємо! Ми зв\'яжемось з вами найближчим часом.',
                     'form_location': form_location  # Додати для можливості завантаження форми після закриття
