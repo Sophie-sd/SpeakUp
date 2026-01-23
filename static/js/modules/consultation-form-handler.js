@@ -29,8 +29,12 @@ export class ConsultationFormHandler {
     const target = e.detail.target;
     
     // Перевірити чи це success message від консультації
-    if (target.dataset.success === 'consultation' || target.classList.contains('message--success')) {
-      this.handleSuccess(target);
+    // target - це #consultation-form-wrapper, потрібно перевірити чи всередині є success message
+    const successElement = target.querySelector('[data-success="consultation"]') || 
+                          target.querySelector('.message--success');
+    
+    if (successElement) {
+      this.handleSuccess(successElement);
     }
   }
 
@@ -54,9 +58,26 @@ export class ConsultationFormHandler {
     // Додати клас для анімації закриття
     messageElement.classList.add('message--closing');
     
+    // Зберегти form_location перед видаленням елемента
+    const formLocation = messageElement.dataset.formLocation || 'camp-landing';
+    
     // Видалити елемент через 300ms (час анімації)
     setTimeout(() => {
       messageElement.remove();
+      
+      // Після закриття success message - повернути форму
+      const formWrapper = document.getElementById('consultation-form-wrapper');
+      if (formWrapper && !formWrapper.querySelector('form')) {
+        // Завантажити форму через HTMX GET запит
+        if (typeof htmx !== 'undefined') {
+          // Використати правильний URL (відносний шлях)
+          const formUrl = `/submit-consultation/?form_location=${encodeURIComponent(formLocation)}`;
+          htmx.ajax('GET', formUrl, {
+            target: '#consultation-form-wrapper',
+            swap: 'innerHTML'
+          });
+        }
+      }
     }, 300);
   }
 

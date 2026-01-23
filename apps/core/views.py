@@ -634,8 +634,19 @@ def get_testimonial_form(request):
 def submit_consultation(request):
     """Обробка форми консультації з HTMX та сторінка консультацій."""
     
-    # GET запит - показати сторінку з формою
+    # GET запит - показати форму або сторінку
     if request.method == 'GET':
+        form_location = request.GET.get('form_location', '')
+        
+        # Якщо запитують тільки форму (HTMX запит)
+        if form_location and form_location != 'submit-consultation-page':
+            form = ConsultationForm()
+            return render(request, 'core/components/consultation_form.html', {
+                'form': form,
+                'form_location': form_location
+            })
+        
+        # Повна сторінка для submit-consultation-page
         form = ConsultationForm()
         return render(request, 'core/submit_consultation.html', {
             'form': form,
@@ -699,10 +710,11 @@ def submit_consultation(request):
                     'form_location': form_location
                 }, status=400)
 
-            # Для submit-consultation-page - повертаємо success message
-            if 'submit-consultation-page' in str(form_location):
+            # Для submit-consultation-page та camp-landing - повертаємо success message
+            if 'submit-consultation-page' in str(form_location) or 'camp-landing' in str(form_location):
                 return render(request, 'core/components/consultation_success.html', {
-                    'message': 'Дякуємо! Ми зв\'яжемось з вами найближчим часом.'
+                    'message': 'Дякуємо! Ми зв\'яжемось з вами найближчим часом.',
+                    'form_location': form_location  # Додати для можливості завантаження форми після закриття
                 }, status=200)
             
             # Для інших форм - редирект на thank you

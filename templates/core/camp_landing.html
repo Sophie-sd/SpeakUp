@@ -35,6 +35,9 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="{% static 'css/components/camp-landing.css' %}">
 
+  <!-- HTMX для форми консультації -->
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+
   <!-- Structured Data (Schema.org) -->
   <script type="application/ld+json">
   {
@@ -412,5 +415,8 @@
 
   <!-- Script -->
   <script src="{% static 'js/modules/camp-landing.js' %}" defer></script>
+  
+  <!-- Consultation form handler -->
+  <script src="{% static 'js/modules/consultation-form-handler.js' %}" type="module" defer></script>
 </body>
 </html>
