@@ -710,7 +710,7 @@ def submit_consultation(request):
             if 'camp-landing' in str(form_location):
                 return JsonResponse({
                     'success': True,
-                    'redirect_url': reverse('core:thank_you'),
+                    'redirect_url': reverse('core:thank_you_kids'),
                     'message': 'Дякуємо! Перенаправляємо вас.'
                 })
             
@@ -756,6 +756,12 @@ def submit_consultation(request):
 def thank_you(request):
     """Thank you page після успішної відправки форми"""
     return render(request, 'core/thank_you.html')
+
+
+@require_http_methods(["GET"])
+def thank_you_kids(request):
+    """Thank you page для дитячого навчання (окрема аналітика)"""
+    return render(request, 'core/thank_you_kids.html')
 
 
 # ===== SEO STUB PAGES =====

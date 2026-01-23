@@ -11,6 +11,7 @@ urlpatterns = [
     path('faq', views.faq, name='faq'),
     path('testing', views.testing, name='testing'),
     path('thank-you/', views.thank_you, name='thank_you'),
+    path('thank-you-kids/', views.thank_you_kids, name='thank_you_kids'),
 
     # Homepage content forms
     path('submit-testimonial/', views.submit_testimonial, name='submit_testimonial'),
