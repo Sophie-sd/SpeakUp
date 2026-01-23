@@ -3,6 +3,8 @@
  * Handles CTA button interactions, modal triggers, and form submissions
  */
 
+import { CampFormHandler } from './camp-form-handler.js';
+
 (function() {
   'use strict';
 
@@ -69,6 +71,12 @@
     window.addEventListener('resize', handleScrollVisibility);
     // Initial check
     handleScrollVisibility();
+
+    // Ініціалізувати форму консультації
+    const campForm = document.getElementById('camp-consultation-form');
+    if (campForm) {
+      new CampFormHandler(campForm);
+    }
   }
 
   /**

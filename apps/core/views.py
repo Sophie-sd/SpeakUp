@@ -5,7 +5,7 @@ from django.utils.translation import get_language
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.utils.decorators import method_decorator
 from django.db import models
 from django.conf import settings
@@ -630,31 +630,13 @@ def get_testimonial_form(request):
     })
 
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["POST"])
+@csrf_protect
 def submit_consultation(request):
-    """Обробка форми консультації з HTMX та сторінка консультацій."""
-    
-    # GET запит - показати форму або сторінку
-    if request.method == 'GET':
-        form_location = request.GET.get('form_location', '')
-        
-        # Якщо запитують тільки форму (HTMX запит)
-        if form_location and form_location != 'submit-consultation-page':
-            form = ConsultationForm()
-            return render(request, 'core/components/consultation_form.html', {
-                'form': form,
-                'form_location': form_location
-            })
-        
-        # Повна сторінка для submit-consultation-page
-        form = ConsultationForm()
-        return render(request, 'core/submit_consultation.html', {
-            'form': form,
-            'form_location': 'submit-consultation-page'
-        })
+    """JSON API для консультаційних форм (camp-landing та HTMX для інших)."""
     
     # POST запит - обробити форму
-    # Визначити тип форми на основі data-form-location
+    # Визначити тип форми на основі form_location
     form_location = request.POST.get('form_location', request.POST.get('data-form-location', ''))
 
     # Визначити яку форму використовувати
@@ -687,11 +669,8 @@ def submit_consultation(request):
             from apps.leads.utils import get_client_ip
             consultation.ip_address = get_client_ip(request)
 
-            # Встановити статус "дитяча навчання" якщо форма зі сторінки submit-consultation
-            if 'submit-consultation-page' in str(form_location):
-                consultation.status = 'children_learning'
-            # Встановити статус "дитяча навчання" якщо форма з лендингу табору
-            elif 'camp-landing' in str(form_location):
+            # Встановити статус "дитяча навчання" для camp-landing
+            if 'camp-landing' in str(form_location):
                 consultation.status = 'children_learning'
 
             # КРИТИЧНО: Обробка ValidationError при збереженні
@@ -699,6 +678,23 @@ def submit_consultation(request):
                 consultation.save()
             except ValidationError as e:
                 # ValidationError від model validators
+                logger.warning('[ConsultationForm] Validation error on save: %s', e)
+
+                # Для camp-landing - JSON з помилками
+                if 'camp-landing' in str(form_location):
+                    errors = {}
+                    if hasattr(e, 'error_dict'):
+                        for field, field_errors in e.error_dict.items():
+                            errors[field] = [str(err) for err in field_errors]
+                    else:
+                        errors['__all__'] = [str(e)]
+                    
+                    return JsonResponse({
+                        'success': False,
+                        'errors': errors
+                    }, status=400)
+                
+                # Для інших форм (HTMX) - рендер форми з помилками
                 if hasattr(e, 'error_dict'):
                     for field, errors in e.error_dict.items():
                         form.add_error(field, errors)
@@ -710,14 +706,15 @@ def submit_consultation(request):
                     'form_location': form_location
                 }, status=400)
 
-            # Для submit-consultation-page - повертаємо success message
-            if 'submit-consultation-page' in str(form_location):
-                return render(request, 'core/components/consultation_success.html', {
-                    'message': 'Дякуємо! Ми зв\'яжемось з вами найближчим часом.',
-                    'form_location': form_location  # Додати для можливості завантаження форми після закриття
-                }, status=200)
+            # ДЛЯ CAMP-LANDING - JSON відповідь
+            if 'camp-landing' in str(form_location):
+                return JsonResponse({
+                    'success': True,
+                    'redirect_url': reverse('core:thank_you'),
+                    'message': 'Дякуємо! Перенаправляємо вас.'
+                })
             
-            # Для інших форм - редирект на thank you
+            # ДЛЯ ІНШИХ (index, corporate) - HTMX редирект
             response = HttpResponse(status=200)
             response['HX-Redirect'] = reverse('core:thank_you')
             return response
@@ -725,13 +722,30 @@ def submit_consultation(request):
         except Exception as e:
             # Інші несподівані помилки
             logger.error('[ConsultationForm] Unexpected error: %s', e, exc_info=True)
+            
+            # Для camp-landing - JSON з помилкою
+            if 'camp-landing' in str(form_location):
+                return JsonResponse({
+                    'success': False,
+                    'errors': {'__all__': ['Помилка сервера. Спробуйте ще раз.']}
+                }, status=500)
+            
+            # Для інших форм - рендер форми з помилкою
             form.add_error(None, 'Помилка сервера. Спробуйте ще раз.')
             return render(request, 'core/components/consultation_form.html', {
                 'form': form,
                 'form_location': form_location
             }, status=500)
 
-    # Якщо форма невалідна, повертаємо помилки
+    # Форма невалідна
+    # ДЛЯ CAMP-LANDING - JSON з помилками
+    if 'camp-landing' in str(form_location):
+        return JsonResponse({
+            'success': False,
+            'errors': form.errors
+        }, status=400)
+    
+    # ДЛЯ ІНШИХ (index, corporate) - HTMX рендер форми з помилками
     return render(request, 'core/components/consultation_form.html', {
         'form': form,
         'form_location': form_location

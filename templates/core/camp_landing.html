@@ -400,7 +400,33 @@
         <div class="camp-modal__section camp-modal__section--form">
           <h3 class="camp-modal__section-title">Або залишіть дані для консультації</h3>
           <div class="camp-modal__form-wrapper">
-            {% include "core/components/consultation_form.html" with form=consultation_form form_location="camp-landing" %}
+            <form method="post"
+                  action="{% url 'core:submit_consultation' %}"
+                  data-form-type="camp-consultation"
+                  data-form-location="camp-landing"
+                  id="camp-consultation-form"
+                  novalidate>
+              {% csrf_token %}
+              <input type="hidden" name="form_location" value="camp-landing">
+              
+              <div class="form-group">
+                {{ consultation_form.name }}
+                {% if consultation_form.name.errors %}
+                  <span class="form-error">{{ consultation_form.name.errors.0 }}</span>
+                {% endif %}
+              </div>
+              
+              <div class="form-group">
+                {{ consultation_form.phone }}
+                {% if consultation_form.phone.errors %}
+                  <span class="form-error">{{ consultation_form.phone.errors.0 }}</span>
+                {% endif %}
+              </div>
+              
+              <button type="submit" class="button button--primary button--full">
+                Замовити дзвінок
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -411,6 +437,7 @@
   {% comment %}{% include "components/modal.html" %}{% endcomment %}
 
   <!-- Script -->
-  <script src="{% static 'js/modules/camp-landing.js' %}" defer></script>
+  <script type="module" src="{% static 'js/modules/camp-landing.js' %}" defer></script>
+  <script type="module" src="{% static 'js/modules/camp-form-handler.js' %}" defer></script>
 </body>
 </html>
