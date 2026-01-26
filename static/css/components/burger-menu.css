@@ -163,6 +163,7 @@
     background: var(--color-primary);
     border: 1px solid var(--color-white);
     color: var(--color-white);
+    text-decoration: none;
   }
 }
 

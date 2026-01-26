@@ -5,7 +5,19 @@
       <div class="header__menu-slider" data-nav-slider></div>
       <ul class="header__menu">
         <li><a href="{% url 'core:index' %}" class="header__link" data-nav-tab><span class="header__link-text">Головна</span></a></li>
-        <li><a href="{% url 'core:programs_list' %}" class="header__link" data-nav-tab><span class="header__link-text">Програми</span></a></li>
+        <li class="header__menu-item--has-dropdown" data-programs-dropdown>
+          <button type="button" class="header__link header__link--dropdown" data-nav-tab aria-expanded="false" aria-haspopup="true">
+            <span class="header__link-text">Програми</span>
+            <span class="header__link-arrow" aria-hidden="true">▼</span>
+          </button>
+          <div class="header__dropdown" data-dropdown-menu aria-hidden="true">
+            <ul class="header__dropdown-list">
+              <li><a href="{% url 'core:buy_stub' %}" class="header__dropdown-link">Для дорослих</a></li>
+              <li><a href="{% url 'core:camp_landing_page' %}" class="header__dropdown-link">Для дітей</a></li>
+              <li><a href="{% url 'core:premium_learning_page' %}" class="header__dropdown-link header__dropdown-link--premium">Speak Up Premium</a></li>
+            </ul>
+          </div>
+        </li>
         <li class="header__menu-item--mobile-hidden">
           <a href="{% url 'core:program_detail' slug='corporate' %}" class="header__link" data-nav-tab><span class="header__link-text">Корпоративним клієнтам</span></a>
         </li>

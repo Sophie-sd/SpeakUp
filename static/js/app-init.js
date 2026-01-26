@@ -7,6 +7,7 @@ import programsListModule from './modules/programs-list.js';
 import { BaseAccordion } from './modules/base-accordion.js';
 import { initImageFallback } from './modules/image-fallback.js';
 import { initTrialModal } from './modules/trial-modal.js';
+import { ProgramsDropdown } from './modules/programs-dropdown.js';
 
 /**
  * Автоматично визначає активне посилання в навігації на основі поточного URL
@@ -76,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new BurgerMenu();
   initRunningLine();
   initTrialModal();
+  new ProgramsDropdown();
 
   // Слайдер для нижнього меню навігації
   // Використовуємо селектор, який знаходить тільки нижнє меню (всередині .mobile-nav-container)
