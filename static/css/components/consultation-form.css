@@ -15,7 +15,6 @@
 
 .consultation-form {
   max-width: 600px;
-  margin: 0 auto;
   padding: var(--spacing-xl);
   position: relative;
   overflow: hidden;
