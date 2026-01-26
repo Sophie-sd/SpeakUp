@@ -7,6 +7,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/components/parallax.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/consultation-form.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/premium-temporary.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -16,7 +18,31 @@
 </div>
 
 <main class="hero-content">
-  <!-- Контент буде додано пізніше -->
+  <!-- Premium Temporary Content Section -->
+  <section class="premium-temporary glass-section">
+    <div class="premium-temporary__content">
+      <h1 class="premium-temporary__title">Speak Up Premium</h1>
+      <p class="premium-temporary__subtitle">Унікальна програма персональних занять</p>
+      
+      <div class="premium-temporary__message glass-card">
+        <h2 class="premium-temporary__message-title">Програма скоро з'явиться на сайті</h2>
+        <p class="premium-temporary__message-text">
+          <strong>Speak Up Premium</strong> — комплексна програма, яка поєднує персональні заняття з викладачем, розмовні групи та мультимедійні тренінги для вашого прориву в англійській мові.
+        </p>
+        <p class="premium-temporary__message-text">
+          <strong>Дізнайтеся деталі прямо зараз</strong> — залиште заявку або зв'яжіться з нами.
+        </p>
+      </div>
+    </div>
+
+    <!-- Consultation Form Section -->
+    <div class="premium-temporary__form-container">
+      <h2 class="premium-temporary__form-title">Залишити заявку</h2>
+      <div class="consultation-form glass-card">
+        {% include 'core/components/consultation_form.html' with form=consultation_form form_location='premium' %}
+      </div>
+    </div>
+  </section>
 </main>
 {% endblock %}
 

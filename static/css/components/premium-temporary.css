@@ -1,0 +1,197 @@
+/* ==========================================================================
+   Premium Temporary Content - Тимчасовий контент для Premium сторінки
+   ========================================================================== */
+
+.premium-temporary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-spacing-desktop);
+  padding: var(--section-padding-desktop);
+  max-width: min(var(--content-width-desktop), var(--content-max-width));
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  margin-bottom: var(--section-spacing-desktop);
+}
+
+/* Content Section */
+.premium-temporary__content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.premium-temporary__title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-white);
+  margin: 0;
+  text-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.5),
+    0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.premium-temporary__subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Message Box */
+.premium-temporary__message {
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+}
+
+.premium-temporary__message-title {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+}
+
+.premium-temporary__message-text {
+  font-size: 1rem;
+  color: #333;
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+.premium-temporary__message-text:last-child {
+  margin-bottom: 0;
+}
+
+.premium-temporary__message-text strong {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Form Container */
+.premium-temporary__form-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.premium-temporary__form-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--color-white);
+  text-align: center;
+  margin: 0;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (width <= 767px) {
+  .premium-temporary {
+    padding: var(--section-padding-mobile);
+    gap: var(--section-spacing-mobile);
+    margin-bottom: var(--section-spacing-mobile);
+  }
+
+  .premium-temporary__content {
+    gap: var(--spacing-sm);
+  }
+
+  .premium-temporary__title {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .premium-temporary__subtitle {
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+  }
+
+  .premium-temporary__message {
+    padding: var(--spacing-md);
+  }
+
+  .premium-temporary__message-title {
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .premium-temporary__message-text {
+    font-size: 0.9375rem;
+  }
+
+  .premium-temporary__form-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+}
+
+/* Tablet */
+@media (width >= 768px) and (width < 1024px) {
+  .premium-temporary {
+    gap: var(--section-spacing-desktop);
+  }
+
+  .premium-temporary__message {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+/* Large screens */
+@media (width >= 1024px) {
+  .premium-temporary__content {
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (width <= 767px) and (orientation: landscape) {
+  .premium-temporary {
+    padding: clamp(0.75rem, 2vh, 1rem);
+    gap: clamp(0.75rem, 2vh, 1.25rem);
+  }
+
+  .premium-temporary__title {
+    font-size: clamp(1.5rem, 5vh, 2rem);
+    margin-bottom: clamp(0.25rem, 0.5vh, 0.5rem);
+  }
+
+  .premium-temporary__subtitle {
+    font-size: clamp(0.8125rem, 2vh, 1rem);
+  }
+
+  .premium-temporary__message {
+    padding: clamp(0.75rem, 2vh, 1.5rem);
+  }
+}
+
+/* Very small screens */
+@media (width <= 374px) {
+  .premium-temporary {
+    padding: clamp(0.75rem, 3vw, 1rem);
+  }
+
+  .premium-temporary__title {
+    font-size: clamp(1.5rem, 5vw, 1.875rem);
+  }
+
+  .premium-temporary__subtitle {
+    font-size: clamp(0.8125rem, 2.5vw, 1rem);
+  }
+
+  .premium-temporary__message-title {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+  }
+
+  .premium-temporary__message-text {
+    font-size: 0.875rem;
+  }
+}
