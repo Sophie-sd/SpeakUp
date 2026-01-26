@@ -120,14 +120,6 @@
 /* ===== АДАПТИВНІСТЬ - МОБІЛЬНІ ===== */
 
 @media (width <= 767px) {
-  .header__dropdown {
-    /* На мобільних можна зменшити відступ */
-    bottom: calc(100% + 6px);
-    
-    /* Перевірка виходу за межі екрану */
-    max-width: calc(100vw - 20px);
-    min-width: calc(100vw - 40px);
-  }
   
   .header__dropdown-link {
     /* Мінімальна висота для touch targets */
