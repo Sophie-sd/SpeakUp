@@ -81,15 +81,17 @@
 /* ===== ПОСИЛАННЯ В DROPDOWN ===== */
 
 .header__dropdown-link {
-  display: block;
-  padding: var(--menu-spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--menu-spacing-md) * 0.7);
   color: var(--color-white);
   text-decoration: none;
-  font-size: calc(16px * var(--menu-scale));
+  font-size: calc(18px * var(--menu-scale));
   font-weight: 500;
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
-  text-align: center;
+  white-space: nowrap;
   touch-action: manipulation;
 }
 
@@ -124,12 +126,13 @@
     
     /* Перевірка виходу за межі екрану */
     max-width: calc(100vw - 20px);
+    min-width: calc(100vw - 40px);
   }
   
   .header__dropdown-link {
     /* Мінімальна висота для touch targets */
     min-height: 44px;
-    padding: calc(var(--menu-spacing-md) * 1.2);
+    padding: calc(var(--menu-spacing-md) * 0.85);
   }
 }
 
