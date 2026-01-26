@@ -190,6 +190,34 @@
   border: none;
 }
 
+/* Reset для button елементів з класом .header__link */
+button.header__link {
+  /* Прибрати стандартні стилі браузера для button */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Гарантувати ті ж стилі що й для <a> */
+  font-family: inherit;
+  font-size: var(--menu-font-lg);
+  font-weight: 800;
+  line-height: inherit;
+  text-transform: none;
+  letter-spacing: inherit;
+
+  /* Прибрати всі можливі browser defaults */
+  margin: 0;
+  padding: var(--menu-spacing-xs) var(--menu-spacing-sm);
+  border: none;
+  background: transparent;
+  color: var(--color-white);
+
+  /* iOS Safari фікси */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
 .header__link-text {
   position: relative;
   z-index: 1;
@@ -208,6 +236,29 @@
     color: var(--color-white);
     text-decoration: none;
   }
+
+  button.header__link:hover {
+    background: var(--color-primary);
+    border: 1px solid var(--color-white);
+    color: var(--color-white);
+    text-decoration: none;
+  }
+}
+
+/* Active стан для button */
+button.header__link--active {
+  background: var(--color-primary);
+  border: 1px solid var(--color-white);
+  color: var(--color-white);
+}
+
+/* Focus стан для button */
+button.header__link:focus-visible {
+  background: var(--color-primary);
+  border: 1px solid var(--color-white);
+  color: var(--color-white);
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
 }
 
 /* Мобільна версія */
@@ -279,6 +330,13 @@
     font-size: var(--menu-font-xs);
   }
 
+  /* Мобільні стилі для button.header__link */
+  button.header__link {
+    padding: var(--menu-size-xs) var(--menu-size-sm);
+    font-size: var(--menu-font-xs);
+    /* Гарантувати що розміри співпадають з <a> */
+  }
+
   /* Слайдер на мобільних */
   .header__menu-slider {
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -333,6 +391,12 @@
     .header__nav {
       -webkit-overflow-scrolling: touch;
     }
+  }
+
+  /* iOS Safari фікси для button.header__link */
+  button.header__link {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
   }
 }
 
