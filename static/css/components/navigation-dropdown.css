@@ -122,7 +122,7 @@
 @media (width <= 767px) {
   .header__dropdown {
     /* На мобільних можна зменшити відступ */
-    bottom: calc(100% + 8px);
+    bottom: calc(100% + 6px);
     
     /* Перевірка виходу за межі екрану */
     max-width: calc(100vw - 20px);
@@ -131,8 +131,8 @@
   
   .header__dropdown-link {
     /* Мінімальна висота для touch targets */
-    min-height: 44px;
-    padding: calc(var(--menu-spacing-md) * 0.85);
+    min-height: 40px;
+    padding: 8px 12px;
   }
 }
 

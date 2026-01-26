@@ -304,7 +304,8 @@ button.header__link:focus-visible {
 
   /* Виправлення асиметрії */
   .mobile-nav-container .header__menu {
-    padding: var(--menu-size-xs) 0;
+    gap: 4px;
+    padding: 4px 0;
     padding-inline-start: 0;
     padding-inline-end: 0;
     margin-left: 0;
@@ -326,14 +327,14 @@ button.header__link:focus-visible {
   }
 
   .header__link {
-    padding: var(--menu-size-xs) var(--menu-size-sm);
-    font-size: var(--menu-font-xs);
+    padding: 4px 6px;
+    font-size: 11px;
   }
 
   /* Мобільні стилі для button.header__link */
   button.header__link {
-    padding: var(--menu-size-xs) var(--menu-size-sm);
-    font-size: var(--menu-font-xs);
+    padding: 4px 6px;
+    font-size: 11px;
     /* Гарантувати що розміри співпадають з <a> */
   }
 
