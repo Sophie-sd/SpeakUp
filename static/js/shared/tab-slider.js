@@ -38,23 +38,34 @@ export function initTabSlider(containerSelector, options = {}) {
   let resetTimeout = null;
 
   /**
-   * Отримує тільки видимі кнопки (фільтрує приховані через CSS)
+   * Отримує тільки видимі кнопки (фільтрує приховані через CSS та dropdown-кнопки)
    * @returns {HTMLElement[]} Масив видимих кнопок
    */
   function getVisibleTabs() {
     return tabs.filter(tab => {
       // Перевіряємо видимість через offsetParent (найшвидший спосіб)
       // offsetParent === null означає, що елемент прихований (display: none)
+      
+      // Виключаємо dropdown-кнопки з логіки tab-slider
+      const isDropdownButton = tab.closest('[data-programs-dropdown]');
+      if (isDropdownButton) return false;
+      
       return tab.offsetParent !== null;
     });
   }
 
   /**
-   * Знаходить активну кнопку в меню
+   * Знаходить активну кнопку в меню (виключаючи dropdown-кнопки)
    * @returns {HTMLElement|null} Активна кнопка або null
    */
   function findActiveTab() {
-    return tabs.find(tab => tab.classList.contains(config.activeClass)) || null;
+    return tabs.find(tab => {
+      // Виключаємо dropdown-кнопки з пошуку активної
+      if (tab.closest('[data-programs-dropdown]')) {
+        return false;
+      }
+      return tab.classList.contains(config.activeClass);
+    }) || null;
   }
 
   /**
@@ -176,8 +187,17 @@ export function initTabSlider(containerSelector, options = {}) {
    */
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      // Видаляємо active з усіх кнопок
-      tabs.forEach(t => t.classList.remove(config.activeClass));
+      // Виключаємо dropdown-кнопки з логіки tab-slider
+      if (tab.closest('[data-programs-dropdown]')) {
+        return;
+      }
+      
+      // Видаляємо active з усіх видимих табів
+      tabs.forEach(t => {
+        if (!t.closest('[data-programs-dropdown]')) {
+          t.classList.remove(config.activeClass);
+        }
+      });
       // Додаємо active до клікнутої
       tab.classList.add(config.activeClass);
       updateSliderPosition(tab, false); // З анімацією

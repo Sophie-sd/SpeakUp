@@ -17,6 +17,7 @@ export class ProgramsDropdown {
 
     this.isFixed = false; // Чи dropdown зафіксовано кліком
     this.isOpen = false;  // Чи dropdown відкритий зараз
+    this.isMobile = this.checkIfMobile(); // Чи мобільний viewport
 
     this.setupEventListeners();
     
@@ -24,6 +25,13 @@ export class ProgramsDropdown {
     if (this.checkIfProgramsPageActive()) {
       this.button.classList.add('header__link--active');
     }
+  }
+
+  /**
+   * Перевіряє, чи мобільний viewport (≤767px)
+   */
+  checkIfMobile() {
+    return window.matchMedia('(width <= 767px)').matches;
   }
 
   /**
@@ -74,6 +82,15 @@ export class ProgramsDropdown {
       }
     });
 
+    // Touch support для iOS: touchend для більш надійного закриття (в addition до click)
+    document.addEventListener('touchend', (e) => {
+      // Спеціально для touch: закриваємо якщо дропдаун зафіксовано і клік зовні
+      if (this.isMobile && this.isFixed && !this.container.contains(e.target)) {
+        this.isFixed = false;
+        this.close();
+      }
+    }, { passive: true });
+
     // Escape key для закриття
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.isOpen) {
@@ -92,6 +109,11 @@ export class ProgramsDropdown {
     this.dropdown.setAttribute('aria-hidden', 'false');
     this.button.setAttribute('aria-expanded', 'true');
     this.button.classList.add('header__link--active');
+    
+    // На мобільній додаємо клас для усунення обрізання через overflow
+    if (this.isMobile) {
+      document.body.classList.add('programs-dropdown-open');
+    }
   }
 
   /**
@@ -101,6 +123,11 @@ export class ProgramsDropdown {
     this.isOpen = false;
     this.dropdown.setAttribute('aria-hidden', 'true');
     this.button.setAttribute('aria-expanded', 'false');
+    
+    // На мобільній знімаємо клас обрізання
+    if (this.isMobile) {
+      document.body.classList.remove('programs-dropdown-open');
+    }
     
     // Залишаємо active тільки якщо на сторінці програм
     if (!this.checkIfProgramsPageActive()) {

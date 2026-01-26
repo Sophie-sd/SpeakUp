@@ -142,4 +142,34 @@
   .header__dropdown {
     -webkit-overflow-scrolling: touch;
   }
+
+  /* iOS Safari: покращена видимість на мобільній при dropdown відкритому */
+  @media (width <= 767px) {
+    .header__dropdown[aria-hidden="false"] {
+      /* Гарантуємо що dropdown видимий над іншим контентом на iOS */
+      position: absolute;
+      z-index: 1002;
+      
+      /* Коректна робота з high zoom level на iOS Safari */
+      -webkit-user-select: none;
+      user-select: none;
+    }
+  }
+}
+
+/* ===== МОБІЛЬНІ - FIX ДЛЯ OVERFLOW CLIPPING ===== */
+
+/* Коли dropdown відкритий на мобільній, тимчасово вимикаємо overflow обрізання */
+@media (width <= 767px) {
+  body.programs-dropdown-open .mobile-nav-container {
+    overflow: visible;
+  }
+
+  body.programs-dropdown-open .mobile-nav-container .header__nav {
+    overflow: visible;
+  }
+
+  body.programs-dropdown-open .mobile-nav-container .header__menu {
+    overflow: visible;
+  }
 }
