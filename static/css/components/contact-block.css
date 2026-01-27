@@ -193,18 +193,18 @@
   }
 
   .contact-block__phone-block {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: var(--spacing-xs);
   }
 
   .contact-block__phone-text {
-    flex: 1 0 100%;
+    flex: 1 1 auto;
+    min-width: 0;
     font-size: var(--font-size-base);
-    text-align: center;
+    text-align: left;
   }
 
   .contact-block__copy-btn {
-    flex: 1;
     min-height: 40px;
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-sm);
