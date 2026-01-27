@@ -79,7 +79,6 @@
 /* Невидимі секції для балансування */
 .header__spacer--left,
 .header__spacer--right {
-  display: none;
   flex: 1 1 0;
   min-width: 0;
   visibility: hidden;
