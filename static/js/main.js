@@ -31,6 +31,48 @@ window.addEventListener('pageshow', function (event) {
 // HTMX Integration
 // ==========================================================================
 
+/**
+ * Глобальна обробка autofill для всіх input полів
+ * Очищає помилки та атрибути disabled/readonly
+ */
+function setupAutofillHandlers(root = document) {
+  const inputs = root.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], input[name]');
+
+  inputs.forEach(input => {
+    // Skip honeypot та hidden поля
+    if (input.classList.contains('form-group__input--honeypot') ||
+        input.type === 'hidden') {
+      return;
+    }
+
+    // Autofill detection через animation
+    input.addEventListener('animationstart', function(e) {
+      if (e.animationName === 'onAutoFillStart') {
+        console.log('[Global] Autofill detected on:', input.name || input.id);
+
+        // Очистити помилки
+        input.classList.remove('field-error', 'error');
+        input.removeAttribute('aria-invalid');
+        input.removeAttribute('disabled');
+        input.removeAttribute('readonly');
+
+        const formGroup = input.closest('.form-group');
+        if (formGroup) {
+          const errorSpan = formGroup.querySelector('.form-error');
+          if (errorSpan) errorSpan.remove();
+        }
+      }
+    });
+
+    // Change event (fallback)
+    input.addEventListener('change', function() {
+      // Очистити disabled/readonly після autofill
+      this.removeAttribute('disabled');
+      this.removeAttribute('readonly');
+    });
+  });
+}
+
 if (typeof htmx !== 'undefined') {
   // Rule 85: CSRF Token для HTMX запитів
   document.body.addEventListener('htmx:configRequest', function (event) {
@@ -93,48 +135,6 @@ if (typeof htmx !== 'undefined') {
       });
     }
   });
-
-  /**
-   * Глобальна обробка autofill для всіх input полів
-   * Очищає помилки та атрибути disabled/readonly
-   */
-  function setupAutofillHandlers(root = document) {
-    const inputs = root.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], input[name]');
-
-    inputs.forEach(input => {
-      // Skip honeypot та hidden поля
-      if (input.classList.contains('form-group__input--honeypot') ||
-          input.type === 'hidden') {
-        return;
-      }
-
-      // Autofill detection через animation
-      input.addEventListener('animationstart', function(e) {
-        if (e.animationName === 'onAutoFillStart') {
-          console.log('[Global] Autofill detected on:', input.name || input.id);
-
-          // Очистити помилки
-          input.classList.remove('field-error', 'error');
-          input.removeAttribute('aria-invalid');
-          input.removeAttribute('disabled');
-          input.removeAttribute('readonly');
-
-          const formGroup = input.closest('.form-group');
-          if (formGroup) {
-            const errorSpan = formGroup.querySelector('.form-error');
-            if (errorSpan) errorSpan.remove();
-          }
-        }
-      });
-
-      // Change event (fallback)
-      input.addEventListener('change', function() {
-        // Очистити disabled/readonly після autofill
-        this.removeAttribute('disabled');
-        this.removeAttribute('readonly');
-      });
-    });
-  }
 
   // Rule 87: Обробка після заміни контенту - afterSwap
   document.body.addEventListener('htmx:afterSwap', function (event) {
