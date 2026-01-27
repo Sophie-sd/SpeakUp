@@ -10,6 +10,10 @@
     {% csrf_token %}
     {# Hidden input to pass form location to backend #}
     <input type="hidden" name="form_location" value="{% if form_location %}{{ form_location }}{% else %}page{% endif %}">
+    
+    {# Блок швидкого контакту #}
+    {% include 'components/contact-block.html' %}
+    
     <div class="consultation-form__phone-section">
       <div class="form-group">
         {{ form.name }}

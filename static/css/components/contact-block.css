@@ -1,0 +1,250 @@
+/* ==========================================================================
+   Contact Block - Швидкий контакт з телефоном і месенджерами
+   ========================================================================== */
+
+.contact-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Заголовок блоку */
+.contact-block__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.9);
+  line-height: 1.4;
+}
+
+/* Секція телефону */
+.contact-block__phone-section {
+  background: rgba(231, 30, 20, 0.05);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  border: 1px solid rgba(231, 30, 20, 0.15);
+}
+
+.contact-block__phone-label {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+}
+
+/* Блок з номером і кнопкою */
+.contact-block__phone-block {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--color-white);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  border: 2px solid rgba(231, 30, 20, 0.2);
+}
+
+.contact-block__phone-text {
+  flex: 1;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.5px;
+}
+
+/* Кнопка копіювання */
+.contact-block__copy-btn {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-family: inherit;
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.contact-block__copy-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(231, 30, 20, 0.25);
+}
+
+.contact-block__copy-btn:active {
+  transform: scale(0.98);
+}
+
+.contact-block__copy-btn.copied {
+  background: #10b981;
+}
+
+.contact-block__copy-btn svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.contact-block__copy-text {
+  display: inline;
+}
+
+/* Секція месенджерів */
+.contact-block__social-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.contact-block__social-title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.contact-block__social-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+}
+
+/* Кнопка месенджера */
+.contact-block__social-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  cursor: pointer;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.8);
+  transition: all var(--transition-base);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.contact-block__social-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.contact-block__social-btn svg {
+  width: 28px;
+  height: 28px;
+  transition: transform var(--transition-base);
+}
+
+/* Варіанти мессенджерів */
+.contact-block__social-btn--telegram {
+  border-color: #0088cc;
+  color: #0088cc;
+}
+
+.contact-block__social-btn--telegram:hover {
+  background: rgba(0, 136, 204, 0.1);
+  transform: translateY(-4px);
+}
+
+.contact-block__social-btn--instagram {
+  border-color: #e4405f;
+  color: #e4405f;
+}
+
+.contact-block__social-btn--instagram:hover {
+  background: rgba(228, 64, 95, 0.1);
+  transform: translateY(-4px);
+}
+
+.contact-block__social-btn--facebook {
+  border-color: #1877f2;
+  color: #1877f2;
+}
+
+.contact-block__social-btn--facebook:hover {
+  background: rgba(24, 119, 242, 0.1);
+  transform: translateY(-4px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact-block__social-btn:hover svg {
+    transform: scale(1.1);
+  }
+}
+
+.contact-block__social-btn:active {
+  transform: translateY(0) scale(1);
+}
+
+.contact-block__social-btn:active svg {
+  transform: scale(1);
+}
+
+/* Мобільна версія */
+@media (width <= 767px) {
+  .contact-block {
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .contact-block__phone-section {
+    padding: var(--spacing-sm);
+  }
+
+  .contact-block__phone-block {
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  .contact-block__phone-text {
+    flex: 1 0 100%;
+    font-size: var(--font-size-base);
+    text-align: center;
+  }
+
+  .contact-block__copy-btn {
+    flex: 1;
+    min-height: 40px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+
+  .contact-block__social-buttons {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xs);
+  }
+
+  .contact-block__social-btn {
+    padding: var(--spacing-sm);
+  }
+
+  .contact-block__social-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .contact-block__copy-text {
+    display: none;
+  }
+
+  .contact-block__social-btn span {
+    font-size: 0.75rem;
+    text-align: center;
+  }
+}

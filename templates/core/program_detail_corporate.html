@@ -346,6 +346,9 @@
     <h3 class="corporate-consultation__title">Хочете отримати більше деталей щодо корпоративного навчання?</h3>
     <p class="corporate-consultation__description">Залиште ваші контакти та з вами зв'яжеться наш менеджер для більш детальної консультації</p>
     <div class="corporate-consultation__form glass-card">
+      {# Блок швидкого контакту #}
+      {% include 'components/contact-block.html' %}
+      
       <form method="post"
             action="{% url 'core:submit_consultation' %}"
             hx-post="{% url 'core:submit_consultation' %}"

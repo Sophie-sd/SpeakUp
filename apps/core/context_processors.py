@@ -2,6 +2,7 @@ from django.utils.translation import get_language
 from django.urls import translate_url
 from django.conf import settings
 from apps.leads.forms import TrialLessonForm
+from apps.core.models import ContactInfo
 
 def seo_context(request):
     """
@@ -63,7 +64,8 @@ def feature_flags(request):
 
 
 def forms_context(request):
-    """Додає форми у всі templates (для header та інших компонентів)."""
+    """Додає форми та контакти у всі templates (для header та інших компонентів)."""
     return {
         'trial_form': TrialLessonForm(),
+        'contact_info': ContactInfo.objects.filter(is_active=True).first(),
     }

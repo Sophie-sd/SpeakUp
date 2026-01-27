@@ -10,6 +10,11 @@
       novalidate>
   {% csrf_token %}
 
+  {# Блок швидкого контакту (крім hero-варіанту) #}
+  {% if variant != 'hero' %}
+    {% include 'components/contact-block.html' %}
+  {% endif %}
+
   {# Honeypot поле (приховане CSS) - незвична назва #}
   <div class="form-group form-group--honeypot" aria-hidden="true">
     <input type="text"
