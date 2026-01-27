@@ -219,7 +219,9 @@ html {
   height: auto;
   min-height: 100vh;
   min-height: 100dvh;
-  /* overflow-y: auto; - Видалено, щоб уникнути конфліктів */
+  
+  /* EMERGENCY FIX: Force vertical scroll */
+  overflow-y: scroll !important;
 
   /* Темний фон для запобігання білим смугам на overscroll */
   background-color: var(--color-bg-parallax);
@@ -234,8 +236,8 @@ body {
   color: var(--color-white);
   background-color: transparent; /* Прозорий фон для відображення паралаксу на десктопі */
 
-  /* Rule 32: overscroll-behavior */
-  overscroll-behavior: none;
+  /* Rule 32: overscroll-behavior - REMOVED to fix stuck scroll */
+  /* overscroll-behavior: none; */
 
   /* Rule 42: font-smoothing */
   -webkit-font-smoothing: antialiased;
@@ -256,8 +258,12 @@ body {
   box-sizing: border-box;
 
   /* Запобігає зайвому скролу через fixed елементи */
-  min-height: 0;
+  min-height: 100vh;
+  min-height: 100dvh; /* Ensure body takes full height */
   height: auto;
+  
+  /* EMERGENCY FIX: Ensure body allows scroll */
+  overflow-y: visible !important;
 }
 
 /* На мобільних робимо body прозорим, щоб фонове зображення було видиме */

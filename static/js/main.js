@@ -270,18 +270,27 @@ document.addEventListener('DOMContentLoaded', function() {
   // This prevents the page from being stuck if a modal/menu didn't close properly
   // or if styles leaked.
   setTimeout(() => {
-    const isLocked = document.body.style.overflow === 'hidden';
+    const bodyStyle = window.getComputedStyle(document.body);
+    const isOverflowHidden = bodyStyle.overflow === 'hidden' || document.body.style.overflow === 'hidden';
+    const isPositionFixed = bodyStyle.position === 'fixed' || document.body.style.position === 'fixed';
+    
     const hasActiveModal = document.querySelector('.modal--active') || 
                            document.querySelector('[aria-modal="true"][style*="display: block"]') ||
                            document.querySelector('.burger-menu--active'); // Check your burger menu active class
 
-    if (isLocked && !hasActiveModal) {
+    if ((isOverflowHidden || isPositionFixed) && !hasActiveModal) {
       console.warn('[Safety] Scroll locked but no modal active. Forcing unlock.');
+      
+      // Force remove inline styles
       document.body.style.removeProperty('overflow');
       document.body.style.removeProperty('position');
       document.body.style.removeProperty('top');
       document.body.style.removeProperty('width');
       document.body.style.removeProperty('padding-right');
+      
+      // Also ensure HTML is scrollable
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.overflowY = '';
     }
   }, 500); // Wait a bit for initial scripts to settle
 
