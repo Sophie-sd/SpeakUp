@@ -4,6 +4,7 @@
  */
 
 import { CampFormHandler } from './camp-form-handler.js';
+import { lockScroll, unlockScroll } from '../utils/scroll-lock.js';
 
 (function() {
   'use strict';
@@ -67,7 +68,16 @@ import { CampFormHandler } from './camp-form-handler.js';
     });
 
     // Initialize scroll handler for fixed CTA button visibility
-    window.addEventListener('scroll', handleScrollVisibility);
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(handleScrollVisibility);
+        ticking = true;
+        setTimeout(() => {
+          ticking = false;
+        }, 150);
+      }
+    }, { passive: true });
     window.addEventListener('resize', handleScrollVisibility);
     // Initial check
     handleScrollVisibility();
@@ -96,7 +106,7 @@ import { CampFormHandler } from './camp-form-handler.js';
     const campModal = document.getElementById('camp-modal');
     if (campModal) {
       campModal.classList.add('camp-modal--active');
-      document.body.style.overflow = 'hidden';
+      lockScroll();
       
       // Set focus to first form input for accessibility
       const firstInput = campModal.querySelector('input[type="text"], input[type="tel"]');
@@ -113,7 +123,7 @@ import { CampFormHandler } from './camp-form-handler.js';
     const campModal = document.getElementById('camp-modal');
     if (campModal) {
       campModal.classList.remove('camp-modal--active');
-      document.body.style.overflow = '';
+      unlockScroll();
     }
   }
 

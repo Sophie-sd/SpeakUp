@@ -65,6 +65,12 @@
   pointer-events: none;
 }
 
+/* Дозволити клики на інтерактивних елементах */
+[data-header-running-line] a,
+[data-header-running-line] button {
+  pointer-events: auto;
+}
+
 /* Клікабельна бігуча стрічка тільки на мобільних */
 @media (width <= 767px) {
   [data-header-running-line] {

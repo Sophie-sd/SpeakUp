@@ -76,10 +76,9 @@ function initAdvantagesCarousel() {
 
       // Якщо рух мінімальний - це tap, робимо flip
       if (diffX < 10 && diffY < 10) {
-        e.preventDefault();
         handleFlip();
       }
-    }, { passive: false });
+    }, { passive: true });
   });
 
   // Keyboard navigation для accessibility
@@ -161,9 +160,6 @@ function initAdvantagesCarousel() {
     }
 
     // Smooth scroll на desktop при кліку по індикатору (якщо буде додано)
-    container.addEventListener('scroll', () => {
-      // Можна додати логіку для індикаторів прогресу
-    }, { passive: true });
   }
 }
 

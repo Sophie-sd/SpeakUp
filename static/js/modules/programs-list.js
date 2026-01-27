@@ -1,5 +1,7 @@
 'use strict';
 
+import { scrollToConsultation } from '../utils/scroll-utils.js';
+
 /**
  * Programs List - таб-навігація та акордеони для сторінки всіх програм
  */
@@ -79,7 +81,7 @@ function handleConsultationClick(e) {
   // Скролл до форми консультації
   const consultationSection = document.querySelector('#consultation');
   if (consultationSection) {
-    consultationSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    scrollToConsultation(consultationSection, 'center');
 
     // Зберегти вибрану програму для передачі в форму
     sessionStorage.setItem('selectedPricing', programTitle);

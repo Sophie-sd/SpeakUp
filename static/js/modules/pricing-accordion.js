@@ -1,6 +1,7 @@
 'use strict';
 
 import { BaseAccordion } from './base-accordion.js';
+import { scrollToConsultation } from '../utils/scroll-utils.js';
 
 /**
  * Pricing Accordion - акордеони прайс-листу
@@ -50,7 +51,7 @@ function handleConsultationClick(e) {
   // Скролл до форми консультації
   const consultationSection = document.querySelector('#consultation');
   if (consultationSection) {
-    consultationSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    scrollToConsultation(consultationSection, 'center');
 
     // Зберегти вибраний пакет для передачі в форму
     sessionStorage.setItem('selectedPricing', pricingTitle);

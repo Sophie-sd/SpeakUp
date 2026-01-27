@@ -1,5 +1,7 @@
 'use strict';
 
+import { lockScroll, unlockScroll } from '../utils/scroll-lock.js';
+
 /**
  * Trial Modal - модальне вікно для запису на пробний урок
  * Обробляє відкриття/закриття модального вікна та доступність
@@ -20,6 +22,7 @@ export function initTrialModal() {
    */
   const openModal = () => {
     modal.classList.add('modal--active');
+    lockScroll();
     // Trap focus для доступності
     const focusableElements = modal.querySelectorAll(
       'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -56,6 +59,7 @@ export function initTrialModal() {
    */
   const closeModal = () => {
     modal.classList.remove('modal--active');
+    unlockScroll();
     trigger.focus(); // Повернути фокус на кнопку
   };
 
