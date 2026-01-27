@@ -66,6 +66,11 @@ import { CampFormHandler } from './camp-form-handler.js';
       }
     });
 
+    // Гарантувати скидання overflow при покиданні сторінки (якщо модалка була відкрита)
+    window.addEventListener('pagehide', function() {
+      document.body.style.overflow = '';
+    });
+
     // Initialize scroll handler for fixed CTA button visibility
     window.addEventListener('scroll', handleScrollVisibility);
     window.addEventListener('resize', handleScrollVisibility);

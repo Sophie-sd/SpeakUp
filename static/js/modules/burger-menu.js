@@ -28,6 +28,13 @@ export class BurgerMenu {
         this.close();
       }
     });
+
+    // Закриття меню при переході на десктоп (resize)
+    window.addEventListener('resize', () => {
+      if (this.isOpen && window.innerWidth > 767) {
+        this.close();
+      }
+    });
   }
 
   toggle() {
