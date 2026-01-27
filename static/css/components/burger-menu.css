@@ -83,14 +83,12 @@
   background: rgba(0, 0, 0, 0.5);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
-  opacity: 0;
-  visibility: hidden;
+  display: none;
   transition: opacity var(--transition-normal), visibility var(--transition-normal);
 }
 
 .burger-menu__overlay[aria-hidden="false"] {
-  opacity: 1;
-  visibility: visible;
+  display: block;
 }
 
 /* Dropdown меню */
