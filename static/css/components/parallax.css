@@ -11,7 +11,7 @@
   height: 100svh; /* На мобільних - стабільна висота при видимому UI браузера */
   z-index: var(--z-parallax-container, -1);
   overflow: hidden;
-  pointer-events: none;
+  pointer-events: none !important;
 
   /* Видалено contain для уникнення проблем з відображенням інших елементів */
 }
@@ -51,6 +51,7 @@
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  pointer-events: none !important;
 
   /* Оптимізація для iOS - апаратне прискорення */
   will-change: transform;

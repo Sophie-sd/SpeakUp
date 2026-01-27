@@ -10,12 +10,14 @@
   max-width: 91dvw;
   padding: var(--section-padding-desktop);
   margin-bottom: var(--section-spacing-desktop);
-  contain: layout style paint; /* Ізоляція для продуктивності */
+  contain: layout style; /* Прибрано paint, щоб уникнути overflow issue */
   overflow: visible;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 9vh; /* Стабільний, не реагує на UI браузера */
+  position: relative;
+  z-index: var(--z-section-content, 2);
 }
 
 .hero-section__header {

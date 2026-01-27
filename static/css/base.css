@@ -219,7 +219,7 @@ html {
   height: auto;
   min-height: 100vh;
   min-height: 100dvh;
-  overflow-y: auto;
+  /* overflow-y: auto; - Видалено, щоб уникнути конфліктів */
 
   /* Темний фон для запобігання білим смугам на overscroll */
   background-color: var(--color-bg-parallax);

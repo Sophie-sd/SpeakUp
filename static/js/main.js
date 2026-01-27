@@ -266,6 +266,25 @@ function trapFocus(element) {
 document.addEventListener('DOMContentLoaded', function() {
   console.log('[SpeakUp] Application initialized');
 
+  // Safety Check: Force unlock scroll if locked erroneously
+  // This prevents the page from being stuck if a modal/menu didn't close properly
+  // or if styles leaked.
+  setTimeout(() => {
+    const isLocked = document.body.style.overflow === 'hidden';
+    const hasActiveModal = document.querySelector('.modal--active') || 
+                           document.querySelector('[aria-modal="true"][style*="display: block"]') ||
+                           document.querySelector('.burger-menu--active'); // Check your burger menu active class
+
+    if (isLocked && !hasActiveModal) {
+      console.warn('[Safety] Scroll locked but no modal active. Forcing unlock.');
+      document.body.style.removeProperty('overflow');
+      document.body.style.removeProperty('position');
+      document.body.style.removeProperty('top');
+      document.body.style.removeProperty('width');
+      document.body.style.removeProperty('padding-right');
+    }
+  }, 500); // Wait a bit for initial scripts to settle
+
   // Глобальна обробка autofill для initial page load
   setupAutofillHandlers();
 
