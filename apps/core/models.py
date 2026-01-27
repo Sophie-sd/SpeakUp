@@ -358,6 +358,39 @@ class ContactInfo(BaseModel):
     def __str__(self):
         return f"Контакти - {self.phone_uk}"
 
+    @property
+    def phone_tel_uk(self):
+        """
+        Повертає номер телефону у форматі, придатному для tel: URL.
+        Формат: +XXXXXXXXXX (тільки цифри та +).
+        Приклад: +380931707867
+        """
+        if not self.phone_uk:
+            return '+380931707867'  # fallback
+        import re
+        # Залишаємо тільки цифри
+        digits = re.sub(r'\D', '', self.phone_uk)
+        # Якщо нема плюса, додаємо його (для України)
+        if digits and not digits.startswith('+'):
+            return f'+{digits}'
+        return f'+{digits}' if digits else '+380931707867'
+
+    @property
+    def phone_tel_international(self):
+        """
+        Повертає міжнародний номер телефону у форматі, придатному для tel: URL.
+        Формат: +XXXXXXXXXX (тільки цифри та +).
+        """
+        if not self.phone_international:
+            return None
+        import re
+        # Залишаємо тільки цифри
+        digits = re.sub(r'\D', '', self.phone_international)
+        # Додаємо плюс, якщо його немає
+        if digits and not digits.startswith('+'):
+            return f'+{digits}'
+        return f'+{digits}' if digits else None
+
     def save(self, *args, **kwargs):
         """Переконатися, що тільки один активний запис"""
         if self.is_active:

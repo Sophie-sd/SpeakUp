@@ -1,14 +1,15 @@
 {% load static %}
-{% load phone_filters %}
 {# Переиспользуемый блок быстрого контакта для всех форм заявок #}
 <div class="contact-block">
-  <!-- Блок телефону з кнопками копіювання та виклику -->
+  <!-- Блок телефону з кнопкою копіювання -->
   <div class="contact-block__phone-section">
     <p class="contact-block__phone-label">Телефон:</p>
     <div class="contact-block__phone-block" data-contact-block>
-      <span class="contact-block__phone-text" data-contact-phone>
-        {% if contact_info %}{{ contact_info.phone_uk }}{% else %}+38 (093) 170-78-67{% endif %}
-      </span>
+      <a href="tel:{% if contact_info %}{{ contact_info.phone_tel_uk }}{% else %}+380931707867{% endif %}" class="contact-block__phone-link">
+        <span class="contact-block__phone-text" data-contact-phone>
+          {% if contact_info %}{{ contact_info.phone_uk }}{% else %}+38 (093) 170-78-67{% endif %}
+        </span>
+      </a>
       <button type="button" class="contact-block__copy-btn" data-contact-copy aria-label="Копіювати номер телефону">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
@@ -16,12 +17,6 @@
         </svg>
         <span class="contact-block__copy-text">Копіювати</span>
       </button>
-      <a href="tel:{{ contact_info.phone_uk|phone_for_tel if contact_info else '+380931707867' }}" class="contact-block__call-btn" aria-label="Позвонити">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-        </svg>
-        <span class="contact-block__call-text">Викликати</span>
-      </a>
     </div>
   </div>
 

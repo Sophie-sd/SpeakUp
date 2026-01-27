@@ -36,6 +36,33 @@
   gap: var(--spacing-xs);
 }
 
+.contact-block__phone-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs);
+  margin: calc(var(--spacing-xs) * -1);
+}
+
+.contact-block__phone-link:hover {
+  opacity: 0.8;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.contact-block__phone-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.contact-block__phone-link:active {
+  opacity: 0.6;
+}
+
 .contact-block__phone-text {
   flex: 1;
   font-size: var(--font-size-lg);
@@ -84,51 +111,6 @@
 }
 
 .contact-block__copy-text {
-  display: inline;
-}
-
-/* Кнопка виклику */
-.contact-block__call-btn {
-  background: var(--color-primary);
-  color: var(--color-white);
-  border: none;
-  padding: var(--spacing-xs) var(--spacing-md);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  font-family: inherit;
-  transition: all var(--transition-base);
-  flex-shrink: 0;
-  min-height: 44px;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-.contact-block__call-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(231, 30, 20, 0.25);
-}
-
-.contact-block__call-btn:active {
-  transform: scale(0.98);
-}
-
-.contact-block__call-btn:focus-visible {
-  outline: 2px solid var(--color-white);
-  outline-offset: 2px;
-}
-
-.contact-block__call-btn svg {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-
-.contact-block__call-text {
   display: inline;
 }
 
@@ -255,12 +237,6 @@
     font-size: var(--font-size-sm);
   }
 
-  .contact-block__call-btn {
-    min-height: 40px;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-sm);
-  }
-
   .contact-block__social-buttons {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-xs);
@@ -276,10 +252,6 @@
   }
 
   .contact-block__copy-text {
-    display: none;
-  }
-
-  .contact-block__call-text {
     display: none;
   }
 

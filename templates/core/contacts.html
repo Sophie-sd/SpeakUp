@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load phone_filters %}
 
 {% block title %}Контакти - SPEAK UP{% endblock %}
 {% block og_title %}Контакти - SPEAK UP{% endblock %}
@@ -48,13 +47,13 @@
       <h2 class="contacts-section__title">Гаряча лінія</h2>
       <div class="contacts-section__content">
         <div class="contact-item">
-          <a href="tel:{{ contact_info.phone_uk|phone_for_tel }}" class="contact-item__link">
+          <a href="tel:{{ contact_info.phone_tel_uk }}" class="contact-item__link">
             {{ contact_info.phone_uk }}
           </a>
         </div>
-        {% if contact_info.phone_international %}
+        {% if contact_info.phone_tel_international %}
         <div class="contact-item">
-          <a href="tel:{{ contact_info.phone_international|phone_for_tel }}" class="contact-item__link">
+          <a href="tel:{{ contact_info.phone_tel_international }}" class="contact-item__link">
             {{ contact_info.phone_international }}
           </a>
         </div>
