@@ -11,13 +11,6 @@ window.addEventListener('pageshow', function (event) {
   if (event.persisted) {
     console.log('[bfcache] Page restored from back-forward cache');
 
-    // Скинути scroll-lock з body (на випадок якщо меню було відкрите перед навігацією)
-    document.body.style.removeProperty('overflow');
-    document.body.style.removeProperty('position');
-    document.body.style.removeProperty('top');
-    document.body.style.removeProperty('width');
-    document.body.style.removeProperty('padding-right');
-
     // Оновити HTMX контент після відновлення з bfcache
     if (typeof htmx !== 'undefined') {
       htmx.trigger(document.body, 'pageRestored');
