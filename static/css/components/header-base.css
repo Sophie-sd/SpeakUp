@@ -391,6 +391,11 @@
     overflow: visible;
   }
 
+  /* Прибрати padding-right зі внутрішнього меню верхнього бару, щоб кнопка телефону стояла у самій правій частині капсули */
+  .header-wrapper .header__nav--top .header__menu--top {
+    padding-right: 0;
+  }
+
   /* Кнопка Student Zone на мобільних */
   .header-wrapper .header__student-zone {
     display: flex;
