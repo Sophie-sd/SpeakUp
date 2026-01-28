@@ -362,6 +362,13 @@
     pointer-events: none;
   }
 
+  /* Мобільна темна капсула (бігуча стрічка + кнопка телефону) має займати весь вільний простір */
+  .header-wrapper .header__nav--top {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+  }
+
   .header {
     flex-direction: column;
     position: static;
