@@ -17,7 +17,7 @@
 
 /* ДРІБНІ елементі (картки, кнопки) - з виразнішим blur та тінями */
 .glass-card {
-  background: var(--glass-bg-elevated);
+  background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--glass-border-elevated);
   border-radius: var(--radius-md);
   box-shadow: var(--glass-shadow-elevated);
