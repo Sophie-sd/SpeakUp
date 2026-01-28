@@ -219,6 +219,7 @@
     min-width: 0;
     max-height: 2.5rem;
     width: 100%;
+    overflow: visible;
   }
 
   /* Бігуча стрічка в хедері на мобільних */
