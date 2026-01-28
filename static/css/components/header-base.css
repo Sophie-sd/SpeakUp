@@ -323,6 +323,11 @@
     max-height: 16px;
   }
 
+  /* Вирівнювання обгортки кнопки телефону */
+  .header__phone-btn-wrap {
+    margin-left: var(--menu-spacing-sm);
+  }
+
   /* Мобільна кнопка прихована */
   .trial-form__trigger--mobile {
     display: none;
@@ -453,22 +458,5 @@
 .header__phone-hint--visible {
   opacity: 1;
   visibility: visible;
-}
-
-/* Мобільна версія - вище кнопки */
-@media (width <= 767px) {
-  .header__phone-hint {
-    bottom: auto;
-    top: -50px;
-  }
-
-  .header__phone-hint::before {
-    top: auto;
-    bottom: -6px;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: 0;
-    border-top: 6px solid var(--color-white);
-  }
 }
 
