@@ -7,6 +7,7 @@ import programsListModule from './modules/programs-list.js';
 import { BaseAccordion } from './modules/base-accordion.js';
 import { initImageFallback } from './modules/image-fallback.js';
 import { initTrialModal } from './modules/trial-modal.js';
+import { initHeaderPhoneHint } from './modules/header-phone-hint.js';
 import { ProgramsDropdown } from './modules/programs-dropdown.js';
 
 /**
@@ -77,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new BurgerMenu();
   initRunningLine();
   initTrialModal();
+  initHeaderPhoneHint();
   new ProgramsDropdown();
 
   // Слайдер для нижнього меню навігації
