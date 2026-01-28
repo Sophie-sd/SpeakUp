@@ -268,7 +268,7 @@ button.header__link:focus-visible {
     max-width: 100%;
     width: 100%;
     margin: 0;
-    overflow: hidden;
+    overflow: visible;
     position: static;
     box-shadow: none;
   }
