@@ -422,7 +422,7 @@
   transform: translateX(-50%);
   white-space: nowrap;
   background: var(--color-white);
-  color: var(--color-text-primary);
+  color: var(--color-black);
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   font-size: 0.875rem;
