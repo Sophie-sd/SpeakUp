@@ -140,7 +140,7 @@
 .premium-hero__image {
   width: 95%;
   height: auto;
-  max-height: 420px;
+  max-height: 560px;
   object-fit: contain;
   object-position: right bottom;
   display: block;
