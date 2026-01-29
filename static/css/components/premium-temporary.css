@@ -14,7 +14,7 @@
   align-items: stretch;
   position: relative;
   width: 100%;
-  max-width: min(var(--content-width-desktop), var(--content-max-width));
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -70,6 +70,7 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
+  min-width: 0;
 }
 
 .premium-hero__form-card {
@@ -82,6 +83,8 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   width: 100%;
   box-sizing: border-box;
+  min-width: 0;
+  overflow: hidden;
 }
 
 @supports (-webkit-touch-callout: none) {
@@ -117,6 +120,7 @@
   align-items: stretch;
   justify-content: center;
   min-height: 400px;
+  min-width: 0;
 }
 
 .premium-hero__image-wrapper {
@@ -125,22 +129,28 @@
   height: 100%;
   overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.1);
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .premium-hero__image {
-  width: 80%;
+  width: 95%;
   height: auto;
-  max-height: 350px;
+  max-height: 420px;
   object-fit: contain;
-  object-position: center;
+  object-position: right bottom;
   display: block;
 }
 
 /* === КОМПАКТНА ФОРМА У HERO === */
+
+.premium-hero__form-card .consultation-form__wrapper {
+  max-width: 100%;
+}
 
 .premium-hero__form-card .consultation-form__phone-section {
   gap: 0.75rem;
@@ -150,6 +160,8 @@
   min-height: 44px;
   padding: 0.625rem 0.875rem;
   font-size: 0.9rem;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .premium-hero__form-card .contact-block {
@@ -197,7 +209,7 @@
   margin-bottom: var(--section-spacing-desktop);
   text-align: center;
   width: 100%;
-  max-width: min(var(--content-width-desktop), var(--content-max-width));
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -205,6 +217,16 @@
 .premium-intro__content {
   max-width: 800px;
   margin: 0 auto;
+}
+
+.premium-intro__content--sticker {
+  background: rgba(255, 193, 7, 0.12);
+  border: 2px solid rgba(255, 193, 7, 0.6);
+  border-radius: 12px;
+  padding: 1.5rem;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.15);
 }
 
 .premium-intro__text {
@@ -220,7 +242,7 @@
   padding: var(--section-padding-desktop);
   margin-bottom: var(--section-spacing-desktop);
   width: 100%;
-  max-width: min(var(--content-width-desktop), var(--content-max-width));
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -307,7 +329,7 @@
   padding: var(--section-padding-desktop);
   margin-bottom: var(--section-spacing-desktop);
   width: 100%;
-  max-width: min(var(--content-width-desktop), var(--content-max-width));
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -377,7 +399,7 @@
   padding: var(--section-padding-desktop);
   margin-bottom: var(--section-spacing-desktop);
   width: 100%;
-  max-width: min(var(--content-width-desktop), var(--content-max-width));
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -451,7 +473,7 @@
   padding: var(--section-padding-desktop);
   margin-bottom: var(--section-spacing-desktop);
   width: 100%;
-  max-width: min(var(--content-width-desktop), var(--content-max-width));
+  max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
 }
