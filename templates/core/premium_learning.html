@@ -23,7 +23,9 @@
   <section class="premium-hero glass-section">
     <div class="premium-hero__header">
       <h1 class="premium-hero__title">Speak Up Premium</h1>
-      <p class="premium-hero__subtitle">Комбінований формат: персональні заняття + групи + мультимедія</p>
+      <div class="premium-hero__sticker">
+        <p class="premium-hero__sticker-text">Premium Speak Up поєднує переваги групових та індивідуальних занять. Ідеальний вибір для тих, хто хоче максимального прогресу та персонального підходу.</p>
+      </div>
     </div>
 
     <!-- ЛІВА КОЛОНКА: ФОРМА -->
@@ -60,7 +62,7 @@
   <!-- 3. ЩО ВХОДИТЬ В КУРС -->
   <section class="premium-includes glass-section">
     <h2 class="section-title">Що входить в курс</h2>
-    <div class="premium-includes__list">
+    <div class="premium-includes__list" id="includes-carousel">
       {% for item in premium_program.includes %}
       <div class="premium-includes__item">
         <svg class="premium-includes__icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -71,6 +73,18 @@
       </div>
       {% endfor %}
     </div>
+    <div class="premium-includes__nav">
+      <button class="premium-includes__nav-btn premium-includes__nav-btn--prev" id="includes-prev" aria-label="Попередня картка">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button class="premium-includes__nav-btn premium-includes__nav-btn--next" id="includes-next" aria-label="Наступна картка">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M9 19l7-7-7-7"/>
+        </svg>
+      </button>
+    </div>
   </section>
 
   <!-- 4. ПЕРЕВАГИ НАВЧАННЯ -->
@@ -79,6 +93,7 @@
     <div class="premium-benefits__grid">
       {% for benefit in premium_program.benefits %}
       <div class="premium-benefits__card">
+        <div class="premium-benefits__number">{{ forloop.counter }}</div>
         <h3 class="premium-benefits__title">{{ benefit }}</h3>
       </div>
       {% endfor %}
@@ -143,4 +158,8 @@
 
 {% block extra_js %}
 <script type="module" src="{% static 'js/modules/parallax-scroll.js' %}" defer></script>
+<script type="module">
+  import { initPremiumIncludesCarousel } from "{% static 'js/modules/premium-includes-carousel.js' %}";
+  document.addEventListener('DOMContentLoaded', initPremiumIncludesCarousel);
+</script>
 {% endblock %}
