@@ -1,197 +1,610 @@
 /* ==========================================================================
-   Premium Temporary Content - Тимчасовий контент для Premium сторінки
+   Premium Learning Page Styles - Премiум програма навчання
    ========================================================================== */
 
-.premium-temporary {
-  display: flex;
-  flex-direction: column;
-  gap: var(--section-spacing-desktop);
-  padding: var(--section-padding-desktop);
-  max-width: min(var(--content-width-desktop), var(--content-max-width));
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+/* === HERO БЛОК: ФОРМА ЗЛІВА + ЗОБРАЖЕННЯ СПРАВА === */
+
+.premium-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2rem;
+  padding: 2rem 2rem 0 2rem;
+  margin-top: calc(var(--header-height, 80px) + 1rem);
   margin-bottom: var(--section-spacing-desktop);
+  align-items: stretch;
+  position: relative;
 }
 
-/* Content Section */
-.premium-temporary__content {
+.premium-hero__header {
+  grid-column: 1 / -1;
+  margin-bottom: 1rem;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
 }
 
-.premium-temporary__title {
+.premium-hero__title {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
   line-height: 1.2;
   color: var(--color-white);
-  margin: 0;
-  text-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.5),
-    0 6px 12px rgba(0, 0, 0, 0.4);
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
-.premium-temporary__subtitle {
+.premium-hero__subtitle {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
   line-height: 1.4;
 }
 
-/* Message Box */
-.premium-temporary__message {
-  padding: var(--spacing-xl);
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  text-align: center;
+/* === ЛІВА КОЛОНКА: ФОРМА === */
+
+.premium-hero__left {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
 }
 
-.premium-temporary__message-title {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-  font-weight: 700;
-  color: var(--color-primary);
-  margin: 0 0 1rem 0;
+.premium-hero__form-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 1.5rem;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@supports (-webkit-touch-callout: none) {
+  .premium-hero__form-card {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+}
+
+.premium-hero__form-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-white);
+  text-align: center;
   line-height: 1.3;
 }
 
-.premium-temporary__message-text {
-  font-size: 1rem;
-  color: #333;
-  margin: 0 0 1rem 0;
-  line-height: 1.6;
+.premium-hero__form-subtitle {
+  margin: 0 0 1.5rem 0;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  line-height: 1.4;
 }
 
-.premium-temporary__message-text:last-child {
-  margin-bottom: 0;
-}
+/* === ПРАВА КОЛОНКА: ЗОБРАЖЕННЯ === */
 
-.premium-temporary__message-text strong {
-  color: var(--color-primary);
-  font-weight: 700;
-}
-
-/* Form Container */
-.premium-temporary__form-container {
+.premium-hero__right {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 400px;
 }
 
-.premium-temporary__form-title {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+.premium-hero__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.premium-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* === ІНТРО СЕКЦІЯ === */
+
+.premium-intro {
+  padding: var(--section-padding-desktop);
+  margin-bottom: var(--section-spacing-desktop);
+  text-align: center;
+}
+
+.premium-intro__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.premium-intro__text {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+/* === ЩО ВХОДИТЬ В КУРС === */
+
+.premium-includes {
+  padding: var(--section-padding-desktop);
+  margin-bottom: var(--section-spacing-desktop);
+}
+
+.premium-includes__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.premium-includes__item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.25rem;
+  background: rgba(255, 193, 7, 0.05);
+  border-left: 3px solid rgba(255, 193, 7, 0.6);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.premium-includes__item:hover {
+  background: rgba(255, 193, 7, 0.1);
+  border-left-color: rgba(255, 215, 0, 0.8);
+}
+
+.premium-includes__icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  color: rgba(255, 193, 7, 0.8);
+  flex-shrink: 0;
+}
+
+.premium-includes__text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* === ПЕРЕВАГИ НАВЧАННЯ === */
+
+.premium-benefits {
+  padding: var(--section-padding-desktop);
+  margin-bottom: var(--section-spacing-desktop);
+}
+
+.premium-benefits__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.premium-benefits__card {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.08) 0%, rgba(255, 193, 7, 0.02) 100%);
+  border: 1px solid rgba(255, 193, 7, 0.4);
+  border-radius: 12px;
+  padding: 1.75rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.premium-benefits__card:hover {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.12) 0%, rgba(255, 193, 7, 0.05) 100%);
+  border-color: rgba(255, 215, 0, 0.6);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(255, 193, 7, 0.2);
+}
+
+.premium-benefits__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* === МЕТОДИКА BLENDED LEARNING === */
+
+.premium-methodology {
+  padding: var(--section-padding-desktop);
+  margin-bottom: var(--section-spacing-desktop);
+}
+
+.premium-methodology__intro {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  margin: 1rem auto 2rem auto;
+  max-width: 800px;
+}
+
+.premium-methodology__intro strong {
+  color: rgba(255, 193, 7, 0.95);
+  font-weight: 600;
+}
+
+.premium-methodology__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.premium-methodology__item {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.premium-methodology__item:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 193, 7, 0.5);
+}
+
+.premium-methodology__item-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255, 193, 7, 0.9);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+}
+
+.premium-methodology__item-description {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+/* === ЦІНОВІ ТАРИФИ === */
+
+.premium-pricing {
+  padding: var(--section-padding-desktop);
+  margin-bottom: var(--section-spacing-desktop);
+}
+
+.premium-pricing__subtitle {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  margin: 0.5rem 0 2.5rem 0;
+}
+
+.premium-pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.premium-pricing__card {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border: 2px solid rgba(255, 193, 7, 0.6);
+  border-radius: 16px;
+  padding: 2rem;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.premium-pricing__card:hover {
+  border-color: rgba(255, 215, 0, 0.8);
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(0, 0, 0, 0.6) 100%);
+  box-shadow: 0 12px 40px rgba(255, 193, 7, 0.25);
+  transform: translateY(-4px);
+}
+
+.premium-pricing__tier-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(255, 193, 7, 0.95);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.premium-pricing__duration {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* === РОЗСТРОЧКА === */
+
+.premium-pricing__installment {
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.premium-pricing__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.premium-pricing__installment-amount {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0.5rem 0;
+  line-height: 1.3;
+}
+
+.premium-pricing__installment-amount strong {
+  font-weight: 700;
+}
+
+.premium-pricing__note {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0.5rem 0 0 0;
+}
+
+/* === РОЗДІЛЮВАЧ === */
+
+.premium-pricing__divider {
+  height: 1px;
+  background: rgba(255, 193, 7, 0.3);
+  margin: 0.5rem 0;
+}
+
+/* === ОДНИМ ПЛАТЕЖЕМ === */
+
+.premium-pricing__one-time {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 193, 7, 0.05) 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 193, 7, 0.5);
+}
+
+.premium-pricing__label--highlight {
+  color: rgba(255, 215, 0, 0.95);
+  font-weight: 700;
+}
+
+.premium-pricing__discount {
+  display: inline-block;
+  background: rgba(76, 175, 80, 0.2);
+  color: #4cb050;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+  font-weight: 700;
+}
+
+.premium-pricing__price {
+  font-size: 1.75rem;
   font-weight: 700;
   color: var(--color-white);
-  text-align: center;
-  margin: 0;
-  text-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0.75rem 0 0.25rem 0;
+  line-height: 1.2;
 }
 
-/* Responsive adjustments */
+.premium-pricing__per-month {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* === КНОПКА === */
+
+.premium-pricing__button {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.9) 0%, rgba(255, 215, 0, 0.9) 100%);
+  color: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 193, 7, 0.8);
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+  margin-top: 1rem;
+  transition: all 0.2s ease;
+}
+
+.premium-pricing__button:hover {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 1) 0%, rgba(255, 215, 0, 1) 100%);
+  border-color: rgba(255, 193, 7, 1);
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.5);
+  transform: translateY(-2px);
+}
+
+.premium-pricing__button:focus-visible {
+  outline: 2px solid rgba(255, 215, 0, 0.8);
+  outline-offset: 2px;
+}
+
+/* === RESPONSIVE: МОБІЛЬНІ === */
+
 @media (width <= 767px) {
-  .premium-temporary {
-    padding: var(--section-padding-mobile);
-    gap: var(--section-spacing-mobile);
-    margin-bottom: var(--section-spacing-mobile);
+  .premium-hero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 1rem;
+    margin-top: calc(var(--header-height, 80px) + 0.5rem);
   }
 
-  .premium-temporary__content {
-    gap: var(--spacing-sm);
-  }
-
-  .premium-temporary__title {
+  .premium-hero__title {
     font-size: clamp(1.75rem, 6vw, 2.5rem);
   }
 
-  .premium-temporary__subtitle {
+  .premium-hero__subtitle {
     font-size: clamp(0.875rem, 2vw, 1.125rem);
   }
 
-  .premium-temporary__message {
-    padding: var(--spacing-md);
+  .premium-hero__right {
+    min-height: 250px;
+    order: -1;
   }
 
-  .premium-temporary__message-title {
-    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-    margin-bottom: 0.75rem;
+  .premium-intro,
+  .premium-includes,
+  .premium-benefits,
+  .premium-methodology,
+  .premium-pricing {
+    padding: var(--section-padding-mobile);
+    margin-bottom: var(--section-spacing-mobile);
   }
 
-  .premium-temporary__message-text {
-    font-size: 0.9375rem;
+  .premium-includes__list,
+  .premium-methodology__list {
+    gap: 1rem;
   }
 
-  .premium-temporary__form-title {
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  .premium-benefits__grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .premium-pricing__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .premium-pricing__card {
+    padding: 1.5rem;
   }
 }
 
-/* Tablet */
+/* === RESPONSIVE: ПЛАНШЕТ === */
+
 @media (width >= 768px) and (width < 1024px) {
-  .premium-temporary {
-    gap: var(--section-spacing-desktop);
+  .premium-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
   }
 
-  .premium-temporary__message {
-    max-width: 500px;
-    margin: 0 auto;
+  .premium-hero__right {
+    min-height: 350px;
+  }
+
+  .premium-pricing__grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
 }
 
-/* Large screens */
+/* === RESPONSIVE: ВЕЛИКІ ЕКРАНИ === */
+
 @media (width >= 1024px) {
-  .premium-temporary__content {
-    margin-bottom: var(--spacing-md);
+  .premium-hero {
+    grid-template-columns: 1fr 1.2fr;
+  }
+
+  .premium-hero__right {
+    min-height: 450px;
+  }
+
+  .premium-benefits__grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   }
 }
 
-/* Landscape orientation on mobile */
+/* === LANDSCAPE ОРІЄНТАЦІЯ НА МОБІЛЬНИХ === */
+
 @media (width <= 767px) and (orientation: landscape) {
-  .premium-temporary {
+  .premium-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
     padding: clamp(0.75rem, 2vh, 1rem);
-    gap: clamp(0.75rem, 2vh, 1.25rem);
   }
 
-  .premium-temporary__title {
+  .premium-hero__right {
+    min-height: 280px;
+    order: 0;
+  }
+
+  .premium-hero__title {
     font-size: clamp(1.5rem, 5vh, 2rem);
     margin-bottom: clamp(0.25rem, 0.5vh, 0.5rem);
   }
 
-  .premium-temporary__subtitle {
+  .premium-hero__subtitle {
     font-size: clamp(0.8125rem, 2vh, 1rem);
   }
 
-  .premium-temporary__message {
-    padding: clamp(0.75rem, 2vh, 1.5rem);
+  .premium-includes__item,
+  .premium-benefits__card,
+  .premium-methodology__item {
+    padding: clamp(0.75rem, 2vh, 1.25rem);
   }
 }
 
-/* Very small screens */
-@media (width <= 374px) {
-  .premium-temporary {
-    padding: clamp(0.75rem, 3vw, 1rem);
-  }
+/* === ДУЖЕ МАЛІ ЕКРАНИ === */
 
-  .premium-temporary__title {
+@media (width <= 374px) {
+  .premium-hero__title {
     font-size: clamp(1.5rem, 5vw, 1.875rem);
   }
 
-  .premium-temporary__subtitle {
+  .premium-hero__subtitle {
     font-size: clamp(0.8125rem, 2.5vw, 1rem);
   }
 
-  .premium-temporary__message-title {
-    font-size: clamp(1rem, 2.5vw, 1.25rem);
+  .premium-intro__text,
+  .premium-methodology__intro {
+    font-size: 0.95rem;
   }
 
-  .premium-temporary__message-text {
-    font-size: 0.875rem;
+  .premium-pricing__card {
+    padding: 1.25rem;
+  }
+
+  .premium-pricing__price {
+    font-size: 1.5rem;
+  }
+}
+
+/* === ACCESSIBILITY: FOCUS & HIGH CONTRAST === */
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-includes__item,
+  .premium-benefits__card,
+  .premium-methodology__item,
+  .premium-pricing__card,
+  .premium-pricing__button {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .premium-includes__item {
+    border-left-color: rgba(255, 215, 0, 1);
+  }
+
+  .premium-benefits__card,
+  .premium-methodology__item {
+    border-color: rgba(255, 215, 0, 1);
+  }
+
+  .premium-pricing__card {
+    border-color: rgba(255, 215, 0, 1);
   }
 }

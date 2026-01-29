@@ -18,31 +18,126 @@
 </div>
 
 <main class="hero-content">
-  <!-- Premium Temporary Content Section -->
-  <section class="premium-temporary glass-section">
-    <div class="premium-temporary__content">
-      <h1 class="premium-temporary__title">Speak Up Premium</h1>
-      <p class="premium-temporary__subtitle">Унікальна програма персональних занять</p>
-      
-      <div class="premium-temporary__message glass-card">
-        <h2 class="premium-temporary__message-title">Програма скоро з'явиться на сайті</h2>
-        <p class="premium-temporary__message-text">
-          <strong>Speak Up Premium</strong> — комплексна програма, яка поєднує персональні заняття з викладачем, розмовні групи та мультимедійні тренінги для вашого прориву в англійській мові.
-        </p>
-        <p class="premium-temporary__message-text">
-          <strong>Дізнайтеся деталі прямо зараз</strong> — залиште заявку або зв'яжіться з нами.
-        </p>
-      </div>
+
+  <!-- 1. HERO БЛОК: ФОРМА ЗЛІВА + ЗОБРАЖЕННЯ СПРАВА -->
+  <section class="premium-hero glass-section">
+    <div class="premium-hero__header">
+      <h1 class="premium-hero__title">Speak Up Premium</h1>
+      <p class="premium-hero__subtitle">Комбінований формат: персональні заняття + групи + мультимедія</p>
     </div>
 
-    <!-- Consultation Form Section -->
-    <div class="premium-temporary__form-container">
-      <h2 class="premium-temporary__form-title">Залишити заявку</h2>
-      <div class="consultation-form glass-card">
+    <!-- ЛІВА КОЛОНКА: ФОРМА -->
+    <div class="premium-hero__left">
+      <div class="premium-hero__form-card glass-card">
+        <h2 class="premium-hero__form-title">Залишити заявку</h2>
+        <p class="premium-hero__form-subtitle">Дізнайтеся деталі прямо зараз або запишіться на пробне заняття</p>
         {% include 'core/components/consultation_form.html' with form=consultation_form form_location='premium' %}
       </div>
     </div>
+
+    <!-- ПРАВА КОЛОНКА: ЗОБРАЖЕННЯ -->
+    <div class="premium-hero__right">
+      <div class="premium-hero__image-wrapper">
+        <img 
+          src="{% static 'img/speakup_premium.png' %}" 
+          alt="Speak Up Premium" 
+          class="premium-hero__image" 
+          loading="eager" 
+          decoding="async">
+      </div>
+    </div>
   </section>
+
+  <!-- 2. ІНТРО: ВСТУПНИЙ ТЕКСТ -->
+  <section class="premium-intro glass-section">
+    <div class="premium-intro__content">
+      <p class="premium-intro__text">
+        {{ premium_program.full_content }}
+      </p>
+    </div>
+  </section>
+
+  <!-- 3. ЩО ВХОДИТЬ В КУРС -->
+  <section class="premium-includes glass-section">
+    <h2 class="section-title">Що входить в курс</h2>
+    <div class="premium-includes__list">
+      {% for item in premium_program.includes %}
+      <div class="premium-includes__item">
+        <svg class="premium-includes__icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="premium-includes__text">{{ item }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- 4. ПЕРЕВАГИ НАВЧАННЯ -->
+  <section class="premium-benefits glass-section">
+    <h2 class="section-title">Переваги навчання</h2>
+    <div class="premium-benefits__grid">
+      {% for benefit in premium_program.benefits %}
+      <div class="premium-benefits__card">
+        <h3 class="premium-benefits__title">{{ benefit }}</h3>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- 5. МЕТОДИКА BLENDED LEARNING -->
+  <section class="premium-methodology glass-section">
+    <h2 class="section-title">Методика навчання</h2>
+    <p class="premium-methodology__intro">
+      Навчання проходить в онлайн форматі з використанням нашої авторської методики <strong>Blended Learning:</strong>
+    </p>
+    <div class="premium-methodology__list">
+      {% for item in premium_methodology %}
+      <div class="premium-methodology__item">
+        <h3 class="premium-methodology__item-title">{{ item.title }}</h3>
+        <p class="premium-methodology__item-description">– {{ item.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- 6. ТАРИФИ -->
+  <section class="premium-pricing glass-section">
+    <h2 class="section-title">Обрати тариф</h2>
+    <p class="premium-pricing__subtitle">Гнучкі варіанти оплати для вашого зручності</p>
+    
+    <div class="premium-pricing__grid">
+      {% for tier in premium_pricing_tiers %}
+      <div class="premium-pricing__card">
+        <h3 class="premium-pricing__tier-name">{{ tier.name }}</h3>
+        <p class="premium-pricing__duration">{{ tier.months }} місяців</p>
+
+        <!-- Розстрочка -->
+        <div class="premium-pricing__installment">
+          <p class="premium-pricing__label">Розстрочка:</p>
+          <p class="premium-pricing__installment-amount">
+            {{ tier.price_installment_count }} × <strong>{{ tier.price_installment_amount }} грн</strong>
+          </p>
+          <p class="premium-pricing__note">{{ tier.price_full }} грн</p>
+        </div>
+
+        <div class="premium-pricing__divider"></div>
+
+        <!-- Одним платежем -->
+        <div class="premium-pricing__one-time">
+          <p class="premium-pricing__label premium-pricing__label--highlight">Одним платежем <span class="premium-pricing__discount">–{{ tier.discount_amount }} грн</span></p>
+          <p class="premium-pricing__price">{{ tier.price_one_time }} грн</p>
+          <p class="premium-pricing__per-month">{{ tier.price_per_month }} грн/місяць</p>
+        </div>
+
+        <a href="{% url 'core:submit_consultation' %}" class="button button--primary button--full premium-pricing__button">
+          Записатися
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
 </main>
 {% endblock %}
 

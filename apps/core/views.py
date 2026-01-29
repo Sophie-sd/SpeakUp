@@ -865,6 +865,64 @@ def premium_learning_page(request):
     # Отримуємо дані програми premium
     premium_program = PROGRAMS.get('premium', {})
 
+    # Тарифи Premium
+    premium_pricing_tiers = [
+        {
+            'name': '1 рівень',
+            'months': 4,
+            'price_full': '20 900',
+            'price_installment_count': 4,
+            'price_installment_amount': '5 225',
+            'discount_amount': '1 000',
+            'price_one_time': '19 900',
+            'price_per_month': '4 975',
+        },
+        {
+            'name': '2 рівні',
+            'months': 8,
+            'price_full': '39 800',
+            'price_installment_count': 6,
+            'price_installment_amount': '4 975',
+            'discount_amount': '2 500',
+            'price_one_time': '37 300',
+            'price_per_month': '4 663',
+        },
+        {
+            'name': '3 рівні',
+            'months': 12,
+            'price_full': '59 749',
+            'price_installment_count': 10,
+            'price_installment_amount': '4 979',
+            'discount_amount': '3 500',
+            'price_one_time': '56 249',
+            'price_per_month': '4 687',
+        },
+    ]
+
+    # Методика Blended Learning
+    premium_methodology = [
+        {
+            'title': 'Multimedia Lesson',
+            'description': 'інтерактивні мультимедійні уроки для самостійного вивчення',
+        },
+        {
+            'title': 'Group Class',
+            'description': 'групові заняття з викладачем в групах 1-10 учнів',
+        },
+        {
+            'title': 'Student Zone 24/7',
+            'description': 'онлайн доступ до всіх матеріалів з будь-якої точки планети',
+        },
+        {
+            'title': 'Workshops',
+            'description': 'мовні практикуми з викладачем (розмовна практика, граматика, читання)',
+        },
+        {
+            'title': 'Academic Progress Report',
+            'description': 'регулярний контроль прогресу з гарантією результату',
+        },
+    ]
+
     context = {
         'current_language': lang,
         'premium_program': {
@@ -877,6 +935,8 @@ def premium_learning_page(request):
             'duration': premium_program.get('duration', ''),
             'url': '/programs/premium',
         },
+        'premium_pricing_tiers': premium_pricing_tiers,
+        'premium_methodology': premium_methodology,
         'consultation_form': ConsultationForm(),
     }
     return render(request, 'core/premium_learning.html', context)
