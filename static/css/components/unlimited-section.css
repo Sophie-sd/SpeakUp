@@ -123,6 +123,7 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   overflow: visible;
+  min-height: 135px;            /* Однакова висота для всіх трьох карток */
 }
 
 /* Модифікатори */
@@ -176,14 +177,19 @@
   margin: 0 0 0.5rem 0;         /* Компактно */
   font-size: 1.25rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .price-old {
   text-decoration: line-through;
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.9rem;
-  display: block;
-  margin-bottom: 0.25rem;
+  display: inline;
+  margin-bottom: 0;
 }
 
 .price-new {
@@ -193,16 +199,27 @@
 }
 
 .unlimited-pricing-card__gift {
-  font-size: 0.85rem;           /* Дрібніший текст */
-  color: rgba(255, 193, 7, 0.9);
-  margin: 0.25rem 0;            /* Компактно */
-  font-weight: 500;
+  display: none;                /* Не використовується, приховуємо */
+}
+
+.unlimited-pricing-card__gift-sticker {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  background: rgba(255, 193, 7, 0.2);
+  border: 1px solid rgba(255, 193, 7, 0.5);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+  z-index: 5;
+  transform: rotate(-2deg);
 }
 
 .unlimited-pricing-card__total {
-  font-size: 0.8rem;            /* Дрібніший текст */
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0.25rem 0;            /* Компактно */
+  display: none;                /* Не використовується, видалено з HTML */
 }
 
 .unlimited-pricing-card__per-month {
