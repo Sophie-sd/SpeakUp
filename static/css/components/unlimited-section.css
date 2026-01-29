@@ -1,0 +1,249 @@
+/* ==========================================================================
+   Unlimited Section - КОМПАКТНИЙ дизайн
+   ========================================================================== */
+
+/* === СЕКЦІЯ === */
+.unlimited-section {
+  padding: 2rem;                /* Компактний padding */
+  margin-bottom: 2rem;          /* Менше, ніж 3-4rem в інших секціях */
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* === ЗАГОЛОВКИ === */
+.unlimited-section .section-title {
+  text-align: center;
+  margin-bottom: 0.5rem;        /* Компактно */
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.unlimited-section .section-subtitle {
+  text-align: center;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 1.5rem;        /* Компактно, не 2-3rem */
+  line-height: 1.5;
+}
+
+/* === ДВОКОЛОНКОВИЙ БЛОК === */
+.unlimited-two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;          /* Компактно */
+}
+
+.unlimited-column__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 1rem;          /* Компактно */
+}
+
+/* === СПИСКИ З ГАЛОЧКАМИ === */
+.unlimited-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.unlimited-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;        /* Компактні відступи між пунктами */
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+}
+
+.unlimited-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: rgba(76, 175, 80, 0.95);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* === BLENDED LEARNING === */
+.unlimited-methodology {
+  margin-bottom: 2rem;          /* Компактно */
+}
+
+.unlimited-methodology__intro {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 1rem;          /* Компактно */
+  line-height: 1.6;
+}
+
+.unlimited-methodology__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.unlimited-methodology__list li {
+  margin-bottom: 0.5rem;        /* Компактно між пунктами */
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+.unlimited-methodology__list li strong {
+  color: rgba(100, 149, 237, 0.95);
+  font-weight: 600;
+}
+
+/* === ПРАЙС-КАРТКИ (КОМПАКТНІ) === */
+.unlimited-pricing {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;          /* Компактно */
+}
+
+.unlimited-pricing-card {
+  position: relative;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 1rem;                /* Компактний padding (не 1.5-2rem) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all var(--transition-normal) ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  overflow: visible;
+}
+
+/* Модифікатори */
+.unlimited-pricing-card--popular {
+  border: 2px solid rgba(255, 193, 7, 0.6);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(255, 193, 7, 0.05) 100%);
+}
+
+.unlimited-pricing-card--best {
+  border: 2px solid rgba(76, 175, 80, 0.6);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(76, 175, 80, 0.05) 100%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .unlimited-pricing-card:hover {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+}
+
+/* Бейдж знижки */
+.unlimited-pricing-card__badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 48px;
+  height: 48px;
+  background: rgba(231, 30, 20, 0.95);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-white);
+  transform: rotate(15deg);
+  box-shadow: 0 4px 12px rgba(231, 30, 20, 0.4);
+  z-index: 10;
+}
+
+/* Елементи картки */
+.unlimited-pricing-card__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0 0 0.5rem 0;         /* Компактно */
+}
+
+.unlimited-pricing-card__price {
+  margin: 0 0 0.5rem 0;         /* Компактно */
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.price-old {
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.price-new {
+  color: rgba(76, 175, 80, 0.95);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.unlimited-pricing-card__gift {
+  font-size: 0.85rem;           /* Дрібніший текст */
+  color: rgba(255, 193, 7, 0.9);
+  margin: 0.25rem 0;            /* Компактно */
+  font-weight: 500;
+}
+
+.unlimited-pricing-card__total {
+  font-size: 0.8rem;            /* Дрібніший текст */
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0.25rem 0;            /* Компактно */
+}
+
+.unlimited-pricing-card__per-month {
+  font-size: 0.95rem;
+  color: rgba(100, 149, 237, 0.95);
+  font-weight: 600;
+  margin: 0.25rem 0 0 0;        /* Компактно */
+}
+
+/* === CTA === */
+.unlimited-cta {
+  text-align: center;
+  margin-top: 2rem;             /* Компактно */
+}
+
+.unlimited-cta .button {
+  max-width: 400px;
+  padding: 12px 32px;
+  font-size: 1rem;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .unlimited-section {
+    padding: 1.5rem;            /* Ще компактніше на мобільному */
+  }
+
+  .unlimited-two-columns {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .unlimited-pricing {
+    grid-template-columns: 1fr;
+  }
+
+  .unlimited-section .section-title {
+    font-size: 1.75rem;
+  }
+
+  .unlimited-section .section-subtitle {
+    font-size: 0.95rem;
+  }
+}

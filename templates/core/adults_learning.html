@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="{% static 'css/components/adults-advantages.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/levels-pricing.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/individual-lessons.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/unlimited-section.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -923,8 +924,88 @@
     </div>
   </section>
 
-  <!-- 4. ЯКІР ДЛЯ МАЙБУТНЬОЇ СЕКЦІЇ -->
-  <section id="unlimited-section" style="display: none;"></section>
+  <!-- 4. БЛОК "БЕЗЛІМІТНЕ НАВЧАННЯ" -->
+  <section id="unlimited-section" class="unlimited-section glass-section">
+    <!-- Заголовки -->
+    <h2 class="section-title">Безлімітний курс англійської мови</h2>
+    <p class="section-subtitle">Можливість займатися щодня без обмежень. Ідеально для тих, хто хоче інтенсивно вивчити англійську за короткий термін.</p>
+
+    <!-- Двоколонковий блок -->
+    <div class="unlimited-two-columns">
+      <div class="unlimited-column">
+        <h3 class="unlimited-column__title">Що входить в курс</h3>
+        <ul class="unlimited-list">
+          <li>Заняття в мультимедійному класі</li>
+          <li>Заняття з викладачем</li>
+          <li>Доступ до Student Zone</li>
+          <li>Індивідуальні консультації</li>
+          <li>Розмовні клуби кожного тижня</li>
+        </ul>
+      </div>
+      <div class="unlimited-column">
+        <h3 class="unlimited-column__title">Переваги навчання</h3>
+        <ul class="unlimited-list">
+          <li>Безлімітні заняття</li>
+          <li>Інтенсивне навчання</li>
+          <li>Гнучкий графік</li>
+          <li>Швидкий прогрес</li>
+          <li>Доступ 24/7</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Blended Learning -->
+    <div class="unlimited-methodology">
+      <p class="unlimited-methodology__intro">Навчання проходить в онлайн форматі з використанням нашої авторської методики Blended Learning:</p>
+      <ul class="unlimited-methodology__list">
+        <li><strong>Multimedia Lesson</strong> – інтерактивні мультимедійні уроки для самостійного вивчення</li>
+        <li><strong>Group Class</strong> – групові заняття з викладачем в групах 1-10 учнів</li>
+        <li><strong>Student Zone 24/7</strong> – онлайн доступ до всіх матеріалів з будь-якої точки планети</li>
+        <li><strong>Workshops</strong> – мовні практикуми з викладачем (розмовна практика, граматика, читання)</li>
+        <li><strong>Academic Progress Report</strong> – регулярний контроль прогресу з гарантією результату</li>
+      </ul>
+    </div>
+
+    <!-- Прайс-картки -->
+    <div class="unlimited-pricing">
+      <!-- 1 місяць -->
+      <div class="unlimited-pricing-card">
+        <h4 class="unlimited-pricing-card__title">1 місяць</h4>
+        <p class="unlimited-pricing-card__price">6000 грн</p>
+      </div>
+      
+      <!-- 5 місяців -->
+      <div class="unlimited-pricing-card unlimited-pricing-card--popular">
+        <span class="unlimited-pricing-card__badge">-25%</span>
+        <h4 class="unlimited-pricing-card__title">5 місяців</h4>
+        <p class="unlimited-pricing-card__price">
+          <span class="price-old">30000 грн</span>
+          <span class="price-new">22500 грн</span>
+        </p>
+        <p class="unlimited-pricing-card__gift">+ 1 місяць в подарунок 🎁</p>
+        <p class="unlimited-pricing-card__total">Разом 6 місяців</p>
+        <p class="unlimited-pricing-card__per-month">3750 грн/міс</p>
+      </div>
+      
+      <!-- 10 місяців -->
+      <div class="unlimited-pricing-card unlimited-pricing-card--best">
+        <span class="unlimited-pricing-card__badge">-35%</span>
+        <h4 class="unlimited-pricing-card__title">10 місяців</h4>
+        <p class="unlimited-pricing-card__price">
+          <span class="price-old">60000 грн</span>
+          <span class="price-new">39000 грн</span>
+        </p>
+        <p class="unlimited-pricing-card__gift">+ 2 місяці в подарунок 🎁</p>
+        <p class="unlimited-pricing-card__total">Разом 12 місяців</p>
+        <p class="unlimited-pricing-card__per-month">3250 грн/міс</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="unlimited-cta">
+      <a href="#" class="button button--primary">Записатись на безкоштовне пробне заняття</a>
+    </div>
+  </section>
 </main>
 {% endblock %}
 
