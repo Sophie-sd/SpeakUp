@@ -340,12 +340,23 @@
     overflow-x: hidden;
   }
 
+  /* ВИПРАВЛЕННЯ: Перевизначити базовий gap для всіх contacts-card__content на мобільних */
+  .contacts-card .contacts-card__content {
+    gap: 10px;
+  }
+
+  /* ВИПРАВЛЕННЯ: Перевизначити глобальне правило .contacts-page .glass-section для мобільних */
+  .contacts-page .glass-section {
+    margin-bottom: 10px;
+    padding: 1rem;
+  }
+
   .contacts-hero {
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
     margin: 0 0 10px 0;
-    padding: 1rem 1rem 0.5rem 1rem;
+    padding: 1rem 1rem 0.5rem 1rem !important;
     text-align: center;
   }
 
