@@ -325,13 +325,18 @@
 /* ========== Адаптив для мобільних (width <= 767px) ========== */
 @media (width <= 767px) {
   .contacts-page {
-    max-width: var(--content-width-mobile);
+    width: 100%;
+    max-width: calc(100vw - 2rem);
     padding: 0;
+    margin: 0 auto;
   }
 
   .contacts-hero {
-    padding: var(--section-padding-mobile);
-    margin-bottom: var(--section-spacing-mobile);
+    width: 100%;
+    max-width: calc(100vw - 2rem);
+    margin: 0 auto 1.5rem auto;
+    padding: 1.5rem 1rem;
+    text-align: center;
   }
 
   .contacts-hero h1 {
@@ -339,10 +344,10 @@
   }
 
   .contacts-card {
-    padding: var(--section-padding-mobile);
-    margin-bottom: var(--section-spacing-mobile);
-    margin-left: var(--section-padding-mobile);
-    margin-right: var(--section-padding-mobile);
+    width: 100%;
+    max-width: calc(100vw - 2rem);
+    margin: 0 auto 1.5rem auto;
+    padding: 1.5rem 1rem;
   }
 
   .contacts-card__title {
@@ -351,31 +356,46 @@
 
   /* Телефони */
   .phone-row {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: var(--spacing-sm);
     padding: var(--spacing-md);
   }
 
   .phone-row__number {
     font-size: var(--font-size-base);
-    flex: 1 1 100%;
+    flex: 1 1 auto;
     text-align: left;
+    min-width: 0;
   }
 
   .phone-row__copy-btn {
-    min-height: 40px;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-xs);
-    flex-basis: 100%;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    max-width: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
   .phone-row__copy-text {
     display: none;
   }
 
-  /* Графік */
+  /* Графік роботи - max gap 10px */
+  .contacts-card:has(.schedule-container) {
+    gap: 10px;
+  }
+
+  .contacts-card:has(.schedule-container) .schedule-container {
+    gap: 10px;
+  }
+
   .schedule-row {
-    padding: var(--spacing-sm);
+    padding: 0.75rem;
   }
 
   .schedule-row__label {
@@ -386,19 +406,25 @@
     font-size: var(--font-size-base);
   }
 
-  /* Email */
+  /* Email - білий текст, один рядок */
+  .email-section__label {
+    color: var(--color-white);
+  }
+
   .email-section__link {
     font-size: var(--font-size-base);
     padding: var(--spacing-sm);
+    white-space: nowrap;
   }
 
   .email-section__note {
     font-size: var(--font-size-xs);
   }
 
-  /* Соціальні мережі */
+  /* Соціальні мережі - горизонтально в рядок */
   .social-row {
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: var(--spacing-sm);
   }
 
@@ -406,6 +432,7 @@
     padding: var(--spacing-sm);
     min-height: 40px;
     min-width: 40px;
+    flex-shrink: 0;
   }
 
   .social-btn svg {
