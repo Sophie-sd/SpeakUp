@@ -356,7 +356,7 @@
     width: 100%;
     max-width: 100%;
     margin: 0 0 10px 0;
-    padding: 1rem 1rem 0.5rem 1rem !important;
+    padding: 1rem 1rem 1rem 1rem !important;
     text-align: center;
   }
 
@@ -495,28 +495,62 @@
   .contacts-page {
     max-width: min(var(--content-width-desktop), var(--content-max-width));
     padding: var(--section-padding-desktop);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: var(--section-spacing-desktop);
   }
 
   .contacts-hero {
     padding: var(--section-padding-desktop);
-    margin-bottom: var(--section-spacing-desktop);
+    margin-bottom: 0;
+    grid-column: 1 / -1;
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(1) {
+    margin-bottom: 0;
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(2) {
+    margin-bottom: 0;
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(3) {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
   }
 
   .contacts-card {
     padding: var(--section-padding-desktop);
-    margin-bottom: var(--section-spacing-desktop);
   }
-}
 
-/* На desktop перший contact-card (гаряча лінія) показує 2 номери в один ряд */
-.contacts-page > .contacts-card:nth-of-type(1) .contacts-card__content {
-  display: flex;
-  flex-direction: row;
-  gap: var(--spacing-lg);
-}
+  /* Онлайн підтримка: email зліва, соцмережі справа в один ряд */
+  .contacts-page > .contacts-card:nth-of-type(3) .contacts-card__content {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+  }
 
-.contacts-page > .contacts-card:nth-of-type(1) .phone-row {
-  flex: 1;
+  .contacts-page > .contacts-card:nth-of-type(3) .email-section {
+    flex: 1;
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(3) .social-row {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+  }
+
+  /* На desktop перший contact-card (гаряча лінія) показує 2 номери в один ряд */
+  .contacts-page > .contacts-card:nth-of-type(1) .contacts-card__content {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-lg);
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(1) .phone-row {
+    flex: 1;
+  }
 }
 
 @media (width <= 767px) {
