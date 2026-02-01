@@ -344,7 +344,7 @@
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 0.5rem 0;
     padding: 1rem;
     text-align: center;
   }
@@ -407,7 +407,7 @@
   }
 
   .schedule-row {
-    padding: 0.75rem;
+    padding: 10px 20px;
   }
 
   .schedule-row__label {
@@ -447,7 +447,7 @@
 
   .email-section__link {
     font-size: var(--font-size-base);
-    padding: var(--spacing-sm);
+    padding: 10px 20px;
     white-space: nowrap;
   }
 
@@ -511,6 +511,7 @@
 @media (width <= 767px) {
   .contacts-page > .contacts-card:nth-of-type(1) .contacts-card__content {
     flex-direction: column;
+    gap: 10px;
   }
 }
 
