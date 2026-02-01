@@ -324,22 +324,26 @@
 
 /* ========== Адаптив для мобільних (width <= 767px) ========== */
 @media (width <= 767px) {
-  /* 1. Контейнер контенту - симетричний padding для рівних відстаней від країв */
+  /* 1. Контейнер контенту - тільки z-index, padding переходить до блоків */
   .contacts-content-wrapper {
-    padding: 0 1rem;
+    padding: 0;
     box-sizing: border-box;
   }
 
   .contacts-page {
+    box-sizing: border-box;
     width: 100%;
-    max-width: none;
+    max-width: 100vw;
+    max-width: calc(100vw - 2rem);
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    overflow-x: hidden;
   }
 
   .contacts-hero {
+    box-sizing: border-box;
     width: 100%;
-    max-width: none;
+    max-width: 100%;
     margin: 0 0 1.5rem 0;
     padding: 1rem;
     text-align: center;
@@ -350,10 +354,12 @@
   }
 
   .contacts-card {
+    box-sizing: border-box;
     width: 100%;
-    max-width: none;
+    max-width: 100%;
     margin: 0 0 1.5rem 0;
     padding: 1rem;
+    gap: 10px;
   }
 
   .contacts-card__title {
