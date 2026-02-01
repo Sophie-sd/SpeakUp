@@ -2,79 +2,11 @@
    Contacts Page - Сторінка контактів
    ========================================================================== */
 
-/* Фон (паралакс) */
-.contacts-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh; /* Fallback */
-  height: 100dvh; /* iOS Dynamic Viewport */
-  z-index: var(--z-background, -1);
-  overflow: hidden;
-  pointer-events: none; /* Важливо: не блокує кліки */
-  contain: layout style paint; /* Ізоляція для продуктивності */
-
-  /* Hardware acceleration - використовуємо наявний паттерн з header.css */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-
-  /* Явно вимикаємо blur якщо він застосовується через глобальні стилі */
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  filter: none;
-
-  /* will-change тільки коли активний - додається через JS */
-}
-
-/* Активний стан (додається через JS) */
-.contacts-background--active {
-  will-change: transform;
-}
-
-.contacts-background__image {
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-
-  /* Запобігає мерехтінню на iOS - використовуємо наявний паттерн */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-
-  /* Явно вимикаємо blur */
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  filter: none;
-}
-
-/* Контент над фоном */
+/* Контент над фоном - вирівнювання та z-index */
 .contacts-content-wrapper {
   position: relative;
   z-index: var(--z-content, 1);
   contain: layout style;
-}
-
-/* iOS Safari специфічні фікси */
-@supports (-webkit-touch-callout: none) {
-  .contacts-background {
-    height: 100dvh;
-
-    /* Fallback для iOS < 15 */
-    height: calc(var(--parallax-vh, 1vh) * 100);
-  }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .contacts-background {
-    position: absolute;
-  }
 }
 
 /* Загальні стилі для glass-section на сторінці контактів */
@@ -85,82 +17,191 @@
 
 .contacts-page {
   width: 100%;
-  max-width: 99vw;
-  max-width: 99dvw;
+  max-width: min(var(--content-width-desktop), var(--content-max-width));
   margin: 0 auto;
 }
 
 /* Hero секція */
 .contacts-hero {
   text-align: center;
-  margin-bottom: 0;
+  margin-bottom: var(--section-spacing-desktop);
 }
 
 .contacts-hero h1 {
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
   color: var(--color-white);
-  margin-bottom: var(--spacing-md);
+  margin: 0;
   text-shadow:
     0 2px 4px rgba(0, 0, 0, 0.5),
     0 4px 8px rgba(0, 0, 0, 0.4),
     0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.contacts-hero__subtitle {
-  font-size: var(--font-size-lg);
-  color: var(--color-text-muted);
-  line-height: 1.6;
-  margin-top: var(--spacing-sm);
-}
-
-/* Контент контактів */
-.contacts-content {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xl);
-  padding: var(--section-padding-desktop);
-}
-
-/* Секція контактів */
-.contacts-section {
+/* Картка контактів */
+.contacts-card {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  padding: var(--section-padding-desktop);
+  margin-bottom: var(--section-spacing-desktop);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
-.contacts-section__title {
+.contacts-card__title {
   font-size: clamp(1.25rem, 2.5vw, 1.75rem);
   font-weight: 700;
   color: var(--color-white);
-  margin-bottom: var(--spacing-sm);
+  margin: 0;
   text-shadow:
     0 2px 4px rgba(0, 0, 0, 0.5),
     0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.contacts-section__content {
+.contacts-card__content {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
 }
 
-/* Контактний елемент (телефон, email) */
-.contact-item {
+/* ========== Гаряча лінія - телефони ========== */
+.phone-row {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-  flex-wrap: wrap;
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
 }
 
-.contact-item strong {
-  font-size: var(--font-size-base);
+.phone-row:hover {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.phone-row__link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.phone-row__link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.phone-row__number {
+  font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--color-white);
-  min-width: 60px;
+  letter-spacing: 0.5px;
 }
 
-.contact-item__link {
+.phone-row__link:hover .phone-row__number {
+  color: var(--color-primary);
+}
+
+.phone-row__copy-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.phone-row__copy-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(231, 30, 20, 0.25);
+}
+
+.phone-row__copy-btn:active {
+  transform: scale(0.98);
+}
+
+.phone-row__copy-btn.copied {
+  background: #10b981;
+}
+
+.phone-row__copy-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.phone-row__copy-text {
+  display: inline;
+}
+
+/* ========== Графік роботи ========== */
+.schedule-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.schedule-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+}
+
+.schedule-row__label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.schedule-row__value {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+/* ========== Email секція ========== */
+.email-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.email-section__label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.email-section__link {
   font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--color-primary);
@@ -168,162 +209,262 @@
   transition: all var(--transition-fast);
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: var(--radius-md);
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--glass-border);
   display: inline-block;
-  min-width: fit-content;
+  width: fit-content;
 }
 
-.contact-item__link:hover,
-.contact-item__link:focus {
-  color: var(--color-primary-hover);
-  background: rgba(0, 0, 0, 0.6);
-  border-color: var(--color-primary);
+.email-section__link:hover,
+.email-section__link:focus {
+  text-decoration: underline;
   outline: none;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(231, 30, 20, 0.2);
 }
 
-.contact-item__link:active {
-  transform: translateY(0) scale(0.98);
+.email-section__link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
-/* Примітка про контакт */
-.contact-note {
+.email-section__note {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   line-height: 1.6;
-  margin-top: var(--spacing-xs);
+  margin: var(--spacing-sm) 0 0 0;
   padding: var(--spacing-sm);
-  background: rgba(0, 0, 0, 0.3);
   border-left: 3px solid var(--color-primary);
   border-radius: var(--radius-sm);
 }
 
-/* Графік роботи */
-.schedule-item {
+/* ========== Соціальні мережі ========== */
+.social-section {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-md);
-  background: var(--glass-bg-light);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
+  gap: var(--spacing-md);
 }
 
-.schedule-item__label {
+.social-section__label {
   font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: var(--color-text-muted);
+  font-weight: 700;
+  color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  margin: 0;
 }
 
-.schedule-item__value {
-  font-size: var(--font-size-lg);
-  font-weight: 500;
+.social-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.social-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-white);
+  transition: all var(--transition-fast);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-family: inherit;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.social-btn:hover {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.social-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.social-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.social-btn svg {
+  width: 28px;
+  height: 28px;
+  transition: transform var(--transition-fast);
   color: var(--color-white);
 }
 
-/* Повідомлення про відсутність даних */
-.contacts-content > p {
-  text-align: center;
-  color: var(--color-text-muted);
-  font-size: var(--font-size-lg);
-  padding: var(--spacing-xl);
+.social-btn:hover svg {
+  transform: scale(1.1);
+  color: var(--color-primary);
 }
 
-/* Адаптивність */
+.social-btn span {
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+/* ========== Адаптив для планшетів (768px - 1023px) ========== */
+@media (width >= 768px) and (width <= 1023px) {
+  .contacts-page {
+    padding: var(--section-padding-desktop);
+  }
+
+  .contacts-card {
+    padding: var(--section-padding-desktop);
+  }
+}
+
+/* ========== Адаптив для мобільних (width <= 767px) ========== */
 @media (width <= 767px) {
-  .contacts-page .glass-section {
-    padding: var(--section-padding-mobile);
-    margin-bottom: var(--section-spacing-mobile);
-  }
-
-
-  /* Додати достатній padding для контактних елементів, щоб текст не обрізався */
-  .contacts-section__content {
-    padding-bottom: var(--spacing-sm);
-  }
-
-  .contact-item {
-    padding-bottom: var(--spacing-xs);
-    min-height: auto;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .contact-item strong {
-    min-width: auto;
-  }
-
-  .contact-item__link {
-    word-break: break-word;
-    overflow-wrap: break-word;
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--font-size-base);
-    width: 85%;
-    text-align: center;
-  }
-
-  .schedule-item {
-    padding: var(--spacing-sm);
-    min-height: auto;
+  .contacts-page {
+    max-width: var(--content-width-mobile);
+    padding: 0;
   }
 
   .contacts-hero {
-    margin-bottom: 0;
+    padding: var(--section-padding-mobile);
+    margin-bottom: var(--section-spacing-mobile);
   }
 
   .contacts-hero h1 {
     font-size: var(--font-size-2xl);
   }
 
-  .contacts-hero__subtitle {
-    font-size: var(--font-size-base);
-  }
-
-  .contacts-content {
-    gap: var(--spacing-lg);
+  .contacts-card {
     padding: var(--section-padding-mobile);
+    margin-bottom: var(--section-spacing-mobile);
+    margin-left: var(--section-padding-mobile);
+    margin-right: var(--section-padding-mobile);
   }
 
-  .contacts-section__title {
+  .contacts-card__title {
     font-size: 1.25rem;
   }
 
-  .schedule-item__value {
+  /* Телефони */
+  .phone-row {
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+  }
+
+  .phone-row__number {
+    font-size: var(--font-size-base);
+    flex: 1 1 100%;
+    text-align: left;
+  }
+
+  .phone-row__copy-btn {
+    min-height: 40px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    flex-basis: 100%;
+  }
+
+  .phone-row__copy-text {
+    display: none;
+  }
+
+  /* Графік */
+  .schedule-row {
+    padding: var(--spacing-sm);
+  }
+
+  .schedule-row__label {
+    font-size: var(--font-size-sm);
+  }
+
+  .schedule-row__value {
     font-size: var(--font-size-base);
   }
 
-  .contact-note {
+  /* Email */
+  .email-section__link {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-sm);
+  }
+
+  .email-section__note {
     font-size: var(--font-size-xs);
   }
-}
 
-/* Планшети */
-@media (width >= 768px) and (width <= 1023px) {
-  .contacts-content {
-    max-width: 600px;
-    margin: 0 auto;
+  /* Соціальні мережі */
+  .social-row {
+    justify-content: center;
+    gap: var(--spacing-sm);
+  }
+
+  .social-btn {
+    padding: var(--spacing-sm);
+    min-height: 40px;
+    min-width: 40px;
+  }
+
+  .social-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .social-btn span {
+    display: none;
   }
 }
 
-/* Десктоп - двоколонковий layout */
+/* ========== Десктоп (width >= 1024px) ========== */
 @media (width >= 1024px) {
   .contacts-page {
     max-width: min(var(--content-width-desktop), var(--content-max-width));
     padding: var(--section-padding-desktop);
   }
 
-  .contacts-content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-xl);
+  .contacts-hero {
+    padding: var(--section-padding-desktop);
+    margin-bottom: var(--section-spacing-desktop);
   }
 
-  .contacts-section {
-    min-height: 200px;
+  .contacts-card {
+    padding: var(--section-padding-desktop);
+    margin-bottom: var(--section-spacing-desktop);
   }
 }
 
+/* На desktop перший contact-card (гаряча лінія) показує 2 номери в один ряд */
+.contacts-page > .contacts-card:nth-of-type(1) .contacts-card__content {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-lg);
+}
+
+.contacts-page > .contacts-card:nth-of-type(1) .phone-row {
+  flex: 1;
+}
+
+@media (width <= 767px) {
+  .contacts-page > .contacts-card:nth-of-type(1) .contacts-card__content {
+    flex-direction: column;
+  }
+}
+
+/* ========== iOS Safari фікси ========== */
+@supports (-webkit-touch-callout: none) {
+  .contacts-card {
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .phone-row__copy-btn {
+    -webkit-appearance: none;
+    border-radius: var(--radius-sm);
+  }
+
+  .social-btn {
+    -webkit-appearance: none;
+  }
+}
