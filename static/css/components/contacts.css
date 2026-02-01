@@ -344,8 +344,8 @@
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
-    margin: 0 0 0.5rem 0;
-    padding: 1rem;
+    margin: 0 0 10px 0;
+    padding: 1rem 1rem 0.5rem 1rem;
     text-align: center;
   }
 
@@ -357,7 +357,7 @@
     box-sizing: border-box;
     width: 100%;
     max-width: 100%;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 10px 0;
     padding: 1rem;
     gap: 10px;
   }
@@ -407,7 +407,7 @@
   }
 
   .schedule-row {
-    padding: 10px 20px;
+    padding: 0.75rem;
   }
 
   .schedule-row__label {
@@ -447,7 +447,7 @@
 
   .email-section__link {
     font-size: var(--font-size-base);
-    padding: 10px 20px;
+    padding: var(--spacing-sm);
     white-space: nowrap;
   }
 
