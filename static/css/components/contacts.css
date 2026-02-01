@@ -12,7 +12,6 @@
 /* Загальні стилі для glass-section на сторінці контактів */
 .contacts-page .glass-section {
   padding: var(--section-padding-desktop);
-  margin-bottom: var(--section-spacing-desktop);
 }
 
 .contacts-page {
@@ -516,7 +515,7 @@
   }
 
   /* Третя картка (Онлайн підтримка) займає обидва стовпці */
-  .contacts-page > .contacts-card:nth-child(4) {
+  .contacts-page > .contacts-card:nth-of-type(3) {
     grid-column: 1 / -1;
   }
 
@@ -529,30 +528,30 @@
 
   .contacts-page > .contacts-card:nth-of-type(1) .phone-row {
     flex: 1;
-    white-space: nowrap;
   }
 
+  /* Зменшуємо розмір номера та кнопки копіювання для гарячої лінії */
   .contacts-page > .contacts-card:nth-of-type(1) .phone-row__number {
-    font-size: 1.1rem;
-    flex-shrink: 1;
+    font-size: 1rem;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .contacts-page > .contacts-card:nth-of-type(1) .phone-row__copy-btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
     min-height: 40px;
-    flex-shrink: 0;
+    font-size: var(--font-size-sm);
   }
 
-  .contacts-page > .contacts-card:nth-of-type(1) .phone-row__copy-btn svg {
-    width: 16px;
-    height: 16px;
+  /* Друга картка (Графік роботи) - вертикальна орієнтація, повна ширина */
+  .contacts-page > .contacts-card:nth-of-type(2) .contacts-card__content {
+    flex-direction: column;
   }
 
-  /* Третя картка (Онлайн підтримка) - горизонтальне розміщення */
+  .contacts-page > .contacts-card:nth-of-type(2) .schedule-row {
+    width: 100%;
+  }
+
+  /* Третя картка (Онлайн підтримка) - соціальні ліворуч, емейл праворуч */
   .contacts-page > .contacts-card:nth-of-type(3) .contacts-card__content {
     display: flex;
     flex-direction: row;
@@ -560,28 +559,17 @@
     align-items: flex-start;
   }
 
-  .contacts-page > .contacts-card:nth-of-type(3) .email-section {
-    flex: 1;
-  }
-
   .contacts-page > .contacts-card:nth-of-type(3) .social-row {
-    flex: 1;
+    order: -1;
+    flex: 0 0 auto;
     flex-direction: column;
     gap: var(--spacing-md);
     align-items: flex-start;
+    min-width: 120px;
   }
 
-  /* Графік роботи - розширити ширину контейнера */
-  .contacts-page > .contacts-card:nth-of-type(2) .schedule-container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    width: 100%;
-  }
-
-  .contacts-page > .contacts-card:nth-of-type(2) .schedule-row {
-    width: 100%;
-    box-sizing: border-box;
+  .contacts-page > .contacts-card:nth-of-type(3) .email-section {
+    flex: 1;
   }
 }
 
