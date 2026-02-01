@@ -529,6 +529,27 @@
 
   .contacts-page > .contacts-card:nth-of-type(1) .phone-row {
     flex: 1;
+    white-space: nowrap;
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(1) .phone-row__number {
+    font-size: 1.1rem;
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(1) .phone-row__copy-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    min-height: 40px;
+    flex-shrink: 0;
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(1) .phone-row__copy-btn svg {
+    width: 16px;
+    height: 16px;
   }
 
   /* Третя картка (Онлайн підтримка) - горизонтальне розміщення */
@@ -548,6 +569,19 @@
     flex-direction: column;
     gap: var(--spacing-md);
     align-items: flex-start;
+  }
+
+  /* Графік роботи - розширити ширину контейнера */
+  .contacts-page > .contacts-card:nth-of-type(2) .schedule-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    width: 100%;
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(2) .schedule-row {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
