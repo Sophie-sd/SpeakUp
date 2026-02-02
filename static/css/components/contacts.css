@@ -194,7 +194,7 @@
 .email-section__link {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--color-white);
   text-decoration: none;
   transition: all var(--transition-fast);
   padding: var(--spacing-sm) var(--spacing-md);
@@ -212,16 +212,6 @@
 .email-section__link:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
-}
-
-.email-section__note {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  line-height: 1.6;
-  margin: 0;
-  padding: 10px;
-  border-left: 3px solid var(--color-primary);
-  border-radius: var(--radius-sm);
 }
 
 /* ========== Соціальні мережі ========== */
@@ -242,7 +232,7 @@
 
 .social-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--spacing-md);
   align-items: center;
   justify-content: flex-start;
@@ -267,6 +257,7 @@
   font-family: inherit;
   min-height: 44px;
   min-width: 44px;
+  flex-shrink: 0;
 }
 
 .social-btn:hover {
@@ -285,8 +276,8 @@
 }
 
 .social-btn svg {
-  width: 28px;
-  height: 28px;
+  width: clamp(20px, 4vw, 28px);
+  height: clamp(20px, 4vw, 28px);
   transition: transform var(--transition-fast);
   color: var(--color-white);
 }
@@ -434,10 +425,6 @@
     gap: 0;
   }
 
-  .contacts-card:has(.email-section) .email-section__note {
-    margin-top: 0;
-  }
-
   .contacts-card:has(.email-section) .social-row {
     margin-top: 10px;
     justify-content: center;
@@ -449,10 +436,6 @@
     font-size: var(--font-size-base);
     padding: var(--spacing-sm);
     white-space: nowrap;
-  }
-
-  .email-section__note {
-    font-size: var(--font-size-xs);
   }
 
   /* Соціальні мережі - горизонтально в рядок */
