@@ -66,6 +66,9 @@
     0 9px 18px rgba(0, 0, 0, 0.3),
     0 12px 24px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
+  min-width: 180px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 
 /* Текст під цифрами - більш виразний, менший для 4 в ряд, фіксована висота для вирівнювання */
@@ -196,6 +199,9 @@
       0 4px 8px rgba(0, 0, 0, 0.4),
       0 6px 12px rgba(0, 0, 0, 0.3),
       0 8px 16px rgba(0, 0, 0, 0.2);
+    min-width: 150px;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
   }
 
   .achievement-card__label {
@@ -248,6 +254,9 @@
   .achievement-card__number {
     font-size: clamp(2.0rem, 5vw, 3rem);
     margin-bottom: clamp(0.7rem, 1vw, 0.875rem);
+    min-width: 220px;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
   }
 
   .achievement-card__label {
