@@ -187,7 +187,7 @@
 .email-section {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: 5px;
 }
 
 .email-section__label {
@@ -226,7 +226,7 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   line-height: 1.6;
-  margin: var(--spacing-sm) 0 0 0;
+  margin: 0;
   padding: var(--spacing-sm);
   border-left: 3px solid var(--color-primary);
   border-radius: var(--radius-sm);
@@ -560,20 +560,34 @@
     display: flex;
     flex-direction: row;
     gap: 2.1rem;
+    align-items: flex-start;
   }
 
   .contacts-page > .contacts-card:nth-of-type(3) .email-section {
     flex: 1;
+    min-width: 0;
   }
 
   .contacts-page > .contacts-card:nth-of-type(3) .social-row {
-    flex: 1;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: var(--spacing-md);
-    align-items: flex-start;
-    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* Зменшені іконки для третьої картки на десктопі */
+  .contacts-page > .contacts-card:nth-of-type(3) .social-btn {
+    padding: 0.5rem;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .contacts-page > .contacts-card:nth-of-type(3) .social-btn svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
