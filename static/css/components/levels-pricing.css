@@ -380,6 +380,45 @@
   color: rgba(255, 193, 7, 0.95);
 }
 
+/* === КНОПКА "ПОЧАТИ НАВЧАННЯ" === */
+
+.pricing-card__button {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, var(--color-primary) 0%, rgba(231, 30, 20, 0.8) 100%);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: all var(--transition-normal) ease;
+  box-shadow: 0 4px 12px rgba(231, 30, 20, 0.3);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pricing-card__button:hover {
+    background: linear-gradient(135deg, rgba(231, 30, 20, 0.9) 0%, rgba(231, 30, 20, 0.7) 100%);
+    box-shadow: 0 6px 16px rgba(231, 30, 20, 0.4);
+    transform: translateY(-2px);
+  }
+}
+
+.pricing-card__button:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+.pricing-card__button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(231, 30, 20, 0.3);
+}
+
 /* === CTA БЛОК === */
 
 .levels-cta {

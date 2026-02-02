@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="{% static 'css/components/levels-pricing.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/individual-lessons.css' %}">
 <link rel="stylesheet" href="{% static 'css/components/unlimited-section.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/pricing-modal.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -145,6 +146,29 @@
 
         <!-- Помісячна ціна (зберігаємо як є) -->
         <p class="price-per-month"><strong>{{ package.price_per_month }} грн/міс</strong></p>
+
+        <!-- Кнопка "Почати навчання" -->
+        <button 
+          class="button button--primary pricing-card__button"
+          data-pricing-modal-trigger="{{ package.id }}"
+          data-package-name="{{ package.name_uk }}"
+          data-package-type="levels"
+          data-levels-count="{{ package.levels_count }}"
+          {% if package.discount_percent != 0 %}
+            {% if package.id == 'progress' %}
+              data-price-old="19800"
+            {% elif package.id == 'confidence' %}
+              data-price-old="39600"
+            {% elif package.id == 'maximum' %}
+              data-price-old="59400"
+            {% endif %}
+          {% endif %}
+          data-price-new="{{ package.full_price }}"
+          data-discount-percent="{{ package.discount_percent }}"
+          data-price-per-unit="{{ package.price_per_month }} грн/міс"
+        >
+          Почати навчання
+        </button>
       </div>
       {% endfor %}
     </div>
@@ -267,6 +291,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 3 платежі по 5 542 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-25-50-local-day-general"
+                data-package-name="25 занять × 50 хв"
+                data-package-type="individual"
+                data-teacher="local"
+                data-category="general"
+                data-time="day"
+                data-lesson-count="25"
+                data-lesson-duration="50"
+                data-price-old="16625"
+                data-price-new="14963"
+                data-discount-percent="10"
+                data-price-per-unit="599 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 50 хв - 50 занять -->
@@ -281,6 +322,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 4 платежі по 8 313 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-50-50-local-day-general"
+                data-package-name="50 занять × 50 хв"
+                data-package-type="individual"
+                data-teacher="local"
+                data-category="general"
+                data-time="day"
+                data-lesson-count="50"
+                data-lesson-duration="50"
+                data-price-old="33250"
+                data-price-new="29925"
+                data-discount-percent="10"
+                data-price-per-unit="599 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 90 хв - 20 занять -->
@@ -294,6 +352,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 3 платежі по 6 600 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-20-90-local-day-general"
+                data-package-name="20 занять × 90 хв"
+                data-package-type="individual"
+                data-teacher="local"
+                data-category="general"
+                data-time="day"
+                data-lesson-count="20"
+                data-lesson-duration="90"
+                data-price-old="19800"
+                data-price-new="17820"
+                data-discount-percent="10"
+                data-price-per-unit="891 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 90 хв - 40 занять -->
@@ -307,6 +382,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 4 платежі по 9 900 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-40-90-local-day-general"
+                data-package-name="40 занять × 90 хв"
+                data-package-type="individual"
+                data-teacher="local"
+                data-category="general"
+                data-time="day"
+                data-lesson-count="40"
+                data-lesson-duration="90"
+                data-price-old="39600"
+                data-price-new="35640"
+                data-discount-percent="10"
+                data-price-per-unit="891 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
           </div>
 
@@ -324,6 +416,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 3 платежі по 8 250 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-25-50-native-day-general"
+                data-package-name="25 занять × 50 хв"
+                data-package-type="individual"
+                data-teacher="native"
+                data-category="general"
+                data-time="day"
+                data-lesson-count="25"
+                data-lesson-duration="50"
+                data-price-old="23750"
+                data-price-new="22275"
+                data-discount-percent="6"
+                data-price-per-unit="891 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 50 хв - 50 занять -->
@@ -337,6 +446,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 4 платежі по 11 375 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-50-50-native-day-general"
+                data-package-name="50 занять × 50 хв"
+                data-package-type="individual"
+                data-teacher="native"
+                data-category="general"
+                data-time="day"
+                data-lesson-count="50"
+                data-lesson-duration="50"
+                data-price-old="47500"
+                data-price-new="44550"
+                data-discount-percent="6"
+                data-price-per-unit="891 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 90 хв - 20 занять -->
@@ -351,6 +477,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 3 платежі по 8 600 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-20-90-native-day-general"
+                data-package-name="20 занять × 90 хв"
+                data-package-type="individual"
+                data-teacher="native"
+                data-category="general"
+                data-time="day"
+                data-lesson-count="20"
+                data-lesson-duration="90"
+                data-price-old="25800"
+                data-price-new="23220"
+                data-discount-percent="10"
+                data-price-per-unit="1161 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 90 хв - 40 занять -->
@@ -364,6 +507,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 4 платежі по 12 900 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-40-90-native-day-general"
+                data-package-name="40 занять × 90 хв"
+                data-package-type="individual"
+                data-teacher="native"
+                data-category="general"
+                data-time="day"
+                data-lesson-count="40"
+                data-lesson-duration="90"
+                data-price-old="51600"
+                data-price-new="46440"
+                data-discount-percent="10"
+                data-price-per-unit="1161 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
           </div>
         </div>
@@ -441,6 +601,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 3 платежі по 7 917 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-25-50-local-day-specialized"
+                data-package-name="25 занять × 50 хв"
+                data-package-type="individual"
+                data-teacher="local"
+                data-category="specialized"
+                data-time="day"
+                data-lesson-count="25"
+                data-lesson-duration="50"
+                data-price-old="23750"
+                data-price-new="21375"
+                data-discount-percent="10"
+                data-price-per-unit="855 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 50 хв - 50 занять -->
@@ -455,6 +632,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 4 платежі по 11 875 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-50-50-local-day-specialized"
+                data-package-name="50 занять × 50 хв"
+                data-package-type="individual"
+                data-teacher="local"
+                data-category="specialized"
+                data-time="day"
+                data-lesson-count="50"
+                data-lesson-duration="50"
+                data-price-old="47500"
+                data-price-new="42750"
+                data-discount-percent="10"
+                data-price-per-unit="855 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 90 хв - 20 занять -->
@@ -468,6 +662,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 3 платежі по 8 600 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-20-90-local-day-specialized"
+                data-package-name="20 занять × 90 хв"
+                data-package-type="individual"
+                data-teacher="local"
+                data-category="specialized"
+                data-time="day"
+                data-lesson-count="20"
+                data-lesson-duration="90"
+                data-price-old="25800"
+                data-price-new="23220"
+                data-discount-percent="10"
+                data-price-per-unit="1161 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 90 хв - 40 занять -->
@@ -481,6 +692,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 4 платежі по 12 900 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-40-90-local-day-specialized"
+                data-package-name="40 занять × 90 хв"
+                data-package-type="individual"
+                data-teacher="local"
+                data-category="specialized"
+                data-time="day"
+                data-lesson-count="40"
+                data-lesson-duration="90"
+                data-price-old="51600"
+                data-price-new="46440"
+                data-discount-percent="10"
+                data-price-per-unit="1161 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
           </div>
 
@@ -498,6 +726,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 3 платежі по 11 583 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-25-50-native-day-specialized"
+                data-package-name="25 занять × 50 хв"
+                data-package-type="individual"
+                data-teacher="native"
+                data-category="specialized"
+                data-time="day"
+                data-lesson-count="25"
+                data-lesson-duration="50"
+                data-price-old="34750"
+                data-price-new="31275"
+                data-discount-percent="10"
+                data-price-per-unit="1251 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 50 хв - 50 занять -->
@@ -511,6 +756,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 4 платежі по 17 375 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-50-50-native-day-specialized"
+                data-package-name="50 занять × 50 хв"
+                data-package-type="individual"
+                data-teacher="native"
+                data-category="specialized"
+                data-time="day"
+                data-lesson-count="50"
+                data-lesson-duration="50"
+                data-price-old="69500"
+                data-price-new="62550"
+                data-discount-percent="10"
+                data-price-per-unit="1251 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 90 хв - 20 занять -->
@@ -525,6 +787,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 3 платежі по 11 667 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-20-90-native-day-specialized"
+                data-package-name="20 занять × 90 хв"
+                data-package-type="individual"
+                data-teacher="native"
+                data-category="specialized"
+                data-time="day"
+                data-lesson-count="20"
+                data-lesson-duration="90"
+                data-price-old="35000"
+                data-price-new="31500"
+                data-discount-percent="10"
+                data-price-per-unit="1575 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
 
             <!-- 90 хв - 40 занять -->
@@ -538,6 +817,23 @@
                 <span class="installment-icon" aria-hidden="true">💳</span>
                 4 платежі по 17 500 грн
               </p>
+              <button 
+                class="button button--primary individual-package-card__button"
+                data-pricing-modal-trigger="individual-40-90-native-day-specialized"
+                data-package-name="40 занять × 90 хв"
+                data-package-type="individual"
+                data-teacher="native"
+                data-category="specialized"
+                data-time="day"
+                data-lesson-count="40"
+                data-lesson-duration="90"
+                data-price-old="70000"
+                data-price-new="63000"
+                data-discount-percent="10"
+                data-price-per-unit="1575 грн/заняття"
+              >
+                Почати навчання
+              </button>
             </div>
           </div>
         </div>
@@ -1004,6 +1300,22 @@
       <a href="#" class="button button--primary">Записатись на безкоштовне пробне заняття</a>
     </div>
   </section>
+
+  <!-- === МОДАЛЬНЕ ВІКНО ДЛЯ ДЕТАЛЕЙ ЗАМОВЛЕННЯ === -->
+  <div class="pricing-modal" role="dialog" aria-labelledby="pricing-modal-title" aria-modal="true">
+    <div class="pricing-modal__backdrop"></div>
+    <div class="pricing-modal__content glass-card">
+      <button class="pricing-modal__close" aria-label="Закрити">&times;</button>
+      <h3 id="pricing-modal-title" class="pricing-modal__title">Деталі замовлення</h3>
+      <div class="pricing-modal__body">
+        <!-- Контент генерується динамічно -->
+      </div>
+      <div class="pricing-modal__actions">
+        <button class="button button--primary">Оплатити одним платежем</button>
+        <button class="button button--secondary">💳 Оплата частинами</button>
+      </div>
+    </div>
+  </div>
 </main>
 {% endblock %}
 
@@ -1011,4 +1323,5 @@
 <script type="module" src="{% static 'js/modules/adults-advantages-accordion.js' %}" defer></script>
 <script type="module" src="{% static 'js/modules/level-cards-navigation.js' %}" defer></script>
 <script type="module" src="{% static 'js/modules/individual-lessons-toggle.js' %}" defer></script>
+<script type="module" src="{% static 'js/modules/pricing-modal.js' %}" defer></script>
 {% endblock %}
