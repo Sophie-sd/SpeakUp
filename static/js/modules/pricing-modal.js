@@ -96,6 +96,35 @@ export function initPricingModal() {
   }
 
   /**
+   * Генерує опис для безлімітних пакетів на основі data-атрибутів
+   */
+  function generateUnlimitedDescription(attrs) {
+    const months = parseInt(attrs.months);
+    const giftMonths = parseInt(attrs.giftMonths) || 0;
+    const totalMonths = months + giftMonths;
+    
+    const giftText = giftMonths > 0 
+      ? ` + ${giftMonths} ${giftMonths === 1 ? 'місяць' : 'місяці'} в подарунок 🎁`
+      : '';
+
+    return {
+      packageType: 'unlimited',
+      description: `Безлімітне навчання на ${months} місяців${giftText}`,
+      includes: [
+        'Безлімітні заняття в мультимедійному класі',
+        'Заняття з викладачем (групи 1-10 учнів)',
+        'Доступ до Student Zone 24/7',
+        'Індивідуальні консультації',
+        'Розмовні клуби кожного тижня',
+        'Multimedia Lesson – інтерактивні мультимедійні уроки',
+        'Group Class – групові заняття з викладачем',
+        'Workshops – мовні практикуми',
+        'Academic Progress Report – контроль прогресу'
+      ]
+    };
+  }
+
+  /**
    * Генерує HTML контент модалки
    */
   function generateModalContent(trigger) {
@@ -125,6 +154,15 @@ export function initPricingModal() {
         time,
         lessonCount,
         lessonDuration
+      });
+    } else if (packageType === 'unlimited') {
+      // Отримуємо дані для безлімітних пакетів
+      const months = trigger.dataset.months;
+      const giftMonths = trigger.dataset.giftMonths || '0';
+
+      packageInfo = generateUnlimitedDescription({
+        months,
+        giftMonths
       });
     }
 
