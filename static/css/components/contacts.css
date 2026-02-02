@@ -514,7 +514,7 @@
   }
 
   /* Третя картка (Онлайн підтримка) займає обидва стовпці */
-  .contacts-page > .contacts-card:nth-child(4) {
+  .contacts-card--online-support {
     grid-column: 1 / -1;
   }
 
@@ -553,16 +553,16 @@
   }
 
   /* Третя картка (Онлайн підтримка) - горизонтальне розміщення */
-  .contacts-page > .contacts-card:nth-of-type(3) .contacts-card__content {
+  .contacts-card--online-support .contacts-card__content {
     display: flex;
     gap: 2.1rem;
   }
 
-  .contacts-page > .contacts-card:nth-of-type(3) .email-section {
+  .contacts-card--online-support .email-section {
     flex: 1;
   }
 
-  .contacts-page > .contacts-card:nth-of-type(3) .social-row {
+  .contacts-card--online-support .social-row {
     flex: 1;
     display: flex;
     flex-direction: row;
