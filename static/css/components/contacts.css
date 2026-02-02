@@ -65,7 +65,7 @@
 .contacts-card__content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 10px;
 }
 
 /* ========== Гаряча лінія - телефони ========== */
@@ -190,14 +190,6 @@
   gap: 5px;
 }
 
-.email-section__label {
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  color: var(--color-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin: 0;
-}
 
 .email-section__link {
   font-size: var(--font-size-lg);
@@ -227,7 +219,7 @@
   color: var(--color-text-muted);
   line-height: 1.6;
   margin: 0;
-  padding: var(--spacing-sm);
+  padding: 10px;
   border-left: 3px solid var(--color-primary);
   border-radius: var(--radius-sm);
 }
@@ -262,7 +254,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-xs);
-  padding: var(--spacing-md);
+  padding: 23px;
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
@@ -453,10 +445,6 @@
   }
 
   /* Email - білий текст, один рядок */
-  .email-section__label {
-    color: var(--color-white);
-  }
-
   .email-section__link {
     font-size: var(--font-size-base);
     padding: var(--spacing-sm);
