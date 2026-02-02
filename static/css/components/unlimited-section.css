@@ -124,6 +124,7 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   overflow: visible;
   min-height: 135px;            /* Однакова висота для всіх трьох карток */
+  height: 100%;                 /* Заповнює повну висоту grid-комірки */
 }
 
 /* Модифікатори */
@@ -204,8 +205,8 @@
 
 .unlimited-pricing-card__gift-sticker {
   position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
+  top: -12px;
+  left: -10px;
   padding: 0.35rem 0.6rem;
   background: rgba(255, 193, 7, 0.2);
   border: 1px solid rgba(255, 193, 7, 0.5);
@@ -214,8 +215,8 @@
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
-  z-index: 5;
-  transform: rotate(-2deg);
+  z-index: 15;
+  transform: rotate(-10deg);
 }
 
 .unlimited-pricing-card__total {
@@ -234,7 +235,7 @@
 .unlimited-pricing-card__button {
   width: 100%;
   padding: 0.75rem 1rem;
-  margin-top: 1rem;
+  margin-top: auto;
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: 10px;
