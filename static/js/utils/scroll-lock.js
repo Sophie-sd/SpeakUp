@@ -49,9 +49,19 @@ export function unlockScroll() {
 
   // Відновити позицію скролу
   if (scrollPosition > 0) {
+    // Тимчасово вимкнути smooth scroll щоб позиція відновилася миттєво
+    const htmlElement = document.documentElement;
+    const originalScrollBehavior = htmlElement.style.scrollBehavior;
+    htmlElement.style.scrollBehavior = 'auto';
+
     window.scrollTo({
       top: scrollPosition,
       behavior: 'auto'
+    });
+
+    // Відновити оригінальну scroll-behavior через наступний frame
+    requestAnimationFrame(() => {
+      htmlElement.style.scrollBehavior = originalScrollBehavior;
     });
   }
 
