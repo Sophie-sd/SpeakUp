@@ -515,7 +515,9 @@
 
   /* Третя картка (Онлайн підтримка) займає обидва стовпці */
   .contacts-page > .contacts-card:nth-child(4) {
-    grid-column: 1 / -1;
+    grid-column: 1 / -1 !important;
+    display: flex;
+    flex-direction: column;
   }
 
   /* Перший contact-card (гаряча лінія) показує 2 номери вертикально */
