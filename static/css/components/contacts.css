@@ -518,6 +518,7 @@
     grid-column: 1 / -1 !important;
     display: flex;
     flex-direction: column;
+    max-width: none !important;
   }
 
   /* Перший contact-card (гаряча лінія) показує 2 номери вертикально */
