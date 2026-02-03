@@ -279,7 +279,7 @@
 
 /* НОВА ЦІНА */
 .pricing-modal__price-new {
-  color: var(--color-primary);
+  color: rgba(76, 175, 80, 1);
   font-size: 1.1rem;
   font-weight: 700;
 }
@@ -360,6 +360,11 @@
 .pricing-modal__actions .button--secondary:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+/* КНОПКА КОНСУЛЬТАЦІЇ */
+.pricing-modal__consultation-btn {
+  margin-top: 0.5rem;
 }
 
 /* === RESPONSIVE === */

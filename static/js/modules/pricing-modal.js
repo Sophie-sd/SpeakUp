@@ -297,6 +297,19 @@ export function initPricingModal() {
     const button = event.target;
     const buttonText = button.textContent.trim();
 
+    // Якщо це кнопка консультації - закрити pricing modal та відкрити trial modal
+    if (button.classList.contains('pricing-modal__consultation-btn')) {
+      closeModal();
+      // Знаходимо trial modal trigger та емулюємо клік
+      const trialTriggers = document.querySelectorAll('[data-trial-modal-trigger]');
+      if (trialTriggers.length > 0) {
+        // Використовуємо перший доступний тригер (зазвичай це кнопка в хедері)
+        trialTriggers[0].click();
+      }
+      return;
+    }
+
+    // Для інших кнопок оплати
     alert('Функціонал буде доданий незабаром');
   }
 

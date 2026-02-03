@@ -7,15 +7,16 @@ import { lockScroll, unlockScroll } from '../utils/scroll-lock.js';
  * Обробляє відкриття/закриття модального вікна та доступність
  */
 export function initTrialModal() {
-  const trigger = document.querySelector('[data-trial-modal-trigger]');
+  const triggers = document.querySelectorAll('[data-trial-modal-trigger]');
   const mobileTrigger = document.querySelector('.trial-form__trigger--mobile');
   const modal = document.querySelector('.trial-form__modal');
 
   if (!modal) return;
-  if (!trigger && !mobileTrigger) return;
+  if (triggers.length === 0 && !mobileTrigger) return;
 
   const closeBtn = modal.querySelector('.modal__close');
   const backdrop = modal.querySelector('.modal__backdrop');
+  let lastTrigger = null; // Зберігаємо останній натиснутий тригер для фокусу
 
   /**
    * Відкрити модальне вікно
@@ -60,7 +61,10 @@ export function initTrialModal() {
   const closeModal = () => {
     modal.classList.remove('modal--active');
     unlockScroll();
-    trigger.focus(); // Повернути фокус на кнопку
+    // Повернути фокус на кнопку, якщо вона існує
+    if (lastTrigger && lastTrigger.focus) {
+      lastTrigger.focus();
+    }
   };
 
   /**
@@ -73,17 +77,21 @@ export function initTrialModal() {
     }
   };
 
-  // Обробники подій для десктопної кнопки
-  if (trigger) {
+  /**
+   * Підписати обробники на всі тригери з data-trial-modal-trigger
+   */
+  triggers.forEach(trigger => {
     trigger.addEventListener('click', () => {
+      lastTrigger = trigger;
       openModal();
       document.addEventListener('keydown', handleEscapeKey);
     });
-  }
+  });
 
   // Обробники подій для мобільної кнопки
   if (mobileTrigger) {
     mobileTrigger.addEventListener('click', () => {
+      lastTrigger = mobileTrigger;
       openModal();
       document.addEventListener('keydown', handleEscapeKey);
     });
