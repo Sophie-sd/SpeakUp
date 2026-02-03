@@ -287,7 +287,14 @@
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
   .unlimited-section {
-    padding: 1.5rem;            /* Ще компактніше на мобільному */
+    box-sizing: border-box;
+    width: 100%;
+    max-width: calc(100vw - 2rem);
+    padding: var(--section-padding-mobile);
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: var(--section-spacing-mobile);
+    overflow-x: hidden;
   }
 
   .unlimited-two-columns {
@@ -297,6 +304,7 @@
 
   .unlimited-pricing {
     grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
 
   .unlimited-section .section-title {
