@@ -19,22 +19,7 @@
   box-sizing: border-box;
 }
 
-/* Десктоп - симетричний padding */
-@media (min-width: 768px) {
-  .pricing-modal {
-    padding: var(--spacing-xl);
-  }
-}
-
-/* Мобільна версія - адаптивний padding з урахуванням safe area */
-@media (max-width: 767px) {
-  .pricing-modal {
-    padding-top: var(--spacing-lg);
-    padding-bottom: var(--spacing-lg);
-    padding-left: max(var(--spacing-md), env(safe-area-inset-left, 0px));
-    padding-right: max(var(--spacing-md), env(safe-area-inset-right, 0px));
-  }
-}
+/* Не використовуємо padding на контейнері - margin буде на контенті */
 
 .pricing-modal--active {
   opacity: 1;
@@ -52,7 +37,6 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   cursor: pointer;
-  z-index: -1;
 }
 
 /* === КОНТЕНТ МОДАЛКИ === */
@@ -65,8 +49,9 @@
   padding: 2.5rem;
   max-width: 500px;
   width: calc(100% - 2rem);
-  max-height: calc(100vh - 2 * var(--spacing-xl));
-  max-height: calc(100dvh - 2 * var(--spacing-xl));
+  max-height: calc(100vh - 4rem);
+  max-height: calc(100dvh - 4rem);
+  margin: 2rem 1rem;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -395,7 +380,7 @@
 
 /* Кнопка "Оплата частинами" — тонкий червоний border */
 .pricing-modal__actions .button--secondary:not(.pricing-modal__consultation-btn) {
-  border: 1px solid var(--color-primary);
+  border: 0.5px solid var(--color-primary);
 }
 
 /* КНОПКА КОНСУЛЬТАЦІЇ */
@@ -408,9 +393,10 @@
 @media (max-width: 768px) {
   .pricing-modal__content {
     padding: 2rem;
-    max-width: calc(100% - 1.5rem);
-    max-height: calc(100vh - 2 * var(--spacing-lg));
-    max-height: calc(100dvh - 2 * var(--spacing-lg));
+    max-width: calc(100% - 2rem);
+    max-height: calc(100vh - 3rem);
+    max-height: calc(100dvh - 3rem);
+    margin: 1.5rem 1rem;
     border-radius: 16px;
   }
 
@@ -437,8 +423,9 @@
   .pricing-modal__content {
     padding: 1.5rem;
     max-width: calc(100% - 1rem);
-    max-height: calc(100vh - 2 * var(--spacing-md));
-    max-height: calc(100dvh - 2 * var(--spacing-md));
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    margin: 1rem 0.5rem;
     border-radius: 12px;
   }
 
