@@ -145,9 +145,12 @@
 /* === ПІДЗАГОЛОВОК (ОПИС ВИБОРУ) === */
 .pricing-modal__subtitle {
   font-size: 0.95rem;
+  font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.5;
-  margin: 0 0 1.75rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0 0 1.5rem 0;
   text-align: center;
 }
 

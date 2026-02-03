@@ -43,7 +43,7 @@ export function initPricingModal() {
     },
     confidence: {
       packageType: 'levels',
-      description: 'Ви обираєте пакет з 3 рівнями - найпопулярніший вибір',
+      description: 'Ви обираєте пакет з 3 рівнями англійської мови',
       includes: [
         '3 рівні навчання (9 місяців)',
         'Групові заняття з викладачем',
@@ -198,10 +198,6 @@ export function initPricingModal() {
         <div class="pricing-modal__pricing-row">
           <span class="pricing-modal__pricing-label">Ціна:</span>
           <span class="pricing-modal__pricing-value pricing-modal__price-new">${priceNew} грн</span>
-        </div>
-        <div class="pricing-modal__pricing-row">
-          <span class="pricing-modal__pricing-label pricing-modal__price-per-unit">За одиницю:</span>
-          <span class="pricing-modal__pricing-value pricing-modal__price-per-unit">${pricePerUnit}</span>
         </div>
         ${
           hasDiscount
