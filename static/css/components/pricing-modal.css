@@ -393,6 +393,11 @@
   outline-offset: 2px;
 }
 
+/* Кнопка "Оплата частинами" — тонкий червоний border */
+.pricing-modal__actions .button--secondary:not(.pricing-modal__consultation-btn) {
+  border: 1px solid var(--color-primary);
+}
+
 /* КНОПКА КОНСУЛЬТАЦІЇ */
 .pricing-modal__consultation-btn {
   margin-top: 0.5rem;
