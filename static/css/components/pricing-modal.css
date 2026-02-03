@@ -142,6 +142,15 @@
   flex-shrink: 0;
 }
 
+/* === ПІДЗАГОЛОВОК (ОПИС ВИБОРУ) === */
+.pricing-modal__subtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  margin: 0 0 1.75rem 0;
+  text-align: center;
+}
+
 /* === ТІЛО МОДАЛКИ === */
 .pricing-modal__body {
   margin-bottom: 0;

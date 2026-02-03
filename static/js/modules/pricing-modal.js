@@ -175,12 +175,7 @@ export function initPricingModal() {
     const savings = hasDiscount ? parseInt(priceOld) - parseInt(priceNew) : 0;
 
     return `
-      <div class="pricing-modal__package-name">${packageName}</div>
-
-      <div class="pricing-modal__description">
-        <span class="pricing-modal__description-label">Ваш вибір</span>
-        <p class="pricing-modal__description-text">${packageInfo.description}</p>
-      </div>
+      <p class="pricing-modal__subtitle">${packageInfo.description}</p>
 
       <div class="pricing-modal__includes">
         <div class="pricing-modal__includes-title">Що включено:</div>
