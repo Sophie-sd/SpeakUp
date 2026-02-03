@@ -5,10 +5,10 @@
 /* === МОДАЛЬНИЙ КОНТЕЙНЕР === */
 .pricing-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 2rem;
+  bottom: 2rem;
+  left: 1rem;
+  right: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,8 +18,6 @@
   transition: opacity var(--transition-normal) ease, visibility var(--transition-normal) ease;
   box-sizing: border-box;
 }
-
-/* Не використовуємо padding на контейнері - margin буде на контенті */
 
 .pricing-modal--active {
   opacity: 1;
@@ -49,9 +47,7 @@
   padding: 2.5rem;
   max-width: 500px;
   width: calc(100% - 2rem);
-  max-height: calc(100vh - 4rem);
-  max-height: calc(100dvh - 4rem);
-  margin: 2rem 1rem;
+  max-height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -69,17 +65,6 @@
   to {
     transform: translateY(0);
     opacity: 1;
-  }
-}
-
-/* Перевизначення glass-card обмеження для модалки */
-.pricing-modal__content.glass-card {
-  max-width: 500px;
-}
-
-@media (max-width: 767px) {
-  .pricing-modal__content.glass-card {
-    max-width: calc(100% - 2rem);
   }
 }
 
@@ -391,12 +376,16 @@
 /* === RESPONSIVE === */
 
 @media (max-width: 768px) {
+  .pricing-modal {
+    top: 1.5rem;
+    bottom: 1.5rem;
+    left: 1rem;
+    right: 1rem;
+  }
+
   .pricing-modal__content {
     padding: 2rem;
-    max-width: calc(100% - 2rem);
-    max-height: calc(100vh - 3rem);
-    max-height: calc(100dvh - 3rem);
-    margin: 1.5rem 1rem;
+    max-width: 100%;
     border-radius: 16px;
   }
 
@@ -420,12 +409,16 @@
 }
 
 @media (max-width: 480px) {
+  .pricing-modal {
+    top: 1rem;
+    bottom: 1rem;
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+
   .pricing-modal__content {
     padding: 1.5rem;
-    max-width: calc(100% - 1rem);
-    max-height: calc(100vh - 2rem);
-    max-height: calc(100dvh - 2rem);
-    margin: 1rem 0.5rem;
+    max-width: 100%;
     border-radius: 12px;
   }
 
