@@ -20,17 +20,17 @@
 }
 
 /* Десктоп - симетричний padding */
-@media (width > 767px) {
+@media (min-width: 768px) {
   .pricing-modal {
-    padding: var(--spacing-md);
+    padding: var(--spacing-xl);
   }
 }
 
 /* Мобільна версія - адаптивний padding з урахуванням safe area */
-@media (width <= 767px) {
+@media (max-width: 767px) {
   .pricing-modal {
-    padding-top: var(--spacing-md);
-    padding-bottom: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
     padding-left: max(var(--spacing-md), env(safe-area-inset-left, 0px));
     padding-right: max(var(--spacing-md), env(safe-area-inset-right, 0px));
   }
@@ -43,7 +43,7 @@
 
 /* === BACKDROP === */
 .pricing-modal__backdrop {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -52,6 +52,7 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   cursor: pointer;
+  z-index: -1;
 }
 
 /* === КОНТЕНТ МОДАЛКИ === */
@@ -64,7 +65,8 @@
   padding: 2.5rem;
   max-width: 500px;
   width: calc(100% - 2rem);
-  max-height: calc(100dvh - 2 * var(--spacing-md));
+  max-height: calc(100vh - 2 * var(--spacing-xl));
+  max-height: calc(100dvh - 2 * var(--spacing-xl));
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -82,6 +84,17 @@
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+/* Перевизначення glass-card обмеження для модалки */
+.pricing-modal__content.glass-card {
+  max-width: 500px;
+}
+
+@media (max-width: 767px) {
+  .pricing-modal__content.glass-card {
+    max-width: calc(100% - 2rem);
   }
 }
 
@@ -315,7 +328,7 @@
   align-items: center;
   padding-top: 0.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(76, 175, 80, 0.95);
+  color: rgba(255, 255, 255, 0.95);
   font-weight: 600;
 }
 
@@ -391,7 +404,8 @@
   .pricing-modal__content {
     padding: 2rem;
     max-width: calc(100% - 1.5rem);
-    max-height: calc(100dvh - 2 * var(--spacing-md));
+    max-height: calc(100vh - 2 * var(--spacing-lg));
+    max-height: calc(100dvh - 2 * var(--spacing-lg));
     border-radius: 16px;
   }
 
@@ -418,6 +432,7 @@
   .pricing-modal__content {
     padding: 1.5rem;
     max-width: calc(100% - 1rem);
+    max-height: calc(100vh - 2 * var(--spacing-md));
     max-height: calc(100dvh - 2 * var(--spacing-md));
     border-radius: 12px;
   }
