@@ -105,7 +105,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  margin-bottom: 2rem;          /* Компактно */
+  margin-bottom: 3.5rem;        /* Збільшена відстань до CTA */
 }
 
 .unlimited-pricing-card {
@@ -208,15 +208,15 @@
   top: -12px;
   left: -10px;
   padding: 0.35rem 0.6rem;
-  background: rgba(255, 193, 7, 0.2);
-  border: 1px solid rgba(255, 193, 7, 0.5);
+  background: rgba(255, 193, 7, 0.65);
+  border: 1px solid rgba(255, 193, 7, 0.75);
   border-radius: 8px;
   font-size: 0.75rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
   z-index: 15;
-  transform: rotate(-10deg);
+  transform: none;
 }
 
 .unlimited-pricing-card__total {
@@ -272,7 +272,7 @@
 /* === CTA === */
 .unlimited-cta {
   text-align: center;
-  margin-top: 2rem;             /* Компактно */
+  margin-top: 3.5rem;            /* Збільшена відстань від картків */
 }
 
 .unlimited-cta .button {
@@ -310,6 +310,7 @@
   .unlimited-cta {
     padding: 0 1rem;
     box-sizing: border-box;
+    margin-top: 4rem;
   }
 
   .unlimited-cta .button {
