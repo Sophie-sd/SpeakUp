@@ -16,6 +16,24 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity var(--transition-normal) ease, visibility var(--transition-normal) ease;
+  box-sizing: border-box;
+}
+
+/* Десктоп - симетричний padding */
+@media (width > 767px) {
+  .pricing-modal {
+    padding: var(--spacing-md);
+  }
+}
+
+/* Мобільна версія - адаптивний padding з урахуванням safe area */
+@media (width <= 767px) {
+  .pricing-modal {
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    padding-left: max(var(--spacing-md), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--spacing-md), env(safe-area-inset-right, 0px));
+  }
 }
 
 .pricing-modal--active {
@@ -46,7 +64,7 @@
   padding: 2.5rem;
   max-width: 500px;
   width: calc(100% - 2rem);
-  max-height: calc(100vh - 4rem);
+  max-height: calc(100dvh - 2 * var(--spacing-md));
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -373,6 +391,7 @@
   .pricing-modal__content {
     padding: 2rem;
     max-width: calc(100% - 1.5rem);
+    max-height: calc(100dvh - 2 * var(--spacing-md));
     border-radius: 16px;
   }
 
@@ -399,6 +418,7 @@
   .pricing-modal__content {
     padding: 1.5rem;
     max-width: calc(100% - 1rem);
+    max-height: calc(100dvh - 2 * var(--spacing-md));
     border-radius: 12px;
   }
 

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тест: Spacing Pricing Modal</title>
+  <link rel="stylesheet" href="static/css/base.css">
+  <link rel="stylesheet" href="static/css/components/pricing-modal.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    
+    .test-container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    h1 {
+      margin: 0 0 20px 0;
+      color: #1e3a8a;
+      font-size: 1.75rem;
+    }
+    
+    p {
+      margin: 0 0 20px 0;
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    .button {
+      background: linear-gradient(135deg, #e71e14 0%, #e71e14 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(231, 30, 20, 0.3);
+    }
+    
+    .info {
+      background: #f0f7ff;
+      border-left: 4px solid #e71e14;
+      padding: 16px;
+      margin: 20px 0;
+      border-radius: 4px;
+      text-align: left;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    
+    .info strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #1e3a8a;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🧪 Тест Pricing Modal</h1>
+    <p>Цей файл тестує CSS-зміни для модального вікна "Деталі замовлення"</p>
+    
+    <button class="button" id="openModal">Відкрити модальне вікно</button>
+    
+    <div class="info">
+      <strong>Очікуємо:</strong>
+      ✓ На десктопі: padding 24-32px з усіх сторін<br>
+      ✓ На мобілі: padding 24-32px з урахуванням safe-area<br>
+      ✓ max-height: calc(100dvh - 2 * var(--spacing-md))<br>
+      ✓ Модалка не торкається краю екрану
+    </div>
+  </div>
+
+  <!-- Тестова модалка -->
+  <div class="pricing-modal pricing-modal--active" id="testModal" role="dialog" aria-labelledby="pricing-modal-title" aria-modal="true">
+    <div class="pricing-modal__backdrop"></div>
+    <div class="pricing-modal__content glass-card">
+      <button class="pricing-modal__close" id="closeModal" aria-label="Закрити">&times;</button>
+      <h3 id="pricing-modal-title" class="pricing-modal__title">Деталі замовлення</h3>
+      <div class="pricing-modal__scroll-container">
+        <div class="pricing-modal__body">
+          <p class="pricing-modal__subtitle">Вибраний пакет: Навчання за рівнями</p>
+          <div class="pricing-modal__package-name">2 рівні (Confidence)</div>
+          
+          <div class="pricing-modal__description">
+            <span class="pricing-modal__description-label">Опис</span>
+            <p class="pricing-modal__description-text">
+              Ви обираєте пакет з 2 рівнями англійської мови для швидкого прогресу.
+            </p>
+          </div>
+          
+          <div class="pricing-modal__includes">
+            <div class="pricing-modal__includes-title">Що включено:</div>
+            <ul class="pricing-modal__includes-list">
+              <li class="pricing-modal__includes-item">2 рівні навчання (6 місяців)</li>
+              <li class="pricing-modal__includes-item">Групові заняття з викладачем</li>
+              <li class="pricing-modal__includes-item">Доступ до Student Zone 24/7</li>
+              <li class="pricing-modal__includes-item">Гарантія якості</li>
+            </ul>
+          </div>
+          
+          <div class="pricing-modal__pricing">
+            <div class="pricing-modal__pricing-row">
+              <span class="pricing-modal__pricing-label">Звичайна ціна:</span>
+              <span class="pricing-modal__pricing-value pricing-modal__price-old">39600 грн</span>
+            </div>
+            <div class="pricing-modal__pricing-row">
+              <span class="pricing-modal__pricing-label">Ціна:</span>
+              <span class="pricing-modal__pricing-value pricing-modal__price-new">25740 грн</span>
+            </div>
+            <div class="pricing-modal__pricing-row">
+              <span class="pricing-modal__pricing-label">Ціна за місяць:</span>
+              <span class="pricing-modal__pricing-value pricing-modal__price-per-unit">4290 грн/міс</span>
+            </div>
+            <div class="pricing-modal__savings">
+              <span>Економія:</span>
+              <span>13860 грн (35%)</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="pricing-modal__actions">
+          <button class="button button--primary">Оплатити одним платежем</button>
+          <button class="button button--secondary">💳 Оплата частинами</button>
+          <button type="button" class="button button--secondary pricing-modal__consultation-btn">
+            Безкоштовна консультація
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const testModal = document.getElementById('testModal');
+    const openBtn = document.getElementById('openModal');
+    const closeBtn = document.getElementById('closeModal');
+    
+    openBtn.addEventListener('click', () => {
+      testModal.classList.add('pricing-modal--active');
+    });
+    
+    closeBtn.addEventListener('click', () => {
+      testModal.classList.remove('pricing-modal--active');
+    });
+    
+    // Логування інформації про padding
+    window.addEventListener('load', () => {
+      const modal = document.querySelector('.pricing-modal');
+      const content = document.querySelector('.pricing-modal__content');
+      const styles = window.getComputedStyle(modal);
+      const contentStyles = window.getComputedStyle(content);
+      
+      console.log('=== PRICING MODAL SPACING TEST ===');
+      console.log('Modal padding:', styles.padding);
+      console.log('Modal padding-top:', styles.paddingTop);
+      console.log('Modal padding-bottom:', styles.paddingBottom);
+      console.log('Content max-height:', contentStyles.maxHeight);
+      console.log('Viewport height:', window.innerHeight);
+      console.log('Window width (breakpoint):', window.innerWidth);
+    });
+  </script>
+</body>
+</html>
