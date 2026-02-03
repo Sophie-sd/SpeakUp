@@ -5,8 +5,8 @@
 /* === МОДАЛЬНИЙ КОНТЕЙНЕР === */
 .pricing-modal {
   position: fixed;
-  top: 2rem;
-  bottom: 2rem;
+  top: 3rem;
+  bottom: 3rem;
   left: 1rem;
   right: 1rem;
   display: flex;
@@ -377,8 +377,8 @@
 
 @media (max-width: 768px) {
   .pricing-modal {
-    top: 1.5rem;
-    bottom: 1.5rem;
+    top: 3rem;
+    bottom: 3rem;
     left: 1rem;
     right: 1rem;
   }
@@ -410,8 +410,8 @@
 
 @media (max-width: 480px) {
   .pricing-modal {
-    top: 1rem;
-    bottom: 1rem;
+    top: 3rem;
+    bottom: 3rem;
     left: 0.5rem;
     right: 0.5rem;
   }
