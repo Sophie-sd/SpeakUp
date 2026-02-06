@@ -7,7 +7,16 @@
     <!-- Картка 1: Навчання для дорослих -->
     <div class="program-card glass-card">
       <div class="program-card__image-wrapper">
-        <img src="{% static 'img/speak_man.png' %}" alt="Навчання для дорослих" class="program-card__image" loading="lazy" decoding="async">
+        <picture>
+          <source srcset="{% static 'img/speak_man.webp' %}" type="image/webp">
+          <img src="{% static 'img/speak_man.png' %}" 
+               alt="Навчання для дорослих" 
+               class="program-card__image" 
+               loading="lazy" 
+               decoding="async"
+               width="1080"
+               height="1350">
+        </picture>
       </div>
       <div class="program-card__content">
         <div class="program-card__badge">
@@ -32,7 +41,16 @@
     <!-- Картка 2: Навчання для дітей -->
     <div class="program-card glass-card">
       <div class="program-card__image-wrapper">
-        <img src="{% static 'img/speak_kid.png' %}" alt="Навчання для дітей" class="program-card__image" loading="lazy" decoding="async">
+        <picture>
+          <source srcset="{% static 'img/speak_kid.webp' %}" type="image/webp">
+          <img src="{% static 'img/speak_kid.png' %}" 
+               alt="Навчання для дітей" 
+               class="program-card__image" 
+               loading="lazy" 
+               decoding="async"
+               width="1080"
+               height="1350">
+        </picture>
       </div>
       <div class="program-card__content">
         <div class="program-card__badge">
@@ -57,7 +75,16 @@
     <!-- Картка 3: Speak Up Premium -->
     <div class="program-card program-card--premium glass-card">
       <div class="program-card__image-wrapper">
-        <img src="{% static 'img/speak_premium.png' %}" alt="Speak Up Premium" class="program-card__image" loading="lazy" decoding="async">
+        <picture>
+          <source srcset="{% static 'img/speak_premium.webp' %}" type="image/webp">
+          <img src="{% static 'img/speak_premium.png' %}" 
+               alt="Speak Up Premium" 
+               class="program-card__image" 
+               loading="lazy" 
+               decoding="async"
+               width="1080"
+               height="1350">
+        </picture>
       </div>
       <div class="program-card__content">
         <div class="program-card__badge">

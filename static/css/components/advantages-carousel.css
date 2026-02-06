@@ -117,25 +117,65 @@
   z-index: 1;
 }
 
-/* Статичні зображення для карток 1-5 */
+/* Статичні зображення для карток 1-5 з WebP fallback */
 .advantage-card__bg--static-1 {
   background-image: url('../../img/1card.png');
+  background-image: -webkit-image-set(
+    url('../../img/1card.webp') type('image/webp'),
+    url('../../img/1card.png') type('image/png')
+  );
+  background-image: image-set(
+    url('../../img/1card.webp') type('image/webp'),
+    url('../../img/1card.png') type('image/png')
+  );
 }
 
 .advantage-card__bg--static-2 {
   background-image: url('../../img/2card.png');
+  background-image: -webkit-image-set(
+    url('../../img/2card.webp') type('image/webp'),
+    url('../../img/2card.png') type('image/png')
+  );
+  background-image: image-set(
+    url('../../img/2card.webp') type('image/webp'),
+    url('../../img/2card.png') type('image/png')
+  );
 }
 
 .advantage-card__bg--static-3 {
   background-image: url('../../img/3card.png');
+  background-image: -webkit-image-set(
+    url('../../img/3card.webp') type('image/webp'),
+    url('../../img/3card.png') type('image/png')
+  );
+  background-image: image-set(
+    url('../../img/3card.webp') type('image/webp'),
+    url('../../img/3card.png') type('image/png')
+  );
 }
 
 .advantage-card__bg--static-4 {
   background-image: url('../../img/4card.png');
+  background-image: -webkit-image-set(
+    url('../../img/4card.webp') type('image/webp'),
+    url('../../img/4card.png') type('image/png')
+  );
+  background-image: image-set(
+    url('../../img/4card.webp') type('image/webp'),
+    url('../../img/4card.png') type('image/png')
+  );
 }
 
 .advantage-card__bg--static-5 {
   background-image: url('../../img/5card.png');
+  background-image: -webkit-image-set(
+    url('../../img/5card.webp') type('image/webp'),
+    url('../../img/5card.png') type('image/png')
+  );
+  background-image: image-set(
+    url('../../img/5card.webp') type('image/webp'),
+    url('../../img/5card.png') type('image/png')
+  );
 }
 
 /* Динамічне зображення через data-атрибут (встановлюється через JS) */

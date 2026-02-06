@@ -65,6 +65,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="dns-prefetch" href="https://unpkg.com">
   <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  
+  <!-- КРИТИЧНО: Cloudinary preconnect для швидшого завантаження зображень -->
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link rel="dns-prefetch" href="https://res.cloudinary.com">
+  
+  <!-- ОПТИМІЗАЦІЯ: preconnect для run.app (Google Analytics events) -->
+  <link rel="preconnect" href="https://mpc2-prod-24-is5qnl632q-uw.a.run.app" crossorigin>
+  <link rel="dns-prefetch" href="https://mpc2-prod-24-is5qnl632q-uw.a.run.app">
 
   <!-- Preload критичних ресурсів для швидшого завантаження -->
   <link rel="preload" href="{% static 'css/normalize.css' %}" as="style">
@@ -89,34 +97,49 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="{% static 'img/logoBase.png' %}">
 
-  <!-- Критичні CSS - синхронне завантаження для усунення FOUC -->
-  <!-- Базові CSS (першими) -->
+  <!-- Критичні CSS - тільки найважливіші для First Paint -->
+  <!-- Базові CSS (першими) - КРИТИЧНО для Layout -->
   <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
   <link rel="stylesheet" href="{% static 'css/components/ios-safe.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
-  <!-- Header компоненти -->
+  <!-- Above-the-fold CSS - критично для LCP -->
   <link rel="stylesheet" href="{% static 'css/components/header-base.css' %}">
   <link rel="stylesheet" href="{% static 'css/components/navigation.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/navigation-dropdown.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/burger-menu.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/header-dynamic-form.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/tab-slider.css' %}">
-
-  <!-- Компоненти (використовуються в header.html та base.html) -->
   <link rel="stylesheet" href="{% static 'css/components/button.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/form.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/modal.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/trial-form.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/contact-block.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/message.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
-  <link rel="stylesheet" href="{% static 'css/components/running-line.css' %}">
-
-  <!-- Utilities (використовуються на всіх сторінках) -->
-  <link rel="stylesheet" href="{% static 'css/utilities/carousel.css' %}">
   <link rel="stylesheet" href="{% static 'css/utilities/glassmorphism.css' %}">
-  <link rel="stylesheet" href="{% static 'css/utilities/counter-animation.css' %}">
+  
+  <!-- Below-the-fold CSS - завантажуємо асинхронно, застосовуємо після load -->
+  <link rel="preload" href="{% static 'css/components/navigation-dropdown.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/burger-menu.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/header-dynamic-form.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/tab-slider.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/form.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/modal.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/trial-form.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/contact-block.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/message.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/footer.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/components/running-line.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/utilities/carousel.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{% static 'css/utilities/counter-animation.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fallback для браузерів без JS -->
+  <noscript>
+    <link rel="stylesheet" href="{% static 'css/components/navigation-dropdown.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/burger-menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/header-dynamic-form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/tab-slider.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/trial-form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/contact-block.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/message.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/running-line.css' %}">
+    <link rel="stylesheet" href="{% static 'css/utilities/carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/utilities/counter-animation.css' %}">
+  </noscript>
 
   <!-- Не критичні CSS завантажуються через дочірні шаблони (extra_css block) -->
   <!-- programs-list.css, news.css - специфічні для окремих сторінок -->

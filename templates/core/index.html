@@ -25,10 +25,10 @@
 <link rel="preload" as="image" href="{% static 'img/2card.webp' %}" type="image/webp">
 <link rel="preload" as="image" href="{% static 'img/2card.png' %}">
 
-<!-- STEP 8: Preload зображення для секції Програми навчання -->
-<link rel="preload" as="image" href="{% static 'img/speak_man.png' %}">
-<link rel="preload" as="image" href="{% static 'img/speak_kid.png' %}">
-<link rel="preload" as="image" href="{% static 'img/speak_premium.png' %}">
+<!-- STEP 8: Preload зображення для секції Програми навчання (WebP першочергово) -->
+<link rel="preload" as="image" href="{% static 'img/speak_man.webp' %}" type="image/webp">
+<link rel="preload" as="image" href="{% static 'img/speak_kid.webp' %}" type="image/webp">
+<link rel="preload" as="image" href="{% static 'img/speak_premium.webp' %}" type="image/webp">
 
 <!-- STEP 8: Preload паралакс зображення (desktop + mobile) з WebP -->
 <link rel="preload" as="image" href="{% static 'img/mainBackground.webp' %}" type="image/webp" media="(min-width: 768px)">
@@ -58,7 +58,16 @@
             </div>
 
             <div class="hero-section__image">
-              <img src="{% static 'img/formsSpeaky.png' %}" alt="" loading="eager" decoding="async">
+              <picture>
+                <source srcset="{% static 'img/formsSpeaky.webp' %}" type="image/webp">
+                <img src="{% static 'img/formsSpeaky.png' %}" 
+                     alt="" 
+                     loading="eager" 
+                     decoding="async"
+                     width="800"
+                     height="800"
+                     fetchpriority="high">
+              </picture>
             </div>
           </div>
         </section>
@@ -77,7 +86,16 @@
             {% endfor %}
           </div>
           <div class="achievements__cta">
-            <img src="{% static 'img/statSpeaky.png' %}" alt="Перевір свій рівень онлайн" class="achievements__cta-image" loading="lazy" decoding="async">
+            <picture>
+              <source srcset="{% static 'img/statSpeaky.webp' %}" type="image/webp">
+              <img src="{% static 'img/statSpeaky.png' %}" 
+                   alt="Перевір свій рівень онлайн" 
+                   class="achievements__cta-image" 
+                   loading="lazy" 
+                   decoding="async"
+                   width="1920"
+                   height="1080">
+            </picture>
             <a href="{% url 'core:testing' %}" class="button button--primary">
               Пройти тест
             </a>
