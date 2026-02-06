@@ -26,7 +26,7 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in CSRF_TRUSTED_ORIGINS
 ]
 
-# Database
+# Database з connection pooling для оптимізації
 DATABASE_URL = os.getenv('DATABASE_URL')
 if DATABASE_URL:
     DATABASES = {
@@ -43,6 +43,25 @@ else:
             'PORT': os.getenv('DB_PORT', '5432'),
         }
     }
+
+# Connection pooling для оптимізації DB queries
+DATABASES['default']['CONN_MAX_AGE'] = 600  # 10 хвилин
+DATABASES['default']['OPTIONS'] = {
+    'connect_timeout': 10,
+    'options': '-c statement_timeout=30000'  # 30 секунд timeout для queries
+}
+
+# Cache configuration для оптимізації
+# Використовуємо локальний memory cache (для Render без Redis)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'speakup-cache',
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000,  # Максимальна кількість записів в cache
+        }
+    }
+}
 
 # Security settings for production
 # SECURE_SSL_REDIRECT enabled - healthcheck обробляється через HealthCheckMiddleware
@@ -69,10 +88,19 @@ CANONICAL_DOMAIN = os.getenv('CANONICAL_DOMAIN', '')
 if not CANONICAL_DOMAIN and ALLOWED_HOSTS and ALLOWED_HOSTS[0] != '*':
     CANONICAL_DOMAIN = f"https://{ALLOWED_HOSTS[0]}"
 
-# WhiteNoise configuration for static files (БЕЗ кешування)
+# WhiteNoise configuration for static files (З АГРЕСИВНИМ КЕШУВАННЯМ)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 WHITENOISE_BROTLI_ENABLED = True
-WHITENOISE_MAX_AGE = 0  # Без кешування
+
+# Кешування статичних файлів на 1 рік (оскільки WhiteNoise додає хеші до імен файлів)
+WHITENOISE_MAX_AGE = 31536000  # 1 рік = 365 * 24 * 60 * 60
+
+# Всі статичні файли immutable (оскільки мають хеш в імені)
+WHITENOISE_IMMUTABLE_FILE_TEST = lambda path, url: True
+
+# Додаткові заголовки для оптимізації
+WHITENOISE_ADD_HEADERS_FUNCTION = None  # Можна додати custom headers функцію
+
 WHITENOISE_MIMETYPES = {
     '.js': 'application/javascript; charset=utf-8',
     '.css': 'text/css; charset=utf-8',

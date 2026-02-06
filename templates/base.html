@@ -60,8 +60,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <meta name="twitter:description" content="{% block twitter_description %}SpeakUp - Django HTMX Application{% endblock %}">
   <meta name="twitter:image" content="{% block twitter_image %}{{ default_og_image }}{% endblock %}">
 
-  <!-- Rule 23: Preconnect для CDN -->
+  <!-- Performance: Preconnect та DNS-prefetch для зовнішніх ресурсів -->
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+
+  <!-- Preload критичних ресурсів для швидшого завантаження -->
+  <link rel="preload" href="{% static 'css/normalize.css' %}" as="style">
+  <link rel="preload" href="{% static 'css/base.css' %}" as="style">
+  <link rel="preload" href="{% static 'img/logoBase.png' %}" as="image">
+  <link rel="preload" href="https://unpkg.com/htmx.org@2.0.3" as="script" crossorigin>
 
   <!-- Prefetch для найбільш ймовірних переходів (обмежено для оптимізації) -->
   {% if request.path == '/' %}

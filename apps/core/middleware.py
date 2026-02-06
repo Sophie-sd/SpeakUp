@@ -4,9 +4,15 @@ Middleware для обробки 301 редиректів зі старих URL.
 from django.shortcuts import redirect
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.conf import settings
+from django.core.cache import cache
 from .models import NewsArticle
 from .redirects import REDIRECTS
 from .utils.redirect_logger import redirect_logger
+
+
+# Cache для news redirects (зменшує DB queries)
+NEWS_REDIRECT_CACHE_TIMEOUT = 3600  # 1 година
+NEWS_REDIRECT_CACHE_PREFIX = 'news_redirect:'
 
 
 class AllowedHostsMiddleware:
@@ -156,6 +162,18 @@ class NewsRedirectMiddleware:
 
         for check_path in news_paths_to_check:
             if check_path.startswith('/news/') and check_path != '/news/':
+                # Перевіряємо cache спочатку
+                cache_key = f'{NEWS_REDIRECT_CACHE_PREFIX}{check_path}'
+                cached_url = cache.get(cache_key)
+                
+                if cached_url:
+                    # Cache hit - повертаємо закешований redirect
+                    if cached_url != path:
+                        return redirect(cached_url, permanent=True)
+                    # Якщо cached_url == path, пропускаємо
+                    continue
+                
+                # Cache miss - шукаємо в базі даних
                 # Шукаємо статтю за old_url_uk або old_url_ru
                 article = NewsArticle.objects.filter(
                     old_url_uk=check_path
@@ -169,6 +187,10 @@ class NewsRedirectMiddleware:
                 if article:
                     # 301 редирект на новий URL ТІЛЬКИ якщо URL відрізняється
                     new_url = article.get_absolute_url()
+                    
+                    # Кешуємо результат
+                    cache.set(cache_key, new_url, NEWS_REDIRECT_CACHE_TIMEOUT)
+                    
                     if new_url != path:
                         # ✅ Логування НЕ блокує
                         redirect_logger.log_redirect(
@@ -179,6 +201,9 @@ class NewsRedirectMiddleware:
                         )
 
                         return redirect(new_url, permanent=True)
+                else:
+                    # Якщо не знайдено - кешуємо None (щоб не робити повторні DB запити)
+                    cache.set(cache_key, path, NEWS_REDIRECT_CACHE_TIMEOUT)
 
         response = self.get_response(request)
         return response

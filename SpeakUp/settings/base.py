@@ -24,20 +24,20 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'apps.core.middleware.AllowedHostsMiddleware',  # Обробка ALLOWED_HOSTS ПЕРЕД SecurityMiddleware
+    'apps.core.middleware.HealthCheckMiddleware',  # ПЕРШИЙ - швидкий вихід для healthcheck
+    'apps.core.middleware.AllowedHostsMiddleware',  # Обробка ALLOWED_HOSTS
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Обслуговування статичних файлів
-    'apps.core.middleware.HealthCheckMiddleware',  # Healthcheck ДО перевірки ALLOWED_HOSTS
-    'apps.core.middleware.GoogleAdsBotMiddleware',  # Обробка Google Ads ботів ДО SessionMiddleware
+    'apps.core.middleware.GoogleAdsBotMiddleware',  # Обробка Google Ads ботів
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'apps.core.middleware.NewsRedirectMiddleware',
-    'apps.core.middleware.WordPressBlockMiddleware',  # НОВИЙ: блокує WP шляхи з 410 Gone
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.core.middleware.NewsRedirectMiddleware',  # Редіректи - ПІСЛЯ auth (з кешем)
+    'apps.core.middleware.WordPressBlockMiddleware',  # WP блокування - ОСТАННІЙ
 ]
 
 ROOT_URLCONF = 'SpeakUp.urls'
