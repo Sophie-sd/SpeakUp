@@ -9,6 +9,7 @@ import { initImageFallback } from './modules/image-fallback.js';
 import { initTrialModal } from './modules/trial-modal.js';
 import { initHeaderPhoneHint } from './modules/header-phone-hint.js';
 import { ProgramsDropdown } from './modules/programs-dropdown.js';
+import './modules/footer-accordion.js';
 
 /**
  * Автоматично визначає активне посилання в навігації на основі поточного URL
