@@ -217,10 +217,45 @@
   padding-top: var(--spacing-md);
   border-top: 1px solid var(--color-border-light);
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
 .footer__copyright-text {
   margin: 0;
+}
+
+/* Блок кредиту */
+.footer__credit {
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Посилання PrometeyLabs */
+.footer__credit-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  touch-action: manipulation;
+  font-weight: 500;
+}
+
+.footer__credit-link:hover,
+.footer__credit-link:focus-visible {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer__credit-link:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+  }
 }
 
 /* Десктоп (≥768px) */
@@ -271,8 +306,9 @@
 
   .footer__copyright {
     flex-basis: 100%;
-    text-align: center;
+    text-align: left;
     margin-top: var(--spacing-md);
+    justify-content: space-between;
   }
 }
 
