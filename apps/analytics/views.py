@@ -6,7 +6,7 @@ from django.views.decorators.http import require_POST
 from django.utils import timezone
 
 from .models import VisitorSession, PageView
-from .utils import is_bot_user_agent, get_client_ip, detect_device_type
+from .utils import is_bot_user_agent, get_client_ip, detect_device_type, is_suspicious_frequency
 
 
 @csrf_exempt
@@ -29,9 +29,15 @@ def track_pageview(request):
         try:
             ip = get_client_ip(request)
             ua = request.META.get('HTTP_USER_AGENT', '')[:512]
-            now = timezone.now()
             
-            # Отримати або створити сесію
+            # Перевірка на ботів
+            if is_bot_user_agent(ua) or is_suspicious_frequency(ip):
+                return  # Не записувати ботів взагалі
+            
+            now = timezone.now()
+            normalized_url = _normalize_url(url)
+            
+            # Отримати або створити сесію (НЕ створювати для ботів)
             session, created = VisitorSession.objects.get_or_create(
                 session_key=session_key,
                 defaults={
@@ -45,7 +51,7 @@ def track_pageview(request):
                     'utm_term': data.get('utm_term', '')[:255],
                     'first_seen': now,
                     'last_activity': now,
-                    'is_bot': is_bot_user_agent(ua),
+                    'is_bot': False,  # Бо ми вже відфільтрували ботів
                     'device_type': detect_device_type(ua),
                 }
             )
@@ -55,28 +61,33 @@ def track_pageview(request):
                 session.last_activity = now
                 session.save(update_fields=['last_activity'])
             
-            # Створити або оновити перегляд сторінки
-            entered_at_str = data.get('entered_at')
-            if entered_at_str:
-                try:
-                    from django.utils.dateparse import parse_datetime
-                    entered_at = parse_datetime(entered_at_str) or now
-                except (ValueError, TypeError):
-                    entered_at = now
-            else:
-                entered_at = now
-            
-            PageView.objects.update_or_create(
+            # Знайти останній PageView для цієї сесії та URL
+            pageview = PageView.objects.filter(
                 session=session,
-                url=url,
-                entered_at=entered_at,
-                defaults={
-                    'page_title': data.get('page_title', '')[:512],
-                    'time_spent_seconds': int(data.get('time_spent', 0)),
-                    'is_exit_page': data.get('is_exit', False),
-                    'source': 'js',
-                }
-            )
+                url=normalized_url,
+            ).order_by('-entered_at').first()
+            
+            time_spent = int(data.get('time_spent', 0))
+            page_title = data.get('page_title', '')[:512]
+            
+            if pageview:
+                # Оновити існуючий запис
+                pageview.time_spent_seconds = time_spent
+                pageview.is_exit_page = True
+                pageview.source = 'js'
+                pageview.page_title = page_title
+                pageview.save(update_fields=['time_spent_seconds', 'is_exit_page', 'source', 'page_title'])
+            else:
+                # Створити новий (якщо middleware не встиг)
+                PageView.objects.create(
+                    session=session,
+                    url=normalized_url,
+                    page_title=page_title,
+                    entered_at=now,
+                    time_spent_seconds=time_spent,
+                    is_exit_page=True,
+                    source='js',
+                )
         except Exception as e:
             # Логуємо помилку, але не падаємо
             import logging
@@ -88,3 +99,10 @@ def track_pageview(request):
     thread.start()
     
     return HttpResponse(status=204)
+
+
+def _normalize_url(url: str) -> str:
+    """Нормалізувати URL -- прибрати trailing slash (крім кореня)"""
+    if url != '/' and url.endswith('/'):
+        return url.rstrip('/')
+    return url

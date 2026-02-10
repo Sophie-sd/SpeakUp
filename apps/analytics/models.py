@@ -147,12 +147,6 @@ class PageView(models.Model):
             models.Index(fields=['session', 'entered_at']),
             models.Index(fields=['url', 'entered_at']),
         ]
-        constraints = [
-            models.UniqueConstraint(
-                fields=['session', 'url', 'entered_at'],
-                name='unique_pageview'
-            )
-        ]
     
     def __str__(self):
         return f'{self.session.ip_address} - {self.url}'

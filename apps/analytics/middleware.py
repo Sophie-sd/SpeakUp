@@ -1,10 +1,11 @@
 import threading
 import os
+from datetime import timedelta
 from django.conf import settings
 from django.utils import timezone
 
 from .models import VisitorSession, PageView
-from .utils import is_bot_user_agent, get_client_ip, detect_device_type
+from .utils import is_bot_user_agent, get_client_ip, detect_device_type, is_suspicious_frequency
 
 
 class VisitorTrackingMiddleware:
@@ -40,9 +41,15 @@ class VisitorTrackingMiddleware:
         if path.endswith(self.file_extensions):
             return response
         
-        # Пропустити ботів
+        ip = get_client_ip(request)
         ua = request.META.get('HTTP_USER_AGENT', '')
+        
+        # Пропустити ботів (User-Agent)
         if is_bot_user_agent(ua):
+            return response
+        
+        # Пропустити ботів (поведінка)
+        if is_suspicious_frequency(ip):
             return response
         
         # Перевірити _google_ads_bot від GoogleAdsBotMiddleware
@@ -52,7 +59,7 @@ class VisitorTrackingMiddleware:
         # Записати в фоновому потоці
         def _record():
             try:
-                self._record_pageview(request)
+                self._record_pageview(request, ip, ua)
             except Exception as e:
                 import logging
                 logger = logging.getLogger(__name__)
@@ -63,11 +70,16 @@ class VisitorTrackingMiddleware:
         
         return response
     
-    def _record_pageview(self, request):
+    def _normalize_url(self, url: str) -> str:
+        """Нормалізувати URL -- прибрати trailing slash (крім кореня)"""
+        if url != '/' and url.endswith('/'):
+            return url.rstrip('/')
+        return url
+    
+    def _record_pageview(self, request, ip: str, ua: str):
         """Записати перегляд сторінки"""
-        ip = get_client_ip(request)
-        ua = request.META.get('HTTP_USER_AGENT', '')[:512]
         now = timezone.now()
+        normalized_url = self._normalize_url(request.path)
         
         # Створити унікальний ключ сесії на базі Django session
         if hasattr(request, 'session'):
@@ -80,16 +92,16 @@ class VisitorTrackingMiddleware:
             import hashlib
             session_key = hashlib.md5(f'{ip}{ua}'.encode()).hexdigest()
         
-        # Отримати або створити сесію
+        # Отримати або створити сесію (НЕ записуємо ботів)
         session, created = VisitorSession.objects.get_or_create(
             session_key=session_key,
             defaults={
                 'ip_address': ip,
-                'user_agent': ua,
+                'user_agent': ua[:512],
                 'referrer': request.META.get('HTTP_REFERER', '')[:2048],
                 'first_seen': now,
                 'last_activity': now,
-                'is_bot': is_bot_user_agent(ua),
+                'is_bot': False,  # Бо ми вже відфільтрували ботів вище
                 'device_type': detect_device_type(ua),
             }
         )
@@ -99,25 +111,22 @@ class VisitorTrackingMiddleware:
             session.last_activity = now
             session.save(update_fields=['last_activity'])
         
-        # Перевірити чи JS вже записав цю сторінку
-        # Шукаємо останній перегляд з source='js' для цієї сторінки
-        recent_js_view = PageView.objects.filter(
+        # Перевірити чи вже є запис за останні 30 секунд (дедуплікація)
+        recent_exists = PageView.objects.filter(
             session=session,
-            url=request.path,
-            source='js',
-            entered_at__gte=now - timezone.timedelta(seconds=10)
+            url=normalized_url,
+            entered_at__gte=now - timedelta(seconds=30)
         ).exists()
         
-        # Записати тільки якщо JS не записав
-        if not recent_js_view:
-            PageView.objects.update_or_create(
+        # Записати тільки якщо немає дубля
+        if not recent_exists:
+            PageView.objects.create(
                 session=session,
-                url=request.path,
+                url=normalized_url,
+                page_title='',
                 entered_at=now,
-                defaults={
-                    'page_title': '',
-                    'time_spent_seconds': 0,
-                    'is_exit_page': False,
-                    'source': 'server',
-                }
+                time_spent_seconds=0,
+                is_exit_page=False,
+                source='server',
             )
+
