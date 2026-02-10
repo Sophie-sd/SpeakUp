@@ -26,6 +26,7 @@ def healthcheck(request):
 urlpatterns = [
     path('healthz', healthcheck, name='healthcheck'),
     path('admin/', admin.site.urls),
+    path('api/analytics/', include('apps.analytics.urls')),
     path('robots.txt', TemplateView.as_view(
         template_name='robots.txt',
         content_type='text/plain',

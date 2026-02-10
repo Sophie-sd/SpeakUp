@@ -37,7 +37,7 @@
 .footer__brand-section {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: 15px;
   flex: 0 0 30%;
   min-width: 0;
 }
@@ -46,7 +46,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--spacing-sm);
+  gap: 10px;
 }
 
 .footer__logo {
@@ -68,7 +68,7 @@
 }
 
 .footer__logo-image {
-  height: 32px;
+  height: 60px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -127,7 +127,7 @@
 .footer__contracts {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: 10px;
   width: 100%;
 }
 
@@ -168,7 +168,7 @@
 .footer__nav-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -260,7 +260,7 @@
 .footer__programs-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -426,10 +426,6 @@
 
   .footer__brand {
     align-items: center;
-  }
-
-  .footer__logo-image {
-    height: 48px;
   }
 
   .footer__social {

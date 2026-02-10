@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'apps.core',
     'apps.leads',
+    'apps.analytics',
 ]
 
 MIDDLEWARE = [
@@ -30,6 +31,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Обслуговування статичних файлів
     'apps.core.middleware.GoogleAdsBotMiddleware',  # Обробка Google Ads ботів
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'apps.analytics.middleware.VisitorTrackingMiddleware',  # Відстеження відвідувачів
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -170,3 +172,11 @@ LOGGING = {
         },
     },
 }
+
+# ========== ANALYTICS SETTINGS ==========
+
+# Analytics tracking configuration
+ANALYTICS_ENABLED = os.getenv('ANALYTICS_ENABLED', 'True') == 'True'
+ANALYTICS_RETENTION_DAYS = int(os.getenv('ANALYTICS_RETENTION_DAYS', '30'))
+ANALYTICS_IGNORE_PATHS = ['/admin/', '/static/', '/media/', '/api/analytics/', '/healthz']
+
