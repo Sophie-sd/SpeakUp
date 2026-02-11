@@ -25,20 +25,6 @@
   }
 }
 
-/* Desktop медіа-запити */
-@media (width >= 768px) {
-  .achievement-card__number {
-    font-size: clamp(2rem, 4vw, 3rem);
-  }
-}
-
-/* Mobile медіа-запити */
-@media (width <= 767px) {
-  .achievement-card__number {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-  }
-}
-
 /* Prefers reduced motion */
 @media (prefers-reduced-motion: reduce) {
   @supports (counter-reset: name var(--value)) {
